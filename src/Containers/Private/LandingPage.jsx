@@ -1,6 +1,7 @@
 import React from "react";
 import NavbarP from "../../Components/NavbarP";
 import FiltrosNavbar from "../../Components/FiltrosNavbar";
+import FooterP from "../../Components/FooterP";
 
 const LandingPage = () => {
 
@@ -77,6 +78,7 @@ const LandingPage = () => {
           </div>
         ))}
       </div>
+      <FooterP/>
     </div>
   );
 };

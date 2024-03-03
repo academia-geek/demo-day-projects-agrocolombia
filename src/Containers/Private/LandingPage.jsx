@@ -1,8 +1,11 @@
 import React from 'react'
+import NavbarP from '../../Components/NavbarP'
 
 const LandingPage = () => {
   return (
-    <div>LandingPage</div>
+    <div>
+      <NavbarP/>
+    </div>
   )
 }
 

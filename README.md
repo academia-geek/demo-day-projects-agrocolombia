@@ -1,5 +1,5 @@
-![logo texto derecha 2](https://github.com/academia-geek/demo-day-projects-agrocolombia/assets/117487196/f2ab5157-9777-4cd2-9be1-84e7a92b5aca)
 # AgroColombia
+![logo texto derecha 2](https://github.com/academia-geek/demo-day-projects-agrocolombia/assets/117487196/f2ab5157-9777-4cd2-9be1-84e7a92b5aca)
 ## Descripción
 AgroColombia es una plataforma online que facilita el comercio de productos agrícolas en Colombia. Inspirada en Mercado Libre, pero con un enfoque específico en el sector agropecuario, AgroColombia busca conectar a productores, distribuidores y consumidores de manera eficiente y transparente.
 

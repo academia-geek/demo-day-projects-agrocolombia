@@ -3,6 +3,7 @@ import NavbarP from "../../Components/NavbarP";
 import FiltrosNavbar from "../../Components/FiltrosNavbar";
 import { useDispatch, useSelector } from "react-redux";
 import { actionListproductAsyn } from "../../Redux/Actions/actionsProduct";
+import FooterP from "../../Components/FooterP";
 
 const LandingPage = () => {
 
@@ -160,8 +161,7 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-
-
+      <FooterP/>
     </div>
   );
 };

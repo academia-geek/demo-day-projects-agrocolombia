@@ -25,21 +25,21 @@ AgroColombia es una plataforma online que facilita el comercio de productos agr�
 
 ## Colaboradores
 - Santiago Buitrago Giraldo:
->- GitHub: https://github.com/topics/santiago
->- Correo electrónico: [correo electrónico Santiago]
->- Teléfono: [número de teléfono Santiago]
+>- GitHub: [https://github.com/topics/santiago](https://github.com/Kiofu7w7)
+>- Correo electrónico: buitragogiraldosantiago@gmail.com
+>- Teléfono: 3006700461
 - Carlos Felipe Gonzales:
->- GitHub: https://github.com/topics/carlos
+>- GitHub: [https://github.com/topics/carlos](https://github.com/PIPE-EX)
 >- Correo electrónico: [correo electrónico Carlos]
 >- Teléfono: [número de teléfono Carlos]
 
 ## Contacto
 Para cualquier pregunta o comentario, no dude en contactarnos a través de los siguientes canales:
 Correo electrónico: [buitragogiraldosantiago@gmail.com]
-Formulario de contacto: https://blog.hubspot.es/website/como-crear-formulario-contacto
-Licencia
 
-## AgroColombia está bajo la licencia MIT.
+
+## Licencia
+AgroColombia está bajo la licencia MIT.
 
 ## ¡Esperamos que AgroColombia sea una herramienta útil para el sector agropecuario colombiano!
 

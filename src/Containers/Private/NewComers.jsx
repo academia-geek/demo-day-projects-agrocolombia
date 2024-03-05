@@ -1,11 +1,13 @@
 import { useDispatch } from "react-redux";
 import useForm from "../../Hooks/useForm";
 import { actionAddUserAsyn } from "../../Redux/Actions/actionsUser";
+import { useNavigate } from "react-router-dom";
 
 
 const NewComers = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [formValue, handleInputChange, reset] = useForm({
     firstName: "",
     lastName: "",
@@ -27,6 +29,7 @@ const NewComers = () => {
     reset()
     try {
       await dispatch(actionAddUserAsyn(newObj))
+      navigate("/")
     } catch (error) {
       console.log(error)
     }

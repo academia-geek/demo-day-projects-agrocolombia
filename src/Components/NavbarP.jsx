@@ -1,25 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { actionLogoutAsyn } from "../Redux/Actions/actionsLogin";
+import { actionListUserAsyn } from "../Redux/Actions/actionsUser";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavbarP = () => {
+
+  const dispatch  = useDispatch()
+  const navigate = useNavigate()
+  const [user, setUser] = useState()
+  useEffect(()=>{
+    const func = async () =>{ 
+      const data = await dispatch(actionListUserAsyn())
+      setUser(data)
+    }
+    func()
+  },[])
+
   return (
-    <div className="navbar bg-base-300">
+    <div className="navbar bg-accent">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
           </div>
           <ul
             tabIndex={0}
@@ -29,12 +32,13 @@ const NavbarP = () => {
               <input
                 type="text"
                 placeholder="Search"
-                className="input input-bordered w-24 md:w-auto"
+                className="input input-bordered w-44 md:w-auto"
               />
             </div>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">AgroColombia</a>
+        <img style={{cursor: "pointer"}} onClick={() => navigate("/")} alt="icon" className="size-12" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709572838/Guajolota/logo_tayiwj.png"></img>
+        <Link to="/" className="btn btn-ghost text-xl">AgroColombia</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <svg
@@ -56,7 +60,7 @@ const NavbarP = () => {
             <input
               type="text"
               placeholder="Search"
-              className="input input-bordered w-24 md:w-auto"
+              className="input input-bordered w-96"
             />
           </div>
         </ul>
@@ -110,8 +114,8 @@ const NavbarP = () => {
             >
               <div className="w-10 rounded-full">
                 <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  alt="Foto perfil"
+                  src={user?.fotoUrl || "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg"}
                 />
               </div>
             </div>
@@ -121,15 +125,18 @@ const NavbarP = () => {
             >
               <li>
                 <a className="justify-between">
-                  Profile
+                  Perfil
                   <span className="badge">New</span>
                 </a>
               </li>
               <li>
-                <a>Settings</a>
+                <p>Mis compras</p>
               </li>
               <li>
-                <a>Logout</a>
+                <p>Configuracion</p>
+              </li>
+              <li onClick={() => dispatch(actionLogoutAsyn())}>
+                <p>Cerrar sesión</p>
               </li>
             </ul>
           </div>

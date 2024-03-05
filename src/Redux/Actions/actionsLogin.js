@@ -61,11 +61,9 @@ export const actionGoogle = () => {
 export const actionLogoutAsyn = () => {
     return (dispatch) => {
         const auth = getAuth();
-
         signOut(auth)
             .then(() => {
                 dispatch(actionLogoutSyn);
-                console.log("Adios..");
             })
             .catch((error) => {
                 console.warn(error);

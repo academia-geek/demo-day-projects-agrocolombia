@@ -106,12 +106,12 @@ export const actionSearchProductAsyn = (payload) => {
         );
 
         const dataQ = await getDocs(q);
-        console.log(dataQ);
         const prod = [];
         dataQ.forEach((docu) => {
             prod.push(docu.data());
         });
         dispatch(actionSearchProductSyn(prod));
+        return prod
     };
 };
 

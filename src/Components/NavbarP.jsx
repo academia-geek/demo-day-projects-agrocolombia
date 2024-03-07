@@ -39,6 +39,23 @@ const NavbarP = () => {
     }
   }
 
+  const [searchInput, setSearchInput] = useState('')
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    navigate(`/search/${searchInput}`)
+  }
+
+  const handleChange = (e) => {
+    setSearchInput(e.target.value)
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e)
+    }
+  }
+
   return (
     <div className="navbar bg-accent">
       <div className="navbar-start">
@@ -55,6 +72,9 @@ const NavbarP = () => {
                 type="text"
                 placeholder="Search"
                 className="input input-bordered w-44 md:w-auto"
+                value={searchInput}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
               />
             </div>
           </ul>
@@ -83,6 +103,9 @@ const NavbarP = () => {
               type="text"
               placeholder="Search"
               className="input input-bordered w-96"
+              value={searchInput}
+              onChange={handleChange}
+              onKeyPress={handleKeyPress}
             />
           </div>
         </ul>

@@ -17,6 +17,28 @@ const NavbarP = () => {
     func()
   },[])
 
+  const logOutClick = () => {
+    navigate("/")
+    dispatch(actionLogoutAsyn())
+  }
+
+
+  const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "mytheme")
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme)
+    const localTheme = localStorage.getItem("theme")
+    document.querySelector("html").setAttribute("data-theme", localTheme)
+  }, [theme])
+
+  const handleToogleTheme = (e) => {
+    if (e.target.checked) {
+      setTheme("forest")
+    }else{
+      setTheme("mytheme")
+    }
+  }
+
   return (
     <div className="navbar bg-accent">
       <div className="navbar-start">
@@ -37,8 +59,8 @@ const NavbarP = () => {
             </div>
           </ul>
         </div>
-        <img style={{cursor: "pointer"}} onClick={() => navigate("/")} alt="icon" className="size-12" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709572838/Guajolota/logo_tayiwj.png"></img>
-        <Link to="/" className="btn btn-ghost text-xl">AgroColombia</Link>
+        <img style={{cursor: "pointer"}} onClick={() => navigate("/*")} alt="icon" className="size-12" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709572838/Guajolota/logo_tayiwj.png"></img>
+        <Link to="/*" className="btn btn-ghost text-xl">AgroColombia</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <svg
@@ -124,6 +146,13 @@ const NavbarP = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
+                <label className="flex cursor-pointer gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" /></svg>
+                  <input onChange={handleToogleTheme} type="checkbox" value="synthwave" className="toggle theme-controller" checked={theme === "forest" ? true : false} />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </label>
+              </li>
+              <li>
                 <a className="justify-between">
                   Perfil
                   <span className="badge">New</span>
@@ -135,7 +164,7 @@ const NavbarP = () => {
               <li>
                 <p>Configuracion</p>
               </li>
-              <li onClick={() => dispatch(actionLogoutAsyn())}>
+              <li onClick={() => logOutClick()}>
                 <p>Cerrar sesión</p>
               </li>
             </ul>

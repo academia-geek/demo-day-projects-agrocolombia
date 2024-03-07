@@ -29,6 +29,7 @@ module.exports = {
           "error": "#d1470b",
         },
       },
+      "forest"
     ],
   },
 }

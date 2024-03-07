@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Perfil = () => {
+    const navigate = useNavigate()
+
   return (
     <div class="font-sans antialiased text-gray-900 leading-normal tracking-wider">
       <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
@@ -13,7 +16,7 @@ const Perfil = () => {
             style={{ backgroundColor: "#B0B0B0" }}
           >
             <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"></div>
-              <h1 class="text-3xl font-bold pt-8 lg:pt-0">Profile Name</h1>
+              <h1 class="text-3xl font-bold pt-8 lg:pt-0">AnaGaby.MaLo</h1>
               <button>
               <img src="https://res.cloudinary.com/dyepe4ih7/image/upload/v1709781279/socialmedia/rnmfexaucktofk1erapk.png" alt="" />
               </button>
@@ -39,7 +42,7 @@ const Perfil = () => {
               78000 seguidores
             </p>
             <p class="pt-8 text-sm">
-                Ana, joven agrónoma, implementa tecnologías agrícolas de precisión para mejorar la rentabilidad y sostenibilidad de la finca familiar.
+                joven agrónoma, implementa tecnologías agrícolas de precisión para mejorar la rentabilidad y sostenibilidad de la finca familiar.
             </p>
 
             <div class="pt-12 pb-8">
@@ -134,6 +137,9 @@ const Perfil = () => {
             src="https://source.unsplash.com/MP0IUfwrn0A"
             class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
           />
+        </div>
+        <div className={`absolute top-0 right-0 h-12 w-18 p-4`}>
+            <button onClick={() => navigate("/landing")}>X</button>
         </div>
       </div>
     </div>

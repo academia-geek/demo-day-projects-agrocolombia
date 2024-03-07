@@ -111,6 +111,9 @@ const NavbarP = () => {
         </ul>
       </div>
       <div className="navbar-end">
+        <div>
+          <img onClick={() => navigate("/chats")} className="btn btn-ghost btn-circle cursor-pointer" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709846420/Guajolota/1380370_nqvo2f.png" alt="" />
+        </div>
         <div className="flex-none">
           <div className="dropdown dropdown-end">
             <div

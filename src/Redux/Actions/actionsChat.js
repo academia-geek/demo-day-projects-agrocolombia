@@ -20,6 +20,8 @@ export const actionFindChatAsync = () => {
                 );
                 const chatSnapshot = await getDocs(chatQuery);
                 const chatSnapshot2 = await getDocs(chatQuery2);
+                console.log(chatSnapshot)
+                console.log(chatSnapshot2)
                 if (chatSnapshot) {
                     let chats = chatSnapshot.docs.map((doc) => ({ Id: doc.id, ...doc.data() }));
                     chats = chats.concat(chatSnapshot2.docs.map((doc) => ({ Id: doc.id, ...doc.data() })));

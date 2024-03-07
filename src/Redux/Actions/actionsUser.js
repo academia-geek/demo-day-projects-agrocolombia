@@ -45,6 +45,47 @@ export const actionListUserSyn = (payload) => {
     };
 };
 
+// ------------------Listar usuario con uid--------------------- //
+export const actionListUserUidAsyn = (payload) => {
+    const userId = payload;
+    return async (dispatch) => {
+        if (userId) {
+            try {
+                const collectionP = collection(dataBase, "Users");
+                const q = query(collectionP, where("uid", "==", userId));
+                const datosQ = await getDocs(q);
+                if (datosQ.empty) {
+                    console.warn("No encontrado");
+                    return;
+                }
+                const usuarios = [];
+                datosQ.forEach((docu) => {
+                    usuarios.push({
+                        ...docu.data(),
+                        id: docu.id,
+                    });
+                });
+                const documentReference = datosQ.docs[0].ref;
+                const documentSnapshot = await getDoc(documentReference);
+                const docData = documentSnapshot.data()
+                dispatch(actionListUserUidSyn(usuarios));
+                return docData
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.warn("Current user is not authenticated.");
+        }
+    };
+}
+
+export const actionListUserUidSyn = (payload) => {
+    return {
+        type: typesUsers.list,
+        payload,
+    };
+};
+
 // ------------------Crear usuario--------------------- //
 export const actionAddUserAsyn = (payload) => {
     const user = getAuth()

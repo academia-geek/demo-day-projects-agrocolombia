@@ -20,8 +20,6 @@ export const actionFindChatAsync = () => {
                 );
                 const chatSnapshot = await getDocs(chatQuery);
                 const chatSnapshot2 = await getDocs(chatQuery2);
-                console.log(chatSnapshot)
-                console.log(chatSnapshot2)
                 if (chatSnapshot) {
                     let chats = chatSnapshot.docs.map((doc) => ({ Id: doc.id, ...doc.data() }));
                     chats = chats.concat(chatSnapshot2.docs.map((doc) => ({ Id: doc.id, ...doc.data() })));
@@ -50,22 +48,27 @@ export const actionAddMessageToChatAsync = (chatId, message) => {
         try {
             const auth = getAuth();
             if (auth && auth.currentUser) {
-                const docRef = doc(dataBase, "Chats", chatId);
-                if (docRef) {
-                    await updateDoc(docRef, {
-                        Messages: arrayUnion({
+                const collectionRef = collection(dataBase, "Chats");
+                const q = query(collectionRef, where("id", "==", chatId));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    const chatDocRef = doc(dataBase, "Chats", querySnapshot.docs[0].id);
+                    await updateDoc(chatDocRef, {
+                        mensajes: arrayUnion({
                             uid: auth.currentUser.uid,
-                            Message: message
+                            mensaje: message
                         })
                     });
                     const obj = {
                         chatId: chatId,
-                        message: message,
-                        uid: auth.currentUser.uid,
-                    }
+                        mensaje: message,
+                        uid: auth.currentUser.uid
+                    };
                     dispatch(actionAddMessageToChatSync(obj));
+                    console.log("Mensaje agregado correctamente.");
                 } else {
-                    console.warn("No se encontró el documento de chat.");
+                    console.warn("No se encontró el chat con ID", chatId);
                 }
             } else {
                 console.warn("No se encontró el usuario.");
@@ -73,7 +76,7 @@ export const actionAddMessageToChatAsync = (chatId, message) => {
         } catch (error) {
             console.error("Error al agregar el mensaje al chat:", error);
         }
-    }
+    };
 };
 
 const actionAddMessageToChatSync = (payload) => {

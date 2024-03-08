@@ -56,23 +56,6 @@ const Chats = () => {
 
     }, [setActiver])
 
-    // SEARCH
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(searchInput)
-    }
-
-    const handleChange = (e) => {
-        setSearchInput(e.target.value)
-    }
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            handleSubmit(e)
-        }
-    }
-
     //CHAT
 
     const handleChatSubmit = async (e) => {
@@ -95,14 +78,6 @@ const Chats = () => {
     return (
         <div>
             <NavbarP />
-            <input
-                type="text"
-                placeholder="Busca tu chat"
-                className="input input-bordered w-96"
-                value={searchInput}
-                onChange={handleChange}
-                onKeyPress={handleKeyPress}
-            />
             {
                 users?.map((c, index) => (
                     <div key={index} value={index} onClick={() => setChatsActual(c)}>

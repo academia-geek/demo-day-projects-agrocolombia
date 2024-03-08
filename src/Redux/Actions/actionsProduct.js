@@ -122,6 +122,33 @@ export const actionSearchProductSyn = (payload) => {
     };
 };
 
+// ------------------Seacrh ID--------------------------
+export const actionSearchProductIDAsyn = (payload) => {
+    return async (dispatch) => {
+        const productosCollection = collection(dataBase, "Products");
+        const q = query(
+            productosCollection,
+            where("id", "==", payload),
+        );
+
+        const dataQ = await getDocs(q);
+        const prod = [];
+        dataQ.forEach((docu) => {
+            prod.push(docu.data());
+        });
+        const product = prod.find(item => item.id === payload);
+        dispatch(actionSearchProductIDSyn(prod));
+        return product
+    };
+};
+
+export const actionSearchProductIDSyn = (payload) => {
+    return {
+        type: typesProducts.search,
+        payload,
+    };
+};
+
 // ----------------- ADD COMMENT ------------------------- //
 export const actionAddCommentAsync = (publicationId, comment) => {
     return async (dispatch) => {

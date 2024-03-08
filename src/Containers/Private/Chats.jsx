@@ -15,7 +15,6 @@ const Chats = () => {
     const dispatch = useDispatch()
     const [chatsActual, setChatsActual] = useState()
     const navigate = useNavigate()
-    const [searchInput, setSearchInput] = useState('')
     const [chatInput, setChatInput] = useState('')
     const [activer, setActiver] = useState(true)
 

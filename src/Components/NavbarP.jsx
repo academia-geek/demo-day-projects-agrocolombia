@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionLogoutAsyn } from "../Redux/Actions/actionsLogin";
 import { actionListUserAsyn } from "../Redux/Actions/actionsUser";
 import { Link, useNavigate } from "react-router-dom";
 
 const NavbarP = () => {
 
-  const dispatch  = useDispatch()
+  const dispatch = useDispatch()
+  const { userData } = useSelector(state => state.userStore)
   const navigate = useNavigate()
-  const [user, setUser] = useState()
-  useEffect(()=>{
-    const func = async () =>{ 
-      const data = await dispatch(actionListUserAsyn())
-      setUser(data)
-    }
-    func()
-  },[])
+  useEffect(() => {
+    dispatch(actionListUserAsyn())
+
+  }, [])
 
   const logOutClick = () => {
     navigate("/")
@@ -34,7 +31,7 @@ const NavbarP = () => {
   const handleToogleTheme = (e) => {
     if (e.target.checked) {
       setTheme("forest")
-    }else{
+    } else {
       setTheme("mytheme")
     }
   }
@@ -79,7 +76,7 @@ const NavbarP = () => {
             </div>
           </ul>
         </div>
-        <img style={{cursor: "pointer"}} onClick={() => navigate("/*")} alt="icon" className="size-12" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709572838/Guajolota/logo_tayiwj.png"></img>
+        <img style={{ cursor: "pointer" }} onClick={() => navigate("/*")} alt="icon" className="size-12" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709572838/Guajolota/logo_tayiwj.png"></img>
         <Link to="/*" className="btn btn-ghost text-xl">AgroColombia</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -163,7 +160,7 @@ const NavbarP = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Foto perfil"
-                  src={user?.fotoUrl || "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg"}
+                  src={userData?.fotoUrl || "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg"}
                 />
               </div>
             </div>
@@ -183,6 +180,9 @@ const NavbarP = () => {
                   Perfil
                   <span className="badge">New</span>
                 </a>
+              </li>
+              <li>
+                <Link to="/mis-ventas">Mis ventas</Link>
               </li>
               <li>
                 <p>Mis compras</p>

@@ -10,6 +10,7 @@ import Chats from '../Containers/Private/Chats'
 import OpcVenta from '../Containers/Private/OpcVenta'
 import VentaCombo from '../Containers/Private/VentaCombo'
 import VentaProducto from '../Containers/Private/VentaProducto'
+import MisVentas from '../Containers/Private/MisVentas'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -40,6 +41,7 @@ const Dashboard = () => {
                 <Route path='/newcomer' element={<NewComers />}></Route>
                 <Route path='/' element={<PrivateCheckRouter isAutentication={user}><LandingPage /></PrivateCheckRouter>} />
                 <Route path='/chats' element={<PrivateCheckRouter isAutentication={user}><Chats /></PrivateCheckRouter>} />
+                <Route path='/mis-ventas' element={<PrivateCheckRouter isAutentication={user}><MisVentas /></PrivateCheckRouter>} />
                 <Route path='/vende' element={<PrivateCheckRouter isAutentication={user}><OpcVenta /></PrivateCheckRouter>} />
                 <Route path='/vende/producto' element={<PrivateCheckRouter isAutentication={user}><VentaProducto /></PrivateCheckRouter>} />
                 <Route path='/vende/combo' element={<PrivateCheckRouter isAutentication={user}><VentaCombo /></PrivateCheckRouter>} />

@@ -37,77 +37,88 @@ const LandingPage = () => {
         </Carousel>
       </div>
       <div className="px-10 py-8 mt-6 ">
-        <div className="bg-success p-7 rounded-lg text-center">
-          <h1 className="text-2xl tracking-wide font-medium">Ofertas</h1>
-        </div>
-        <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10">
-          {products?.map((product) => (
-            <div className="group card bg-base-100 shadow-xl shadow-success ">
-              <figure>
-                <img
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  src={product.media[0]}
-                  alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">
-                  {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-                  <div className="badge badge-success">OFERTA</div>
-                </h2>
-                <div style={{ display: "flex" }}>
-                  <p className="text-gray-400 line-through">
-                    ${product.price}
-                  </p>
-                  <p className="text-lime-500">
-                    ${product.price}
-                  </p>
-                </div>
-                <p>
-                  {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
-                </p>
-                <div className="card-actions justify-end">
-                  <div className="badge badge-outline">Temporada</div>
-                  <div className="badge badge-outline">Verdura</div>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="shadow-2xl shadow-neutral rounded-lg">
+          <div className="bg-neutral p-7 rounded-t-lg text-center">
+            <h1 className="text-2xl tracking-wide font-medium">Ofertas</h1>
+          </div>
+          <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10">
+            {products?.map((product) => {
+              if (product.descuento > 0) {
+                return (
+                  <div className="group card bg-base-100 shadow-xl shadow-neutral ">
+                    <figure>
+                      <img
+                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                        src={product.media[0]}
+                        alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+                      />
+                    </figure>
+                    <div className="card-body">
+                      <h2 className="card-title">
+                        {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+                        <div className="badge badge-success">OFERTA</div>
+                      </h2>
+                      <div style={{ display: "flex" }}>
+                        <p className="text-gray-400 line-through -mr-5">
+                          ${product.price}
+                        </p>
+                        <p>
+                          -{product.descuento}%
+                        </p>
+                        <p className="text-lime-500">
+                          ${(product.price - (product.price*(product.descuento/100)))}
+                        </p>
+                      </div>
+                      <p>
+                        {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
+                      </p>
+                      <div className="card-actions justify-end">
+                        <div className="badge badge-outline">Temporada</div>
+                        <div className="badge badge-outline">Verdura</div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            })}
+          </div>
         </div>
       </div>
 
       <div className="px-10 py-8 mt-6 rounded-xl">
-        <div className="bg-secondary p-7 rounded-lg text-center">
-          <h1 className="text-2xl tracking-wide font-medium">Nuevos</h1>
-        </div>
-        <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10">
-          {products?.map((product) => (
-            <div className="group card bg-base-100 shadow-xl shadow-secondary ">
-              <figure>
-                <img
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  src={product.media[0]}
-                  alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">
-                  {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-                  <div className="badge badge-secondary">Nuevo</div>
-                </h2>
-                <p>
-                  ${product.price}
-                </p>
-                <p>
-                  {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
-                </p>
-                <div className="card-actions justify-end">
-                  <div className="badge badge-outline">Temporada</div>
-                  <div className="badge badge-outline">Verdura</div>
+        <div className="shadow-2xl shadow-neutral rounded-lg">
+          <div className="bg-neutral p-7 rounded-t-lg text-center">
+            <h1 className="text-2xl tracking-wide font-medium">Nuevos</h1>
+          </div>
+          <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10">
+            {products?.map((product) => (
+              <div className="group card bg-base-100 shadow-xl shadow-neutral ">
+                <figure>
+                  <img
+                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    src={product.media[0]}
+                    alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">
+                    {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+                    <div className="badge badge-secondary">Nuevo</div>
+                  </h2>
+                  <p>
+                    ${product.price}
+                  </p>
+                  <p>
+                    {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
+                  </p>
+                  <div className="card-actions justify-end">
+                    <div className="badge badge-outline">Temporada</div>
+                    <div className="badge badge-outline">Verdura</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -149,7 +160,7 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-      <FooterP/>
+      <FooterP />
     </div>
   );
 };

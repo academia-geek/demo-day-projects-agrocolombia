@@ -5,11 +5,15 @@ import userReducer from "../Reducers/userReducers";
 import productReducer from "../Reducers/productReducers"
 import combosReducers from "../Reducers/combosReducers";
 import blogReducers from "../Reducers/blogReducers";
+import chatReducers from "../Reducers/chatReducers";
+import buscadorReducer from "../Reducers/buscadorReducer";
 
 const middleware = [thunk];
 
 const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE_ || compose;
+    (typeof window !== "undefined" &&
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    compose;
 
 
 const reducers = combineReducers({
@@ -17,7 +21,9 @@ const reducers = combineReducers({
     userStore: userReducer,
     productStore: productReducer,
     combosStore: combosReducers,
-    blogStore: blogReducers
+    blogStore: blogReducers,
+    chatStore: chatReducers,
+    resultStore: buscadorReducer,
 });
 
 export const store = createStore(

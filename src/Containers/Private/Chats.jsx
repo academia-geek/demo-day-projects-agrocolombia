@@ -1,66 +1,60 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionAddMessageToChatAsync, actionFindChatAsync } from '../../Redux/Actions/actionsChat'
+import { actionListUserAsyn, actionListUserUidAsyn } from '../../Redux/Actions/actionsUser'
 import NavbarP from '../../Components/NavbarP'
 import FooterP from '../../Components/FooterP'
-import { useDispatch } from 'react-redux'
-import { actionAddMessageToChatAsync, actionFindChatAsync } from '../../Redux/Actions/actionsChat'
-import { useNavigate } from 'react-router-dom'
 import { getAuth } from 'firebase/auth'
-import { actionListUserAsyn, actionListUserUidAsyn } from '../../Redux/Actions/actionsUser'
 
 const Chats = () => {
-
     const user = getAuth()
-    const [users, setUsers] = useState()
-    const [usuarioP, setUsuarioP] = useState()
     const dispatch = useDispatch()
+    const { chats } = useSelector(state => state.chatStore)
+    const { userData } = useSelector(state => state.userStore)
+    console.log(userData)
+    const { resultSearch } = useSelector(state => state.resultStore)
+    const [usuarios, setUsuarios] = useState([])
+    const [data, setData] = useState([]);
     const [chatsActual, setChatsActual] = useState()
-    const navigate = useNavigate()
     const [chatInput, setChatInput] = useState('')
-    const [activer, setActiver] = useState(true)
+    const [indexC, setIndexC] = useState()
+
+    const func = () => {
+        let users = []
+        chats.map((c, index) => {
+            if (c.uid1 === userData.uid) {
+                dispatch(actionListUserUidAsyn(c.uid2))
+            } else {
+                dispatch(actionListUserUidAsyn(c.uid1))
+            }
+        })
+        setUsuarios(users)
+    }
 
     useEffect(() => {
-        const func = async () => {
-            let datosUsuarios = []
-            const datos = await dispatch(actionFindChatAsync())
-            const userData = await dispatch(actionListUserAsyn())
-            if (!users) {
-                datos.map(async (c, index) => {
-                    if (c.uid1 !== user.currentUser.uid) {
-                        let user2 = await dispatch(actionListUserUidAsyn(c.uid1))
-                        user2 = {
-                            ...user2,
-                            chat: {
-                                ...c
-                            }
-                        }
-                        console.log(user2)
-                        datosUsuarios.push(user2)
-                    }
-                    if (c.uid2 !== user.currentUser.uid) {
-                        let user2 = await dispatch(actionListUserUidAsyn(c.uid2))
-                        user2 = {
-                            ...user2,
-                            chat: {
-                                ...c
-                            }
-                        }
-                        datosUsuarios.push(user2)
-                    }
-                })
-                setUsers(datosUsuarios)
-            }
-            setUsuarioP(userData)
-        }
-        func()
+        dispatch(actionFindChatAsync())
+        dispatch(actionListUserAsyn())
+    }, [])
 
-    }, [setActiver])
+    useEffect(() => {
+        func()
+    }, [chats])
+
+    useEffect(() => {
+        if (resultSearch) {
+            const isDuplicate = data.some(item => item.uid === resultSearch.uid);
+
+            if (!isDuplicate) {
+                setData(prevData => [...prevData, resultSearch]);
+            }
+        }
+    }, [resultSearch])
 
     //CHAT
 
     const handleChatSubmit = async (e) => {
         e.preventDefault()
-        await dispatch(actionAddMessageToChatAsync(chatsActual.chat.id,chatInput))
-        setActiver(!activer)
+        await dispatch(actionAddMessageToChatAsync(chatsActual.chat.id, chatInput))
         setChatInput('')
     }
 
@@ -78,8 +72,8 @@ const Chats = () => {
         <div>
             <NavbarP />
             {
-                users?.map((c, index) => (
-                    <div key={index} value={index} onClick={() => setChatsActual(c)}>
+                data?.map((c,index) => (
+                    <div key={index} onClick={() => { setChatsActual(c); setIndexC(index)}}>
                         <p>{c.firstName}</p>
                         <p>{c.lastName}</p>
                         <img className='size-14' src={c.fotoUrl} alt="" />
@@ -96,11 +90,11 @@ const Chats = () => {
                     </div>
                     <hr />
                     <div>
-                        {chatsActual.chat.mensajes.map((m, index) => {
+                        {chats[indexC].mensajes.map((m, index) => {
                             if (m.uid === user.currentUser.uid) {
                                 return (
                                     <div key={index}>
-                                        <img className='size-14' src={usuarioP.fotoUrl} alt="" />
+                                        <img className='size-14' src={userData.fotoUrl} alt="" />
                                         <p>{m.mensaje}</p>
                                     </div>
                                 );

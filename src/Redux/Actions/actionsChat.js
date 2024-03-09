@@ -23,7 +23,7 @@ export const actionFindChatAsync = () => {
                 if (chatSnapshot) {
                     let chats = chatSnapshot.docs.map((doc) => ({ Id: doc.id, ...doc.data() }));
                     chats = chats.concat(chatSnapshot2.docs.map((doc) => ({ Id: doc.id, ...doc.data() })));
-                    dispatch(actionFindChatsync());
+                    dispatch(actionFindChatsync(chats));
                     return chats;
                 } else {
                     console.warn("No se encontraron chats.");
@@ -37,9 +37,10 @@ export const actionFindChatAsync = () => {
     };
 };
 
-const actionFindChatsync = () => {
+const actionFindChatsync = (payload) => {
     return {
-        type: typesChats.list
+        type: typesChats.list,
+        payload
     };
 };
 

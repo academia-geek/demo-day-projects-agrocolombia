@@ -10,7 +10,8 @@ export const typesUsers = {
     edit: "[users] edit",
     delete: "[users] delete",
     list: "[users] list",
-    saved: "[users] saved"
+    saved: "[users] saved",
+    search: "[users] search"
 };
 
 export const typesProducts = {
@@ -28,6 +29,7 @@ export const typesCombos = {
     add: "[combos] add",
     comment: "[combos] comment",
     removeComment: "[combos] removeComment",
+    search: "[combos] search",
 }
 
 export const typesChats = {

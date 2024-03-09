@@ -27,7 +27,7 @@ export const actionListUserAsyn = () => {
                 const documentReference = datosQ.docs[0].ref;
                 const documentSnapshot = await getDoc(documentReference);
                 const docData = documentSnapshot.data()
-                dispatch(actionListUserSyn(usuarios));
+                dispatch(actionListUserSyn(docData));
                 return docData
             } catch (error) {
                 console.log(error);
@@ -68,8 +68,8 @@ export const actionListUserUidAsyn = (payload) => {
                 const documentReference = datosQ.docs[0].ref;
                 const documentSnapshot = await getDoc(documentReference);
                 const docData = documentSnapshot.data()
-                dispatch(actionListUserUidSyn(usuarios));
-                return docData
+                console.log("dentro de buscar la id")
+                dispatch(actionListUserUidSyn(docData));
             } catch (error) {
                 console.log(error);
             }
@@ -81,7 +81,7 @@ export const actionListUserUidAsyn = (payload) => {
 
 export const actionListUserUidSyn = (payload) => {
     return {
-        type: typesUsers.list,
+        type: typesUsers.search,
         payload,
     };
 };

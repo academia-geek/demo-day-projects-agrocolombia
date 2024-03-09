@@ -24,6 +24,35 @@ export const actionListCombosSyn = (payload) => {
     };
 };
 
+
+// ------------------Seacrh ID--------------------------
+export const actionSearchComboIDAsyn = (payload) => {
+    return async (dispatch) => {
+        const productosCollection = collection(dataBase, "Combos");
+        const q = query(
+            productosCollection,
+            where("id", "==", payload),
+        );
+
+        const dataQ = await getDocs(q);
+        const prod = [];
+        dataQ.forEach((docu) => {
+            prod.push(docu.data());
+        });
+        const product = prod.find(item => item.id === payload);
+        dispatch(actionSearchComboIDSyn(prod));
+        return product
+    };
+};
+
+export const actionSearchComboIDSyn = (payload) => {
+    return {
+        type: typesCombos.search,
+        payload,
+    };
+};
+
+
 // ------------------Agregar---------------------
 export const actionAddCombosAsyn = (payload) => {
     return async (dispatch) => {

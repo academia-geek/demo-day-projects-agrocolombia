@@ -46,6 +46,7 @@ export const actionAddproductSyn = (payload) => {
 
 // ------------------Editar---------------------
 export const actionEditProductAsyn = (payload) => {
+    console.log(payload)
     return async (dispatch) => {
         let uid = "";
         const collectionP = collection(dataBase, "Products");

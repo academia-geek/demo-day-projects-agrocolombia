@@ -5,6 +5,7 @@ import PrivateCheckRouter from './PrivateCheckRoutes'
 import NewComers from '../Containers/Private/NewComers'
 import LandingPage from '../Containers/Private/LandingPage'
 import { actionListUserAsyn } from '../Redux/Actions/actionsUser'
+import Perfil from '../Components/Perfil'
 import Search from '../Containers/Private/Search'
 import Chats from '../Containers/Private/Chats'
 import OpcVenta from '../Containers/Private/OpcVenta'
@@ -43,6 +44,7 @@ const Dashboard = () => {
             <Routes>
                 <Route path='/newcomer' element={<NewComers />}></Route>
                 <Route path='/' element={<PrivateCheckRouter isAutentication={user}><LandingPage /></PrivateCheckRouter>} />
+                <Route path='/perfil' element={<Perfil />}></Route>
                 <Route path='/chats' element={<PrivateCheckRouter isAutentication={user}><Chats /></PrivateCheckRouter>} />
                 <Route path='/blog' element={<PrivateCheckRouter isAutentication={user}><Blog /></PrivateCheckRouter>} />
                 <Route path='/nuevo-blog' element={<PrivateCheckRouter isAutentication={user}><NuevoBlog /></PrivateCheckRouter>} />

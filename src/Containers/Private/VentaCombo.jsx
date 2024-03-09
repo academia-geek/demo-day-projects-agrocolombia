@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { actionEditUserAsyn, actionListUserAsyn } from '../../Redux/Actions/actionsUser';
 import { actionSearchProductIDAsyn } from '../../Redux/Actions/actionsProduct';
 import { actionAddCombosAsyn } from '../../Redux/Actions/actionsCombo';
+import { FileUpload } from '../../Helpers/FileUpload';
 
 const VentaCombo = () => {
     const [activeStep, setActiveStep] = useState(0)
@@ -13,6 +14,7 @@ const VentaCombo = () => {
     const [productosUser, setProductosUser] = useState()
     const [selectedProducts, setSelectedProducts] = useState([]);
     const dispatch = useDispatch()
+    const [isImageLoading, setIsImageLoading] = useState(false);
 
     useEffect(() => {
         const func = async () => {
@@ -85,6 +87,21 @@ const VentaCombo = () => {
         setUrlFotos(newSelectedUrlProducts);
     }
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        let url = ""
+        const media = formValue.media
+        setIsImageLoading(true);
+        FileUpload(file)
+            .then((resp) => {
+                url = resp
+                media.push(url)
+                formValue.media = media;
+                setIsImageLoading(false);
+            })
+            .catch((err) => console.warn(err));
+    };
+
 
     return (
         <div>
@@ -151,7 +168,7 @@ const VentaCombo = () => {
             </div>
             <div className={`${activeStep === 4 ? '' : 'hidden'}`}>
                 <p className='text-2xl'>Coloca unas fotos extras a tu combo</p>
-                <input type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+                <input onChange={handleFileChange} type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
                 <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true} thumbWidth={100}>
                     {urlsFotos?.map((i, index) => (
                         <div key={index}>

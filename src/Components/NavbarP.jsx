@@ -186,9 +186,6 @@ const NavbarP = () => {
               <li>
                 <p>Mis compras</p>
               </li>
-              <li>
-                <p>Configuracion</p>
-              </li>
               <li onClick={() => logOutClick()}>
                 <p>Cerrar sesión</p>
               </li>

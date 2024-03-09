@@ -13,7 +13,6 @@ export const actionListBlogAsyn = () => {
                 ...p.data(),
             });
         });
-        console.log(pro)
         dispatch(actionListBlogSyn(pro));
     };
 };
@@ -79,10 +78,8 @@ export const actionDeleteBlogAsyn = (payload) => {
         const productosCollection = collection(dataBase, "Blog");
         const q = query(productosCollection, where("id", "==", payload));
         const dataQ = await getDocs(q);
-        console.log(dataQ);
-
         dataQ.forEach((docu) => {
-            deleteDoc(doc(dataBase, "Products", docu.id));
+            deleteDoc(doc(dataBase, "Blog", docu.id));
         });
         dispatch(actionDeleteBlogSyn(payload));
         dispatch(actionListBlogAsyn());
@@ -107,7 +104,6 @@ export const actionSearchBlogAsyn = (payload) => {
         );
 
         const dataQ = await getDocs(q);
-        console.log(dataQ);
         const prod = [];
         dataQ.forEach((docu) => {
             prod.push(docu.data());

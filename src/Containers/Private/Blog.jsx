@@ -20,16 +20,17 @@ const Blog = () => {
     <div>
       <NavbarP/>
       <FiltrosNavbar/>
-      <div className='px-10 pb-8 pt-5 mt-6'>
+      <div className='px-10 pb-6 pt-2 mt-6'>
         <div className='pb-10 text-5xl'>
           <p>Blog</p>
         </div>
-        <div>
-          <button onClick={() => navigate("/nuevo-blog")} className='btn btn-primary'>Crear publicacion</button>
+        <div className="join join-vertical lg:join-horizontal">
+          <button onClick={() => navigate("/mis-blogs")} className='btn btn-neutral join-item'>Mis publicaciones</button>
+          <button onClick={() => navigate("/nuevo-blog")} className='btn btn-primary join-item'>Crear publicacion</button>
         </div>
         <div className='p-10'>
           {blog?.map((b,index) => (
-            <div className='p-10 shadow-2xl shadow-neutral rounded-lg cursor-pointer' key={index} onClick={() => navigate(`/blog-detaitl/${b.id}`)}>
+            <div className='p-10 shadow-2xl shadow-neutral rounded-lg cursor-pointer mb-10' key={index} onClick={() => navigate(`/blog-detaitl/${b.id}`)}>
               <p className='text-3xl mb-4'>{b.titulo}</p>
               <p className='line-clamp-2'>{b.contenido}</p>
             </div>

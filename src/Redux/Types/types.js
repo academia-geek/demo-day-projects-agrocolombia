@@ -27,6 +27,7 @@ export const typesProducts = {
 export const typesCombos = {
     list: "[combos] list",
     add: "[combos] add",
+    edit: "[combos] edit",
     comment: "[combos] comment",
     removeComment: "[combos] removeComment",
     search: "[combos] search",

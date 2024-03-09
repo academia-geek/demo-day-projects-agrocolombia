@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { actionEditCombosAsyn, actionListCombosAsyn, actionSearchComboIDAsyn } from '../../Redux/Actions/actionsCombo'
 import useForm from '../../Hooks/useForm'
 import { Carousel } from 'react-responsive-carousel'
+import { FileUpload } from '../../Helpers/FileUpload'
 
 const MisVentas = () => {
 
@@ -18,6 +19,7 @@ const MisVentas = () => {
   const [productoEdit, setProductoEdit] = useState()
   const [comboEdit, setComboEdit] = useState()
   const dispatch = useDispatch()
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
   useEffect(() => {
     dispatch(actionListproductAsyn())
@@ -53,6 +55,7 @@ const MisVentas = () => {
 
   const handleClickCombo = (c) => {
     setComboEdit(c)
+    formValue.id = c.id
     formValue.name = c.name;
     formValue.productos = c.productos;
     formValue.pricio = c.precio;
@@ -75,6 +78,21 @@ const MisVentas = () => {
     formValue.media = p.media;
     formValue.stock = p.stock;
   }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    let url = ""
+    const media = formValue.media
+    setIsImageLoading(true);
+    FileUpload(file)
+      .then((resp) => {
+        url = resp
+        media.push(url)
+        formValue.media = media;
+        setIsImageLoading(false);
+      })
+      .catch((err) => console.warn(err));
+  };
 
   const [formValue, handleInputChange, reset] = useForm({});
 
@@ -136,7 +154,7 @@ const MisVentas = () => {
                 <p>Stock del producto:</p>
                 <input type="number" name="stock" value={formValue.stock} onChange={handleInputChange} placeholder="Stock" className="input input-bordered w-full max-w-xs" />
                 <p>Edita tus fotos</p>
-                <input type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+                <input type="file" onChange={handleFileChange} className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
                 <Carousel style={{ width: 300 }} showArrows={true} emulateTouch showThumbs={true} thumbWidth={100}>
                   {productoEdit?.media?.map((i, index) => (
                     <div key={index}>
@@ -169,7 +187,7 @@ const MisVentas = () => {
                 <p>Stock del producto:</p>
                 <input type="number" name="stock" value={formValue.stock} onChange={handleInputChange} placeholder="Stock" className="input input-bordered w-full max-w-xs" />
                 <p>Edita tus fotos</p>
-                <input type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+                <input type="file" onChange={handleFileChange} className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
                 <Carousel style={{width: 300}} showArrows={true} emulateTouch showThumbs={true} thumbWidth={100}>
                   {comboEdit?.media?.map((i, index) => (
                     <div key={index}>

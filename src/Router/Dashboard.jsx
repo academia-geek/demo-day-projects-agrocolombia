@@ -15,6 +15,8 @@ import MisVentas from '../Containers/Private/MisVentas'
 import Blog from '../Containers/Private/Blog'
 import BlogDetail from '../Containers/Private/BlogDetail'
 import NuevoBlog from '../Containers/Private/NuevoBlog'
+import MisBlogs from '../Containers/Private/MisBlogs'
+import Catalogo from '../Containers/Private/Catalogo'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -45,8 +47,11 @@ const Dashboard = () => {
                 <Route path='/newcomer' element={<NewComers />}></Route>
                 <Route path='/' element={<PrivateCheckRouter isAutentication={user}><LandingPage /></PrivateCheckRouter>} />
                 <Route path='/perfil' element={<Perfil />}></Route>
+                <Route path='/catalogo' element={<PrivateCheckRouter isAutentication={user}><Catalogo /></PrivateCheckRouter>} />
+                <Route path='/catalogo/:filtro' element={<PrivateCheckRouter isAutentication={user}><Catalogo /></PrivateCheckRouter>} />
                 <Route path='/chats' element={<PrivateCheckRouter isAutentication={user}><Chats /></PrivateCheckRouter>} />
                 <Route path='/blog' element={<PrivateCheckRouter isAutentication={user}><Blog /></PrivateCheckRouter>} />
+                <Route path='/mis-blogs' element={<PrivateCheckRouter isAutentication={user}><MisBlogs /></PrivateCheckRouter>} />
                 <Route path='/nuevo-blog' element={<PrivateCheckRouter isAutentication={user}><NuevoBlog /></PrivateCheckRouter>} />
                 <Route path='/blog-detaitl/:id' element={<PrivateCheckRouter isAutentication={user}><BlogDetail /></PrivateCheckRouter>} />
                 <Route path='/mis-ventas' element={<PrivateCheckRouter isAutentication={user}><MisVentas /></PrivateCheckRouter>} />

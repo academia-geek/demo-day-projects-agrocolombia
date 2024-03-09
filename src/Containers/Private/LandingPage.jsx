@@ -6,8 +6,10 @@ import { actionListproductAsyn } from "../../Redux/Actions/actionsProduct";
 import FooterP from "../../Components/FooterP";
 import { Carousel } from "react-responsive-carousel";
 import { actionListCombosAsyn } from "../../Redux/Actions/actionsCombo";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
 
   const dispatch = useDispatch()
   const { products } = useSelector((store) => store.productStore);
@@ -17,7 +19,8 @@ const LandingPage = () => {
     dispatch(actionListproductAsyn())
     dispatch(actionListCombosAsyn())
   }, [])
-
+  const [detalles, setDetalles] = useState();
+  
   const onClickItem = () => {
     console.warn("si")
   }
@@ -48,7 +51,7 @@ const LandingPage = () => {
             {products?.map((product) => {
               if (product.descuento > 0) {
                 return (
-                  <div className="group card bg-base-100 shadow-xl shadow-neutral ">
+                  <div onClick={()=>{setDetalles(product); document.getElementById('my_modal_3').showModal()}} className="group card bg-base-100 shadow-xl shadow-neutral ">
                     <figure>
                       <img
                         className="h-full w-full object-cover object-center lg:h-full lg:w-full"
@@ -84,10 +87,52 @@ const LandingPage = () => {
                 )
               }
             })}
+            <dialog id="my_modal_3" className="modal">
+              <div className="modal-box">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <h3 className="font-bold text-lg">{detalles?.name.charAt(0).toUpperCase() + detalles?.name.slice(1)}</h3>
+                <figure>
+                  <img
+                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    src={detalles?.media[0]}
+                    alt={detalles?.name.charAt(0).toUpperCase() + detalles?.name.slice(1)}
+                  />
+                </figure>
+                {detalles?.descuento > 0 && (
+                  <div style={{ display: "flex", justifyContent: "space-around" }}>
+                    <p className="text-gray-400 line-through -mr-5">
+                      ${detalles?.price}
+                    </p>
+                    <p>
+                      -{detalles?.descuento}%
+                    </p>
+                    <p className="text-lime-500">
+                      ${(detalles?.price - (detalles?.price * (detalles?.descuento / 100))).toFixed(2)}
+                    </p>
+                  </div>
+                )}
+                {detalles?.descuento == 0 && (
+                  <p className="text-center">
+                    ${detalles?.price}
+                  </p>
+                )}
+                <p style={{ textAlign: "center" }}>
+                  {detalles?.desc.charAt(0).toUpperCase() + detalles?.desc.slice(1)}
+                </p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn" onClick={() => navigate(`/comprar-producto/${detalles?.id}`)}>Comprar</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
         </div>
       </div>
-
       <div className="px-10 py-8 mt-6 rounded-xl">
         <div className="shadow-2xl shadow-neutral rounded-lg">
           <div className="bg-neutral p-7 rounded-t-lg text-center">
@@ -95,7 +140,7 @@ const LandingPage = () => {
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10">
             {products?.map((product) => (
-              <div className="group card bg-base-100 shadow-xl shadow-neutral ">
+              <div onClick={()=>{setDetalles(product); document.getElementById('my_modal_3').showModal()}} className="group card bg-base-100 shadow-xl shadow-neutral ">
                 <figure>
                   <img
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
@@ -121,7 +166,7 @@ const LandingPage = () => {
                 </div>
               </div>
             ))}
-          </div>
+            </div>
         </div>
       </div>
 

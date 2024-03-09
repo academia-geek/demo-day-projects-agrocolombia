@@ -78,13 +78,13 @@ const Perfil = () => {
                           <label className="label">
                             <span className="label-text">Avatar</span>
                           </label>
-                          <input type="file" className="file-input file-input-bordered w-full max-w-xs" onChange={handleFileChange} />
+                          <input type="file" placeholder="Seleccine una imagen" className="file-input file-input-bordered w-full max-w-xs" onChange={handleFileChange} />
                         </div>
                         <div className="form-control">
                           <label className="label">
                             <span className="label-text">Nombre</span>
                           </label>
-                          <input type="nombre" placeholder="nombre" className="input input-bordered" />
+                          <input type="nombre" placeholder="nombre" onChange={handleInputChange} value={formValue.firstName} className="input input-bordered" />
                         </div>
                         <div className="form-control">
                           <label className="label">

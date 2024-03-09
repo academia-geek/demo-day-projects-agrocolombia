@@ -176,10 +176,9 @@ const NavbarP = () => {
                 </label>
               </li>
               <li>
-                <a className="justify-between">
+                <Link to="/perfil" className="justify-between">
                   Perfil
-                  <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <Link to="/mis-ventas">Mis ventas</Link>

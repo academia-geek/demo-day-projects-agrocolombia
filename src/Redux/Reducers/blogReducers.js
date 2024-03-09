@@ -1,6 +1,5 @@
 import { typesBlog } from "../Types/types";
 
-
 const initialState = {
     blog: [],
 };

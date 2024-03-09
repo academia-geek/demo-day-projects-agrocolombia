@@ -13,6 +13,7 @@ export const actionListBlogAsyn = () => {
                 ...p.data(),
             });
         });
+        console.log(pro)
         dispatch(actionListBlogSyn(pro));
     };
 };

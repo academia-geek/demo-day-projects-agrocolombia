@@ -32,8 +32,8 @@ const FiltrosNavbar = () => {
               </ul>
             </details>
           </li>
-          <li><p>Historial</p></li>
           <li><Link to="/vende">Vender</Link></li>
+          <li><Link to="/blog">Blog</Link></li>
         </ul>
       </div>
       <div className="navbar-end">

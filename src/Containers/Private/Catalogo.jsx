@@ -4,6 +4,7 @@ import FooterP from '../../Components/FooterP'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionListproductAsyn } from '../../Redux/Actions/actionsProduct'
 import { actionListCombosAsyn } from '../../Redux/Actions/actionsCombo'
+import { useNavigate } from 'react-router-dom'
 
 const Catalogo = () => {
 
@@ -11,6 +12,7 @@ const Catalogo = () => {
   const { products } = useSelector((store) => store.productStore);
   const { combos } = useSelector((store) => store.combosStore);
   const [filtrados, setFiltrados] = useState()
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -200,6 +202,7 @@ const Catalogo = () => {
                   <p>
                     {p.desc.charAt(0).toUpperCase() + p.desc.slice(1)}
                   </p>
+                  <button className="btn w-fit btn-primary" onClick={() => navigate(`/comprar-producto/${p?.id}`)}>Ver</button>
                   <div className="card-actions justify-end">
                     {
                       p.categoria.map((c)=>(

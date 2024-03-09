@@ -7,11 +7,9 @@ const OpcVenta = () => {
   return (
     <div>
       Escoje que quieres vender
-      <p onClick={() => navigate("/vende/producto")}>Producto</p>
-      <p onClick={() => navigate("/vende/combo")}>Combo</p>
       <div style={{display: 'flex', justifyContent:'space-around'}}>
         <div className="flex w-full">
-            <div className="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center">
+            <div className="grid flex-grow card rounded-box place-items-center" onClick={() => navigate("/vende/producto")}>
                 <div className="card w-96 bg-base-100 shadow-xl image-full">
                     <figure>
                     <img
@@ -20,25 +18,19 @@ const OpcVenta = () => {
                         alt="patatas"
                         />
                     </figure>
-                    <div className="card-body">
-                    <h2 className="card-title">Productos</h2>
-                    <p>¿Que tipo de producto deseas vender?</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary" onClick={() => navigate("/vende/producto")}>Vender ahora</button>
-                    </div>
+                    <div className="card-body flex justify-around flex-col text-center items-center">
+                        <h2 className="font-semibold text-3xl">Productos</h2>
+                        <p>¿Que tipo de producto deseas vender?</p>
                     </div>
                 </div>
             </div>
         <div className="divider divider-horizontal">OR</div>
-            <div className="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center">
+            <div className="grid flex-grow card rounded-box place-items-center" onClick={() => navigate("/vende/combo")}>
                 <div className="card w-96 bg-base-100 shadow-xl image-full">
                     <figure><img style={{height: '210px', width: '400px'}} src="https://res.cloudinary.com/dyepe4ih7/image/upload/v1710003785/oxi5pofgbadlmnexhca1.png" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h2 className="card-title">Combos</h2>
+                    <div className="card-body flex justify-around flex-col text-center items-center">
+                        <h2 className="font-semibold text-3xl">Combos</h2>
                         <p>¿Que tipo de combo quieres crear?</p>
-                        <div className="card-actions justify-end">
-                        <button className="btn btn-primary" onClick={() => navigate("/vende/combo")}>Crear combo</button>
-                        </div>
                     </div>
                 </div>
             </div>

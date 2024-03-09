@@ -15,6 +15,7 @@ import MisVentas from '../Containers/Private/MisVentas'
 import Blog from '../Containers/Private/Blog'
 import BlogDetail from '../Containers/Private/BlogDetail'
 import NuevoBlog from '../Containers/Private/NuevoBlog'
+import ComprarProducto from '../Containers/Private/ComprarProducto'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -46,6 +47,7 @@ const Dashboard = () => {
                 <Route path='/' element={<PrivateCheckRouter isAutentication={user}><LandingPage /></PrivateCheckRouter>} />
                 <Route path='/perfil' element={<Perfil />}></Route>
                 <Route path='/chats' element={<PrivateCheckRouter isAutentication={user}><Chats /></PrivateCheckRouter>} />
+                <Route path='/comprar-producto/:id' element={<PrivateCheckRouter isAutentication={user}><ComprarProducto /></PrivateCheckRouter>} />
                 <Route path='/blog' element={<PrivateCheckRouter isAutentication={user}><Blog /></PrivateCheckRouter>} />
                 <Route path='/nuevo-blog' element={<PrivateCheckRouter isAutentication={user}><NuevoBlog /></PrivateCheckRouter>} />
                 <Route path='/blog-detaitl/:id' element={<PrivateCheckRouter isAutentication={user}><BlogDetail /></PrivateCheckRouter>} />

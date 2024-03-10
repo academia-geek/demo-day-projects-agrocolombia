@@ -16,7 +16,7 @@ const OpcVenta = () => {
       </div>
       <div style={{display: 'flex', justifyContent:'space-around'}}>
         <div className="flex w-full">
-            <div className="grid flex-grow card rounded-box place-items-center" onClick={() => navigate("/vende/producto")}>
+            <div className="grid flex-grow card rounded-box place-items-center " onClick={() => navigate("/vende/producto")}>
                 <div className="card w-96 bg-base-100 shadow-xl image-full">
                     <figure>
                     <img
@@ -25,7 +25,7 @@ const OpcVenta = () => {
                         alt="patatas"
                         />
                     </figure>
-                    <div className="card-body flex justify-around flex-col text-center items-center">
+                    <div className="card-body flex justify-around flex-col text-center items-center cursor-pointer">
                         <h2 className="font-semibold text-3xl">Productos</h2>
                         <p>¿Que tipo de producto deseas vender?</p>
                     </div>
@@ -35,7 +35,7 @@ const OpcVenta = () => {
             <div className="grid flex-grow card rounded-box place-items-center" onClick={() => navigate("/vende/combo")}>
                 <div className="card w-96 bg-base-100 shadow-xl image-full">
                     <figure><img style={{height: '210px', width: '400px'}} src="https://res.cloudinary.com/dyepe4ih7/image/upload/v1710003785/oxi5pofgbadlmnexhca1.png" alt="Shoes" /></figure>
-                    <div className="card-body flex justify-around flex-col text-center items-center">
+                    <div className="card-body flex justify-around flex-col text-center items-center cursor-pointer">
                         <h2 className="font-semibold text-3xl">Combos</h2>
                         <p>¿Que tipo de combo quieres crear?</p>
                     </div>

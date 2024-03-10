@@ -135,12 +135,12 @@ export const actionSearchCombosAsyn = (payload) => {
         );
 
         const dataQ = await getDocs(q);
-        console.log(dataQ);
         const prod = [];
         dataQ.forEach((docu) => {
             prod.push(docu.data());
         });
         dispatch(actionSearchCombosSyn(prod));
+        return prod
     };
 };
 

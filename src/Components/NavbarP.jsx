@@ -20,7 +20,7 @@ const NavbarP = () => {
     dispatch(actionListCombosAsyn())
 
     let totalCost = 0;
-    userData.cart.forEach(product => {
+    userData.cart?.forEach(product => {
       const { idProduct, cantidad} = product;
       const productItem = products.find(p => p.id === idProduct);
       if (productItem) {
@@ -29,7 +29,7 @@ const NavbarP = () => {
 
       }
     });
-    userData.cart.forEach(combo => {
+    userData.cart?.forEach(combo => {
       const { idProduct, cantidad } = combo;
       const comboItem = combos.find(p => p.id === idProduct);
       if (comboItem) {

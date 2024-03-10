@@ -107,6 +107,7 @@ const Catalogo = () => {
     const buscar = async () => {
       try {
         setFiltrados(applyFilters(products));
+        setFiltradosCombo(applyFiltersCombos(combos));
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -197,7 +198,6 @@ const Catalogo = () => {
                 <p>Categorias</p>
                 <div className="join join-vertical ml-3">
                   <input onClick={() => setCategoria(null)} className="join-item btn" type="radio" name="categorias" aria-label="Todos" />
-                  {console.log(categoriesArray)}
                   {categoriesArray?.map((c,index) => (
                     <input onClick={() => setCategoria(c)} className="join-item btn" type="radio" name="categorias" aria-label={c} />
                   ))}
@@ -243,6 +243,48 @@ const Catalogo = () => {
                   <div className="card-actions justify-end">
                     {
                       p.categoria.map((c)=>(
+                        <div onClick={() => setCategoria(c)} className="badge badge-outline cursor-pointer">{c}</div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </div>
+            ))}
+            {filtradosCombo?.map((p, index) => (
+              <div className="flex bg-accent mb-10 p-5 rounded-lg">
+                <img
+                  className="object-contain object-center"
+                  src={p.media[0]}
+                  style={{ width: 200, height: 200 }}
+                  alt={p.name.charAt(0).toUpperCase() + p.name.slice(1)}
+                />
+                <div className="card-body">
+                  <h2 className="card-title">
+                    {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
+                    {p.descuento > 0 && (
+                      <div>
+                        <div className="badge badge-secondary">Descuento</div>
+                      </div>
+                    )}
+                  </h2>
+                  <p>
+                    {p.descuento > 0 && (
+                      <div>
+                        <span className="text-base text-secondary mr-3 line-through">${p.precio}</span>
+                        <span className="text-base text">${(p.precio - (p.precio * (p.descuento / 100)))}</span>
+                      </div>
+                    )}
+                    {p.descuento === "0" && (
+                      <span className="text-base">${p.precio}</span>
+                    )}
+                  </p>
+                  <p>
+                    {p.desc.charAt(0).toUpperCase() + p.desc.slice(1)}
+                  </p>
+                  <button className="btn w-fit btn-primary" onClick={() => navigate(`/comprar-combo/${p?.id}`)}>Ver</button>
+                  <div className="card-actions justify-end">
+                    {
+                      p.categoria?.map((c) => (
                         <div onClick={() => setCategoria(c)} className="badge badge-outline cursor-pointer">{c}</div>
                       ))
                     }

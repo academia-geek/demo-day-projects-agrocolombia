@@ -21,8 +21,8 @@ export const actionFindChatAsync = () => {
                 const chatSnapshot = await getDocs(chatQuery);
                 const chatSnapshot2 = await getDocs(chatQuery2);
                 if (chatSnapshot) {
-                    let chats = chatSnapshot.docs.map((doc) => ({ Id: doc.id, ...doc.data() }));
-                    chats = chats.concat(chatSnapshot2.docs.map((doc) => ({ Id: doc.id, ...doc.data() })));
+                    let chats = chatSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+                    chats = chats.concat(chatSnapshot2.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
                     dispatch(actionFindChatsync(chats));
                     return chats;
                 } else {
@@ -67,6 +67,7 @@ export const actionAddMessageToChatAsync = (chatId, message) => {
                         uid: auth.currentUser.uid
                     };
                     dispatch(actionAddMessageToChatSync(obj));
+                    dispatch(actionFindChatAsync())
                     console.log("Mensaje agregado correctamente.");
                 } else {
                     console.warn("No se encontró el chat con ID", chatId);
@@ -82,7 +83,7 @@ export const actionAddMessageToChatAsync = (chatId, message) => {
 
 const actionAddMessageToChatSync = (payload) => {
     return {
-        type: typesChats.list,
+        type: typesChats.addMessage,
         payload
     };
 };
@@ -162,24 +163,23 @@ export const actionStartChatAsyn = (payload) => {
             const auth = getAuth();
             if (auth && auth.currentUser) {
                 const uid = auth.currentUser.uid;
-                const otherUid = payload.uid1 === uid ? payload.uid2 : payload.uid1;
-                const existingChat = await query(
+                const existingChatQuery = query(
                     collection(dataBase, "Chats"),
                     where("uid1", "==", uid),
-                    where("uid2", "==", otherUid)
-                ).get();
-                if (existingChat.docs.length > 0) {
+                    where("uid2", "==", payload)
+                );
+                const existingChatDocs = await getDocs(existingChatQuery);
+                if (existingChatDocs.docs.length > 0) {
                     return true; 
                 }
                 const obj = {
                     id: crypto.randomUUID(),
                     messages: [],
-                    uid1: payload.uid1,
-                    uid2: payload.uid2,
+                    uid1: uid,
+                    uid2: payload
                 };
                 await addDoc(collection(dataBase, "Chats"), obj);
                 dispatch(actionStartChatSyn(payload));
-                return false;
             } else {
                 console.warn("User not auth");
             }

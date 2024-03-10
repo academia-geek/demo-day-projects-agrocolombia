@@ -109,7 +109,7 @@ const NavbarP = () => {
       </div>
       <div className="navbar-end">
         <div>
-          <img onClick={() => navigate("/chats")} className="btn btn-ghost btn-circle cursor-pointer" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709846420/Guajolota/1380370_nqvo2f.png" alt="" />
+          <img onClick={() => navigate("/chats")} className="btn btn-ghost cursor-pointer" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709846420/Guajolota/1380370_nqvo2f.png" alt="" />
         </div>
         <div className="flex-none">
           <div className="dropdown dropdown-end">
@@ -182,9 +182,6 @@ const NavbarP = () => {
               </li>
               <li>
                 <Link to="/mis-ventas">Mis ventas</Link>
-              </li>
-              <li>
-                <p>Mis compras</p>
               </li>
               <li onClick={() => logOutClick()}>
                 <p>Cerrar sesión</p>

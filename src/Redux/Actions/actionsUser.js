@@ -49,7 +49,6 @@ export const actionListUserSyn = (payload) => {
 export const actionListUserUidAsyn = (payload) => {
     const userId = payload;
     return async (dispatch) => {
-        console.log(payload)
         if (userId) {
             try {
                 const collectionP = collection(dataBase, "Users");
@@ -69,7 +68,6 @@ export const actionListUserUidAsyn = (payload) => {
                 const documentReference = datosQ.docs[0].ref;
                 const documentSnapshot = await getDoc(documentReference);
                 const docData = documentSnapshot.data()
-                console.log("dentro de buscar la id")
                 dispatch(actionListUserUidSyn(docData));
             } catch (error) {
                 console.log(error);
@@ -142,20 +140,24 @@ export const actionAddCartUserSyn = (payload) => {
 // ------------------Editar---------------------
 export const actionEditUserAsyn = (payload) => {
     return async (dispatch) => {
-        let uid = "";
-        const collectionP = collection(dataBase, "Users");
-        const q = query(collectionP, where("uid", "==", payload.uid));
-        const datosQ = await getDocs(q);
-        datosQ.forEach((docu) => {
-            uid = docu.id;
-        });
-        const docRef = doc(dataBase, "Users", uid);
-        await updateDoc(docRef, payload)
-            .then((resp) => {
-                dispatch(actionEditUserSyn(payload));
-                dispatch(actionListUserAsyn())
-            })
-            .catch((error) => console.log(error));
+        try {
+            let uid = "";
+            const collectionP = collection(dataBase, "Users");
+            const q = query(collectionP, where("uid", "==", payload.uid));
+            const datosQ = await getDocs(q);
+            datosQ.forEach((docu) => {
+                uid = docu.id;
+            });
+            const docRef = doc(dataBase, "Users", uid);
+            await updateDoc(docRef, payload)
+                .then((resp) => {
+                    dispatch(actionEditUserSyn(payload));
+                    dispatch(actionListUserAsyn())
+                })
+                .catch((error) => console.log(error));
+        } catch (error) {
+            console.log(error)
+        }
     };
 };
 

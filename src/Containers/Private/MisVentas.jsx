@@ -165,7 +165,6 @@ const MisVentas = () => {
                   ))}
                 </Carousel>
                 <button className='btn btn-warning' onClick={() => { handleSubmitProducto() }}>Confimar edicion</button>
-                <button className='btn btn-secondary'>Cancelar edicion</button>
               </div>
             </ul>
           </div>

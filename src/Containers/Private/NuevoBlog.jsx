@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavbarP from '../../Components/NavbarP'
 import FiltrosNavbar from '../../Components/FiltrosNavbar'
 import FooterP from '../../Components/FooterP'
@@ -6,8 +6,9 @@ import { Carousel } from 'react-responsive-carousel'
 import { useNavigate } from 'react-router-dom'
 import useForm from '../../Hooks/useForm'
 import { FileUpload } from '../../Helpers/FileUpload'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { actionAddBlogAsyn } from '../../Redux/Actions/actionsBlog'
+import { actionEditUserAsyn, actionListUserAsyn } from '../../Redux/Actions/actionsUser'
 
 const NuevoBlog = () => {
 
@@ -15,6 +16,11 @@ const NuevoBlog = () => {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [isSending, setIsSending] = useState(false)
   const dispatch = useDispatch()
+  const { userData } = useSelector(state => state.userStore)
+
+  useEffect(() => {
+    dispatch(actionListUserAsyn())
+  },[])
 
   const [formValue, handleInputChange, reset] = useForm({
     titulo: "",
@@ -37,17 +43,19 @@ const NuevoBlog = () => {
         setIsImageLoading(false);
       })
       .catch((err) => console.warn(err));
-    // setTimeout(() => {
-    //   formValue.media = ["https://res.cloudinary.com/dlwr6vxib/image/upload/v1709236762/Guajolota/g6ojns5bdigsrhj5rd6v.png"]
-
-    // }, 1000);
   };
 
   const handleOnSubmit = () => {
+    let obj = {...userData}
+    let blogs = obj.blogs
+    blogs.push(formValue.id)
+    obj.blogs = blogs;
     setIsSending(true)
     setTimeout(() => {
       setIsSending(false)
+      dispatch(actionEditUserAsyn(obj));
       dispatch(actionAddBlogAsyn(formValue))
+      dispatch(actionListUserAsyn())
     }, 5000);
   }
 
@@ -75,13 +83,13 @@ const NuevoBlog = () => {
             {isImageLoading ? (
               <span className="loading loading-spinner text-primary"></span>
             ) : (
-              <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true}>
-                {formValue.media?.map((u, index) => (
-                  <div key={index}>
-                    <img style={{ height: 500, objectFit: "contain" }} className="rounded-lg" src={u} alt='' />
-                  </div>
-                ))}
-              </Carousel>
+                <Carousel style={{ width: 500 }} showArrows={true} emulateTouch showThumbs={true} thumbWidth={100}>
+                  {formValue?.media?.map((i, index) => (
+                    <div key={index}>
+                      <img style={{ width: 500, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
+                    </div>
+                  ))}
+                </Carousel>
             )}
           </div>
           <div className='flex justify-around'>

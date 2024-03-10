@@ -47,19 +47,19 @@ const LandingPage = () => {
           <div className="bg-neutral p-7 rounded-t-lg text-center">
             <h1 className="text-2xl tracking-wide font-medium">Ofertas</h1>
           </div>
-          <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10">
+          <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10 pt-4">
             {products?.map((product) => {
               if (product.descuento > 0) {
                 return (
-                  <div onClick={()=>{setDetalles(product); document.getElementById('my_modal_3').showModal()}} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer">
-                    <figure>
+                  <div onClick={() => { navigate(`/comprar-producto/${product?.id}`) }} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                    <div className="h-2/5">
                       <img
-                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                        className="h-full w-full object-cover object-center lg:h-full lg:w-full rounded-t-lg"
                         src={product.media[0]}
                         alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
                       />
-                    </figure>
-                    <div className="card-body">
+                    </div>
+                    <div className="card-body h-3/5">
                       <h2 className="card-title">
                         {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
                         <div className="badge badge-success">OFERTA</div>
@@ -75,12 +75,13 @@ const LandingPage = () => {
                           ${(product.price - (product.price*(product.descuento/100)))}
                         </p>
                       </div>
-                      <p>
+                      <p className="line-clamp-2">
                         {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
                       </p>
                       <div className="card-actions justify-end">
-                        <div className="badge badge-outline">Temporada</div>
-                        <div className="badge badge-outline">Verdura</div>
+                        {product.categoria.map((cat) => (
+                          <div className="badge badge-outline">{cat}</div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -138,17 +139,17 @@ const LandingPage = () => {
           <div className="bg-neutral p-7 rounded-t-lg text-center">
             <h1 className="text-2xl tracking-wide font-medium">Nuevos</h1>
           </div>
-          <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10">
+          <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10 pt-4">
             {products?.map((product) => (
-              <div onClick={() => { setDetalles(product); document.getElementById('my_modal_3').showModal() }} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer">
-                <figure>
+              <div onClick={() => { navigate(`/comprar-producto/${product?.id}`) }} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                <div className="h-2/5">
                   <img
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    className="h-full w-full object-cover object-center lg:h-full lg:w-full rounded-t-lg"
                     src={product.media[0]}
                     alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
                   />
-                </figure>
-                <div className="card-body">
+                </div>
+                <div className="card-body h-3/5">
                   <h2 className="card-title">
                     {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
                     <div className="badge badge-secondary">Nuevo</div>
@@ -156,12 +157,13 @@ const LandingPage = () => {
                   <p>
                     ${product.price}
                   </p>
-                  <p>
+                  <p className="line-clamp-2">
                     {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
                   </p>
                   <div className="card-actions justify-end">
-                    <div className="badge badge-outline">Temporada</div>
-                    <div className="badge badge-outline">Verdura</div>
+                    {product.categoria.map((cat) => (
+                      <div className="badge badge-outline">{cat}</div>
+                    ))}
                   </div>
                 </div>
               </div>

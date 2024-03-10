@@ -11,16 +11,13 @@ const Chats = () => {
     const dispatch = useDispatch()
     const { chats } = useSelector(state => state.chatStore)
     const { userData } = useSelector(state => state.userStore)
-    console.log(userData)
     const { resultSearch } = useSelector(state => state.resultStore)
-    const [usuarios, setUsuarios] = useState([])
     const [data, setData] = useState([]);
     const [chatsActual, setChatsActual] = useState()
     const [chatInput, setChatInput] = useState('')
     const [indexC, setIndexC] = useState()
 
     const func = () => {
-        let users = []
         chats.map((c, index) => {
             if (c.uid1 === userData.uid) {
                 dispatch(actionListUserUidAsyn(c.uid2))
@@ -28,7 +25,6 @@ const Chats = () => {
                 dispatch(actionListUserUidAsyn(c.uid1))
             }
         })
-        setUsuarios(users)
     }
 
     useEffect(() => {
@@ -54,7 +50,8 @@ const Chats = () => {
 
     const handleChatSubmit = async (e) => {
         e.preventDefault()
-        await dispatch(actionAddMessageToChatAsync(chatsActual.chat.id, chatInput))
+        console.log(chats[indexC])
+        await dispatch(actionAddMessageToChatAsync(chats[indexC].id, chatInput))
         setChatInput('')
     }
 
@@ -73,7 +70,7 @@ const Chats = () => {
             <NavbarP />
             {
                 data?.map((c,index) => (
-                    <div key={index} onClick={() => { setChatsActual(c); setIndexC(index)}}>
+                    <div key={index} onClick={() => { setChatsActual(c); setIndexC(index); console.log(c)}}>
                         <p>{c.firstName}</p>
                         <p>{c.lastName}</p>
                         <img className='size-14' src={c.fotoUrl} alt="" />
@@ -90,7 +87,7 @@ const Chats = () => {
                     </div>
                     <hr />
                     <div>
-                        {chats[indexC].mensajes.map((m, index) => {
+                        {chats[indexC].mensajes?.map((m, index) => {
                             if (m.uid === user.currentUser.uid) {
                                 return (
                                     <div key={index}>

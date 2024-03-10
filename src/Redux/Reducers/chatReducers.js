@@ -11,6 +11,10 @@ const chatReducers = (state = initialState, action) => {
             return {
                 chats: [...action.payload],
             };
+        case typesChats.addMessage:
+            return {
+                chats: [action],
+            };
 
         default:
             return state;

@@ -1,59 +1,64 @@
 import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FileUpload } from "../Helpers/FileUpload";
-import { actionListUserAsyn } from "../Redux/Actions/actionsUser";
+import { actionEditUserAsyn, actionListUserAsyn } from "../Redux/Actions/actionsUser";
 import useForm from "../Hooks/useForm";
 
 const Perfil = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const { userData } = useSelector(state => state.userStore)
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-    const perfil = getAuth();
-    const [datosusuario, setDatosusuario] = useState()
-    useEffect(()=>{
-      const funk = async() => {
-        const datos = await dispatch(actionListUserAsyn())
-        setDatosusuario(datos)
-      }
-      funk()
-    },[])
+  useEffect(() => {
+    dispatch(actionListUserAsyn())
+  }, [])
 
-     const [formValue, handleInputChange, reset] = useForm({
-        firstName: datosusuario?.firstName
-     });
+  const [formValue, handleInputChange, reset] = useForm({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    fotoUrl: userData.fotoUrl,
+    extra: userData.address.extra,
+    main: userData.address.main,
+    blogs: userData.blogs,
+    combos: userData.combos,
+    idCart: userData.idCart,
+    products: userData.products,
+    uid: userData.uid
+  });
 
   //CAMBIAR LA URL POR LA QUE DE CLOUDINARY
 
-   const handleSubmit = (e) => {
-     e.preventDefault();
-     console.log(formValue);
-    //  let obj = {
-    //    name: formValue.name,
-    //    price: formValue.price,
-    //    description: formValue.des,
-    //    discount: formValue.discount,
-    //    sells: formValue.sells,
-    //    stock: formValue.stock,
-    //    owner: formValue.owner,
-    //    ratings: formValue.ratings,
-    //    url_img: formValue.url_img,
-    //  };
-    //  dispatch(actionEditProductAsyn(obj));
-     reset();
-   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let obj = {
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      fotoUrl: formValue.fotoUrl,
+      address: {
+        extra: formValue.extra,
+        main: formValue.main
+      },
+      blogs: formValue.blogs,
+      combos: formValue.combos,
+      idCart: formValue.idCart,
+      products: formValue.products,
+      uid: formValue.uid
+    };
+    dispatch(actionEditUserAsyn(obj));
+    document.getElementById('my_modal_5').close()
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     FileUpload(file)
-      .then((resp) => (console.log(resp)))
+      .then((resp) => (formValue.fotoUrl = resp))
       .catch((err) => console.warn(err));
   };
 
   return (
-    <div className="font-sans antialiased text-gray-900 leading-normal tracking-wider" style={{backgroundImage: "https:res.cloudinary.com/dyepe4ih7/image/upload/v1709825962/socialmedia/fldldxxk7zwcmogluzqp.png"}}>
+    <div className="font-sans antialiased text-base leading-normal tracking-wider" style={{ backgroundImage: "https:res.cloudinary.com/dyepe4ih7/image/upload/v1709825962/socialmedia/fldldxxk7zwcmogluzqp.png" }}>
       <div className="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
         <div
           id="profile"
@@ -61,86 +66,82 @@ const Perfil = () => {
         >
           <div
             className="p-4 md:p-12 text-center lg:text-left"
-            style={{ backgroundColor: "#B0B0B0"}}
+            style={{ backgroundColor: "#B0B0B0" }}
           >
-            <div className="flex lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"></div>
-              <h1 className="text-3xl font-bold pt-8 lg:pt-0">{datosusuario?.firstName}</h1>
-              <button onClick={()=>document.getElementById('my_modal_5').showModal()}>
-              <img src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709781279/socialmedia/rnmfexaucktofk1erapk.png" alt="" />
-              </button>
-              <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                <div className="modal-box">
-                  <h3 className="font-bold text-lg">Editar perfil</h3>
-                  <div className="modal-action">
-                    <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                      <form className="card-body" onSubmit={handleSubmit}>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Avatar</span>
-                          </label>
-                          <input type="file" placeholder="Seleccine una imagen" className="file-input file-input-bordered w-full max-w-xs" onChange={handleFileChange} />
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Nombre</span>
-                          </label>
-                          <input type="nombre" placeholder="nombre" onChange={handleInputChange} value={formValue.firstName} className="input input-bordered" />
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Apellido</span>
-                          </label>
-                          <input type="apellido" placeholder="apellido" className="input input-bordered" />
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Contraseña</span>
-                          </label>
-                          <input type="contraseña" placeholder="contraseña" className="input input-bordered" />
-                        </div>
-                        <div className="form-control mt-6">
-                          <button className="btn btn-primary">Editar</button>
-                        </div>
-                      </form>
-                    </div>
+            <div className="flex lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center">
+              <img
+                alt=""
+                src={userData?.fotoUrl}
+                className="lg:hidden rounded-full shadow-xl mx-auto  h-48 w-48 bg-cover bg-center"
+              />
+            </div>
+            <h1 className="text-3xl font-bold pt-8 lg:pt-0 text-gray-900">{userData?.firstName} {userData?.lastName}</h1>
+            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Editar perfil</h3>
+                <div className="modal-action">
+                  <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                    <form className="card-body" onSubmit={handleSubmit}>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Foto de perfil</span>
+                        </label>
+                        <input type="file" placeholder="Seleccine una imagen" className="file-input file-input-bordered w-full max-w-xs" onChange={handleFileChange} />
+                      </div>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Nombre</span>
+                        </label>
+                        <input type="text" placeholder="nombre" name="firstName" onChange={handleInputChange} value={formValue.firstName} className="input input-bordered text-base" />
+                      </div>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Apellido</span>
+                        </label>
+                        <input type="text" placeholder="apellido" name="lastName" onChange={handleInputChange} value={formValue.lastName} className="input input-bordered" />
+                      </div>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Direccion de envios</span>
+                        </label>
+                        <input type="text" placeholder="apellido" name="main" onChange={handleInputChange} value={formValue.main} className="input input-bordered" />
+                        <label className="label">
+                          <span className="label-text">Extras</span>
+                        </label>
+                        <input type="text" placeholder="apellido" name="extra" onChange={handleInputChange} value={formValue.extra} className="input input-bordered" />
+                      </div>
+                      <div className="form-control mt-6">
+                        <form className="mb-3" method="dialog">
+                          <button className="btn btn-primary w-full">Cancelar</button>
+                        </form>
+                          <button className="btn btn-warning">Editar</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
-              </dialog>
+              </div>
+            </dialog>
             <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
-            <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
-              <img className="h-4 fill-current text-green-700 pr-4" src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709826115/socialmedia/x6hkkfa0rf4dm4ajmdvp.png" alt="" />
-              4000 prodts en venta
-            </p>
-            <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
-            <img className="h-4 fill-current text-green-700 pr-4" src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709826115/socialmedia/x6hkkfa0rf4dm4ajmdvp.png" alt="" />
-              200 combos en venta
-            </p>
-            {/* <p className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
-              <img className="h-4 fill-current text-green-700 pr-4" src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709315673/socialmedia/nktnddnkc2ierssctj78.png" />
-              78000 seguidores
-            </p> */}
             <p className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
-              <img className="h-4 fill-current text-green-700 pr-4" src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709827637/socialmedia/y27joltjfmby93eppiyo.png" />
-              Piamonte, Cauca
-            </p>
-            <p className="pt-8 text-sm">
-                Joven agrónoma, implementa tecnologías agrícolas de precisión para mejorar la rentabilidad y sostenibilidad de la finca familiar.
+              <img alt="" className="h-4 fill-current text-green-700 pr-4" src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709827637/socialmedia/y27joltjfmby93eppiyo.png" />
+              {userData?.address.main} {userData?.address.extra}
             </p>
             <div className="pt-12 pb-8">
-              <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-                Enviar mensaje
+              <button onClick={() => document.getElementById('my_modal_5').showModal()} className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
+                Editar perfil
               </button>
             </div>
           </div>
         </div>
         <div className="w-full lg:w-2/5">
           <img
-            src="https:source.unsplash.com/MP0IUfwrn0A"
+            alt=""
+            src={userData?.fotoUrl}
             className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
           />
         </div>
         <div className={`btn btn-info absolute top-0 right-0 h-12 w-18 p-4`}>
-            <button onClick={() => navigate("/landing")}>X</button>
+          <button onClick={() => navigate("/landing")}>Volver al comercio</button>
         </div>
       </div>
     </div>

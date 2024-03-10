@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import useForm from '../../Hooks/useForm';
 import { Carousel } from 'react-responsive-carousel';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actionEditUserAsyn, actionListUserAsyn } from '../../Redux/Actions/actionsUser';
-import { actionSearchProductIDAsyn } from '../../Redux/Actions/actionsProduct';
+import { actionListproductAsyn, actionSearchProductIDAsyn } from '../../Redux/Actions/actionsProduct';
 import { actionAddCombosAsyn } from '../../Redux/Actions/actionsCombo';
 import { FileUpload } from '../../Helpers/FileUpload';
 
@@ -13,10 +13,13 @@ const VentaCombo = () => {
     const [datosU, setDatosU] = useState([])
     const [productosUser, setProductosUser] = useState()
     const [selectedProducts, setSelectedProducts] = useState([]);
+    const [selectedCats, setSelectedCats] = useState([]);
     const dispatch = useDispatch()
     const [isImageLoading, setIsImageLoading] = useState(false);
+    const { products } = useSelector((store) => store.productStore);
 
     useEffect(() => {
+        dispatch(actionListproductAsyn())
         const func = async () => {
             const datosUser = await dispatch(actionListUserAsyn())
             setDatosU(datosUser)
@@ -37,10 +40,9 @@ const VentaCombo = () => {
         desc: "",
         descuento: 0,
         media: [],
-        stock: 0
+        stock: 0,
+        categoria: []
     });
-
-    //TODO: FALTA AGREGAR EL CLOUDINARY ----------------------------------------------------------------------------------------------------------------------------------
 
     const handleSubmit = (e) => {
         const uidR = crypto.randomUUID()
@@ -53,6 +55,8 @@ const VentaCombo = () => {
             descuento: formValue.descuento,
             media: formValue.media,
             stock: formValue.stock,
+            dueño: datosU.uid,
+            categoria: formValue.categoria
         };
         dispatch(actionAddCombosAsyn(obj));
         let aCombos = datosU.combos
@@ -102,6 +106,26 @@ const VentaCombo = () => {
             .catch((err) => console.warn(err));
     };
 
+
+    function handleCatSelect(producto) {
+        const newSelectedProducts = [...selectedCats];
+        const productIndex = newSelectedProducts.findIndex((item) => item === producto);
+        if (productIndex !== -1) {
+            newSelectedProducts.splice(productIndex, 1);
+        } else {
+            newSelectedProducts.push(producto);
+        }
+        formValue.categoria = newSelectedProducts;
+        setSelectedCats(newSelectedProducts);
+    }
+
+    const categoriesSet = new Set();
+    products?.forEach((p) => {
+        p.categoria.forEach((c) => {
+            categoriesSet.add(c);
+        });
+    });
+    const categoriesArray = Array.from(categoriesSet);
 
     return (
         <div>
@@ -167,15 +191,36 @@ const VentaCombo = () => {
                 <button className='btn btn-primary' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
             </div>
             <div className={`${activeStep === 4 ? '' : 'hidden'}`}>
-                <p className='text-2xl'>Coloca unas fotos extras a tu combo</p>
-                <input onChange={handleFileChange} type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
-                <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true} thumbWidth={100}>
-                    {urlsFotos?.map((i, index) => (
-                        <div key={index}>
-                            <img style={{ width: 400, maxHeight: 400, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
+                <p className='text-2xl'>Añadele las categorias a tu producto</p>
+                {
+                    categoriesArray?.map((p, index) => (
+                        <div onClick={() => { handleCatSelect(p) }}>
+                            <p>{p}</p>
+                        </div>
+                    ))
+                }
+                <div>
+                    Seleccionados:
+                    {selectedCats.map((p) => (
+                        <div>
+                            <p>{p}</p>
                         </div>
                     ))}
-                </Carousel>
+                </div>
+                <p className='text-2xl'>Coloca unas fotos extras a tu combo</p>
+                <input onChange={handleFileChange} type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+                {isImageLoading ? (
+                    <span className="loading loading-spinner text-primary"></span>
+                ) : (
+                        <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true} thumbWidth={100}>
+                            {urlsFotos?.map((i, index) => (
+                                <div key={index}>
+                                    <img style={{ width: 400, maxHeight: 400, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
+                                </div>
+                            ))}
+                        </Carousel>
+                )}
+                
                 <button className='btn btn-primary' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
                 <button onClick={() => handleSubmit()} className='btn btn-primary'>Vender</button>
             </div>

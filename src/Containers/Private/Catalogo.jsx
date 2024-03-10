@@ -95,7 +95,7 @@ const Catalogo = () => {
     <div>
       <NavbarP/>
       <div className='container mx-auto flex'>
-        <div className='bg-accent h-full w-3/12 px-7 pb-10'>
+        <div className='bg-accent min-h-screen w-3/12 px-7 pb-10'>
           <div className='outline h-full rounded-lg p-2 bg-base'>
             <p className='text-3xl'>Filtros</p>
             <div className='flex flex-col gap-5'>

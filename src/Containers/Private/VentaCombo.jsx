@@ -188,13 +188,17 @@ const VentaCombo = () => {
                     <button className='btn btn-primary' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
                 </div>
             </div>
-            <div className={`grid grid-cols-2 gap-10 justify-center items-center text-center ${activeStep === 3 ? '' : 'hidden'}`}>
-                <p className='text-2xl'>Añadele una descripcion:</p>
-                <p className='text-2xl'>Cantidad:</p>
-                <textarea name="desc" value={formValue.desc} onChange={handleInputChange} placeholder="Caja de aguacates para consumo en una semana" className="textarea textarea-bordered textarea-lg w-full max-w-xs" ></textarea>
-                <input name="stock" value={formValue.stock} onChange={handleInputChange} type='number' placeholder='10' className='input input-bordered w-full max-w-xs'></input>
-                <button className='btn btn-primary' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
-                <button className='btn btn-primary' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
+            <div className={`${activeStep === 3 ? '' : 'hidden'}`}>
+                <div className="grid grid-cols-2 gap-10 justify-center items-center text-center">
+                    <p className='text-2xl'>Añadele una descripcion:</p>
+                    <p className='text-2xl'>Cantidad:</p>
+                    <textarea name="desc" value={formValue.desc} onChange={handleInputChange} placeholder="Caja de aguacates para consumo en una semana" className="textarea textarea-bordered textarea-lg w-full max-w-xs" ></textarea>
+                    <input name="stock" value={formValue.stock} onChange={handleInputChange} type='number' placeholder='10' className='input input-bordered w-full max-w-xs'></input>
+                    </div>
+                    <div className='flex flex-row gap-3 pt-7 justify-center items-center'>
+                        <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
+                        <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
+                </div>
             </div>
             <div className={`flex flex-col gap-4 text-center ${activeStep === 4 ? '' : 'hidden'}`}>
                 <div>
@@ -211,7 +215,7 @@ const VentaCombo = () => {
                     <h2 className='font-semibold'>Seleccionados:</h2>
                     {selectedCats.map((p) => (
                         <div className='join join-vertical lg:join-horizontal py-3'>
-                            <p className='join-item cursor-pointer p-2'>{p}</p>
+                            <p className='join-item p-2'>{p}</p>
                         </div>
                     ))}
                 </div>

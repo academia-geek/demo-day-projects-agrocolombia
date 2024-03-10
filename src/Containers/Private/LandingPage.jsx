@@ -51,7 +51,7 @@ const LandingPage = () => {
             {products?.map((product) => {
               if (product.descuento > 0) {
                 return (
-                  <div onClick={()=>{setDetalles(product); document.getElementById('my_modal_3').showModal()}} className="group card bg-base-100 shadow-xl shadow-neutral ">
+                  <div onClick={()=>{setDetalles(product); document.getElementById('my_modal_3').showModal()}} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer">
                     <figure>
                       <img
                         className="h-full w-full object-cover object-center lg:h-full lg:w-full"
@@ -125,7 +125,7 @@ const LandingPage = () => {
                 <div className="modal-action">
                   <form method="dialog">
                     {/* if there is a button in form, it will close the modal */}
-                    <button className="btn" onClick={() => navigate(`/comprar-producto/${detalles?.id}`)}>Comprar</button>
+                    <button className="btn" onClick={() => navigate(`/comprar-producto/${detalles?.id}`)}>Ver</button>
                   </form>
                 </div>
               </div>
@@ -140,7 +140,7 @@ const LandingPage = () => {
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10">
             {products?.map((product) => (
-              <div onClick={()=>{setDetalles(product); document.getElementById('my_modal_3').showModal()}} className="group card bg-base-100 shadow-xl shadow-neutral ">
+              <div onClick={() => { setDetalles(product); document.getElementById('my_modal_3').showModal() }} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer">
                 <figure>
                   <img
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"

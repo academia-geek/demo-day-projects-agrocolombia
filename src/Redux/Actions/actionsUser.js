@@ -49,6 +49,7 @@ export const actionListUserSyn = (payload) => {
 export const actionListUserUidAsyn = (payload) => {
     const userId = payload;
     return async (dispatch) => {
+        console.log(payload)
         if (userId) {
             try {
                 const collectionP = collection(dataBase, "Users");
@@ -74,7 +75,7 @@ export const actionListUserUidAsyn = (payload) => {
                 console.log(error);
             }
         } else {
-            console.warn("Current user is not authenticated.");
+            console.warn("no se envio la id");
         }
     };
 }

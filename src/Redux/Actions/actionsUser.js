@@ -249,7 +249,7 @@ export const actionAddCartItemAsyn = (payload) => {
 
 export const actionAddCartItemSyn = (payload) => {
     return {
-        type: typesUsers.addToCart,
+        type: typesUsers.addCart,
         payload,
     };
 };

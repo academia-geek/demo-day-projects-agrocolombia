@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { actionListproductAsyn } from '../Redux/Actions/actionsProduct';
 import { actionListCombosAsyn } from '../Redux/Actions/actionsCombo';
 
 const FiltrosNavbar = () => {
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { products } = useSelector((store) => store.productStore);
 
@@ -27,26 +28,7 @@ const FiltrosNavbar = () => {
   const categoriesArray = Array.from(categoriesSet);
 
   return (
-    <div className="navbar ">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li><Link to="/catalogo">Catalogo</Link></li>
-            <li>
-              <p>Categorias</p>
-              <ul className="p-2">
-                {
-                  categoriesArray.map((c, index) => (
-                    <Link to={`/catalogo/${c}`} key={index}><p>{c}</p></Link>
-                  ))
-                }
-              </ul>
-            </li>
-            <li><p>Historial</p></li>
-            <li><p>Vender</p></li>
-          </ul>
-        </div>
-      </div>
+    <div className="navbar justify-center">
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li><Link to="/catalogo">Catalogo</Link></li>
@@ -66,7 +48,29 @@ const FiltrosNavbar = () => {
           <li><Link to="/blog">Blog</Link></li>
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-center lg:hidden">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <button className='btn btn-accent'>Opciones</button>
+          </div>
+          <ul className="menu px-1 menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 gap-5">
+            <li><Link to="/catalogo">Catalogo</Link></li>
+            <li>
+              <details>
+                <summary>Categorias</summary>
+                <ul className="p-2 z-[1] flex flex-col gap-5">
+                  {
+                    categoriesArray.map((c, index) => (
+                      <li onClick={() => navigate(`/catalogo/${c}`)}>{c}</li>
+                    ))
+                  }
+                </ul>
+              </details>
+            </li>
+            <li><Link to="/vende">Vender</Link></li>
+            <li><Link to="/blog">Blog</Link></li>
+          </ul>
+        </div>
       </div>
     </div>
   )

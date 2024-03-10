@@ -6,7 +6,7 @@ export const typesLogin = {
 
 export const typesUsers = {
     add: "[users] add",
-    addCart: "[users] addToCart",
+    addCart: "[users] addCart",
     edit: "[users] edit",
     delete: "[users] delete",
     list: "[users] list",

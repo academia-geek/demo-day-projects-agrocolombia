@@ -4,12 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { actionListproductAsyn } from '../../Redux/Actions/actionsProduct';
 import NavbarP from '../../Components/NavbarP';
 import FooterP from '../../Components/FooterP';
-import { actionListUserUidAsyn } from '../../Redux/Actions/actionsUser';
+import { actionAddCartItemAsyn, actionListUserUidAsyn } from '../../Redux/Actions/actionsUser';
 import { Carousel } from 'react-responsive-carousel';
 import { actionStartChatAsyn } from '../../Redux/Actions/actionsChat';
 import { getAuth } from 'firebase/auth';
 
 const ComprarProducto = () => {
+    const userUID = getAuth()
     const { id } = useParams();
     const dispatch = useDispatch()
     const { products } = useSelector((store) => store.productStore);
@@ -18,6 +19,7 @@ const ComprarProducto = () => {
     const [relacionados, setRelacionados] = useState()
     const [bandera, setBander] = useState(false)
     const navigate = useNavigate()
+    const [alert, setAlert] = useState(false)
 
     useEffect(() => {
         dispatch(actionListproductAsyn())
@@ -30,8 +32,6 @@ const ComprarProducto = () => {
                 }
             })
         }
-        console.log("no")
-
     }, [id]);
 
     useEffect(()=>{
@@ -46,7 +46,6 @@ const ComprarProducto = () => {
             })
         }
         setRelacionados(array)
-        console.log("no")
     }, [bandera, resultSearch])
 
     const [count, setCount] = useState(1);
@@ -66,12 +65,36 @@ const ComprarProducto = () => {
         navigate("/chats")
     }
 
+    const handleComprar = () => {
+        setAlert(true)
+        const objSend = {
+            idUser: userUID.currentUser.uid,
+            idProduct: compra.id,
+            amount: count
+        }
+        dispatch(actionAddCartItemAsyn(objSend));
+        setCount(0)
+        setTimeout(() => {
+            setAlert(false)
+        }, 3000);
+    }
+
     return (
         <div>
+            {
+                alert ? (
+                    <div className="toast toast-top toast-center z-auto">
+                        <div role="alert" className="alert alert-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span>Your purchase has been confirmed!</span>
+                        </div>
+                    </div>
+                ) : ("")
+            }
             <NavbarP />
             <div className='container mx-auto flex'>
-                <div className='w-3/12 min-h-screen bg-accent fondo verde p-4'>
-                    <div className='outline h-full rounded-lg p-2 pt-6 bg-base'>
+                <div className='w-3/12 min-h-screen bg-accent fondo verde px-4 pb-4'>
+                    <div className='outline h-full rounded-lg p-2 pt-6 bg-white'>
                         <div className="avatar w-full flex justify-center">
                             <div className="w-10/12 rounded-full">
                                 <img src={resultSearch?.fotoUrl} alt='' />
@@ -85,10 +108,10 @@ const ComprarProducto = () => {
                         </div>
                         <div className='mt-4 flex justify-center flex-col'>
                             <p className='text-xl font-medium'>Productos realcionados</p>
-                            <div className='columns-2'>
+                            <div className='columns-2 p-5'>
                                 {relacionados?.slice(0, 4).map((i, index) => (
                                     <div key={`itemR${index}`}>
-                                        <img onClick={() => navigate(`/comprar-producto/${i?.id}`)} className='size-20 cursor-pointer' src={i.media[0]} alt="" />
+                                        <img onClick={() => navigate(`/comprar-producto/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
                                     </div>
                                 ))}
                             </div>
@@ -114,7 +137,7 @@ const ComprarProducto = () => {
                             <p>Cantidad: </p>
                             <div className="join join-vertical lg:join-horizontal">
                                 <button className="btn join-item" onClick={handleDecrease}>-</button>
-                                <div className="flex text-center items-center w-10 join-item">
+                                <div className="flex text-center items-center w-10 join-item justify-center">
                                     <p>{count}</p>
                                 </div>
                                 <button className="btn join-item" onClick={handleIncrease}>+</button>
@@ -122,7 +145,7 @@ const ComprarProducto = () => {
                         </div>
                         <div className='flex rounded-lg outline items-center flex-col gap-2 p-4 ml-4 w-fit'>
                             <p>Total productos: {count * compra?.price} </p>
-                            <button className='btn btn-accent'>Comprar</button>
+                            <button onClick={() => handleComprar()} className='btn btn-accent'>Comprar</button>
                         </div>
                     </div>
                 </div>

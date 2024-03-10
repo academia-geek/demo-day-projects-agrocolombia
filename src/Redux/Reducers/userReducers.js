@@ -12,6 +12,11 @@ const userReducer = (state = {}, action) => {
                 userData: action.payload
             };
 
+        case typesUsers.addCart:
+            return {
+                userData: action.payload
+            }
+
         default:
             return state;
     }

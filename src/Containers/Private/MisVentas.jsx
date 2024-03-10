@@ -119,7 +119,8 @@ const MisVentas = () => {
               <p>{p.name}</p>
               <p>{p.stock}</p>
               <p>{p.price}</p>
-              <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary">Open drawer</label>
+              <label htmlFor="my-drawer-4" className="drawer-button btn btn-warning">Editar</label>
+              <button className="btn btn-error">Eliminar</button>
             </div>
           ))}
         </div>
@@ -132,7 +133,8 @@ const MisVentas = () => {
               <p>{c.name}</p>
               <p>{c.stock}</p>
               <p>{c.precio}</p>
-              <label htmlFor="my-drawer-5" className="drawer-button btn btn-primary">Open drawer</label>
+              <label htmlFor="my-drawer-5" className="drawer-button btn btn-warning">Editar</label>
+              <button className="btn btn-error">Eliminar</button>
             </div>
           ))}
         </div>

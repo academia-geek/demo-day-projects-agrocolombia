@@ -54,7 +54,7 @@ const ComprarProducto = () => {
                 <h2 className="card-title">
                 {compra?.name.charAt(0).toUpperCase() + compra?.name.slice(1)}
                 </h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse quo minima nisi dolorum laboriosam, repellat in adipisci molestias voluptatibus officiis, ab nulla soluta cupiditate hic optio, cum eveniet exercitationem magni?</p>
+                <p>{compra?.desc}</p>
                 <div className='flex text-center items-center'>
                     <p>Cantidad: </p>
                     <div className="join join-vertical lg:join-horizontal">

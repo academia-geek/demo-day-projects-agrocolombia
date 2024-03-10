@@ -187,7 +187,7 @@ const LandingPage = () => {
                   <h2 className="card-title">{c.name}</h2>
                   <p>{c.desc}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Detalles</button>
+                    <button className="btn btn-primary" onClick={() => navigate(`/comprar-combo/${c?.id}`)}>Detalles</button>
                   </div>
                 </div>
               </div>

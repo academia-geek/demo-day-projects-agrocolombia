@@ -18,6 +18,7 @@ import NuevoBlog from '../Containers/Private/NuevoBlog'
 import MisBlogs from '../Containers/Private/MisBlogs'
 import Catalogo from '../Containers/Private/Catalogo'
 import ComprarProducto from '../Containers/Private/ComprarProducto'
+import ComprarCombo from '../Containers/Private/ComprarCombo'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -52,6 +53,7 @@ const Dashboard = () => {
                 <Route path='/catalogo/:filtro' element={<PrivateCheckRouter isAutentication={user}><Catalogo /></PrivateCheckRouter>} />
                 <Route path='/chats' element={<PrivateCheckRouter isAutentication={user}><Chats /></PrivateCheckRouter>} />
                 <Route path='/comprar-producto/:id' element={<PrivateCheckRouter isAutentication={user}><ComprarProducto /></PrivateCheckRouter>} />
+                <Route path='/comprar-combo/:id' element={<PrivateCheckRouter isAutentication={user}><ComprarCombo /></PrivateCheckRouter>} />
                 <Route path='/blog' element={<PrivateCheckRouter isAutentication={user}><Blog /></PrivateCheckRouter>} />
                 <Route path='/mis-blogs' element={<PrivateCheckRouter isAutentication={user}><MisBlogs /></PrivateCheckRouter>} />
                 <Route path='/nuevo-blog' element={<PrivateCheckRouter isAutentication={user}><NuevoBlog /></PrivateCheckRouter>} />

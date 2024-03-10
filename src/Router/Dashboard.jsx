@@ -20,6 +20,8 @@ import Catalogo from '../Containers/Private/Catalogo'
 import ComprarProducto from '../Containers/Private/ComprarProducto'
 import ComprarCombo from '../Containers/Private/ComprarCombo'
 import Carrito from '../Containers/Private/Carrito'
+import Pasarela from '../Containers/Private/Pasarela'
+import PasarelaCard from '../Containers/Private/PasarelaCard'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -65,6 +67,8 @@ const Dashboard = () => {
                 <Route path='/vende/producto' element={<PrivateCheckRouter isAutentication={user}><VentaProducto /></PrivateCheckRouter>} />
                 <Route path='/vende/combo' element={<PrivateCheckRouter isAutentication={user}><VentaCombo /></PrivateCheckRouter>} />
                 <Route path='/search/:term' element={<PrivateCheckRouter isAutentication={user}><Search /></PrivateCheckRouter>} />
+                <Route path='/pasarela/:total' element={<PrivateCheckRouter isAutentication={user}><Pasarela /></PrivateCheckRouter>} />
+                <Route path='/pasarelaCard' element={<PrivateCheckRouter isAutentication={user}><PasarelaCard /></PrivateCheckRouter>} />
                 <Route path='/landingpage' element={<PrivateCheckRouter isAutentication={user}><LandingPage /></PrivateCheckRouter>} />
                 <Route path='/*' element={<PrivateCheckRouter isAutentication={user}><LandingPage /></PrivateCheckRouter>} />
             </Routes>

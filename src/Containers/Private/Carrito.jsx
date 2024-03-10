@@ -91,7 +91,7 @@ const Carrito = () => {
     return (
         <div className="min-h-screen">
             <NavbarP />
-            <div className="min-h-full container mx-auto flex">
+            <div className="min-h-full flex lg:flex-row flex-col justify-between">
                 <div className="w-9/12 p-10">
                     {userData.cart.length > 0 ? (
                         <div className="w-full">
@@ -195,7 +195,7 @@ const Carrito = () => {
                         </div>
                     )}
                 </div>
-                <div className="w-3/12 min-h-screen bg-accent fondo verde px-4 pb-4">
+                <div className="w-full lg:w-3/12 min-h-screen bg-accent px-4 py-4 lg:pb-4">
                     <div className="outline h-full rounded-lg p-2 pt-6 bg-white">
                         {userData.cart.length > 0 ? (
                             <div>
@@ -203,7 +203,7 @@ const Carrito = () => {
                                 <div className='text-xl flex flex-col gap-5'>
                                     <p>Total de productos: {userData.cart.length}</p>
                                     <p>
-                                        Total con envio: {totalCost <= 10000 ? (
+                                        Total con envio: {totalCost <= 70000 ? (
                                             <div>
                                                 <span>{totalCost + 14000}</span>
                                                 <span className="text-warning">Para obtener el envio gratis tienes que hacer compras de mas de 70000</span>
@@ -216,10 +216,21 @@ const Carrito = () => {
                                         )}
                                     </p>
                                     <p>Número de productos: {userData.cart.reduce((acc, product) => acc + product.cantidad, 0)}</p>
-                                    <p>Dirección de entrega: {userData.direccionEntrega || 'No especificada'}</p>
-                                    <p>Nombre de recibo: {userData.nombreRecibo || 'No especificado'}</p>
+                                    <p>Dirección de entrega: {userData.address.main || 'No especificada'}</p>
+                                    <p>Indicaciones: {userData.address.extra || 'No especificada'}</p>
+                                    <p>Nombre de recibo: {`${userData.firstName} ${userData.lastName}` || 'No especificado'}</p>
                                     <p>Compra protegida con garantía de consumidor</p>
-                                    <button className='btn btn-primary'>Finalizar compra</button>
+                                    <div className='w-full'>
+                                        {totalCost < 70000 ? (
+                                            <div>
+                                                <button onClick={() => navigate(`/pasarela/${totalCost + 14000}`)} className='btn w-full btn-primary'>Pagar ${totalCost + 14000}</button>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                    <button onClick={() => navigate(`/pasarela/${totalCost}`)} className='btn w-full btn-primary'>Pagar ${totalCost}</button>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>) : (
                             <div>

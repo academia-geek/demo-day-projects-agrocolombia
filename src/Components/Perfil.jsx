@@ -140,8 +140,8 @@ const Perfil = () => {
             className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
           />
         </div>
-        <div className={`btn btn-info absolute top-0 right-0 h-12 w-18 p-4`}>
-          <button onClick={() => navigate("/landing")}>Volver al comercio</button>
+        <div onClick={() => navigate("/landing")} className={`btn btn-info absolute top-0 right-0 h-12 w-18 p-4`}>
+          <button>Volver al comercio</button>
         </div>
       </div>
     </div>

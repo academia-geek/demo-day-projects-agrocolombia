@@ -12,6 +12,7 @@ const Catalogo = () => {
   const { products } = useSelector((store) => store.productStore);
   const { combos } = useSelector((store) => store.combosStore);
   const [filtrados, setFiltrados] = useState()
+  const [filtradosCombo, setFiltradosCombo] = useState()
   const navigate = useNavigate()
 
 
@@ -31,6 +32,42 @@ const Catalogo = () => {
   const [categoria, setCategoria] = useState(null);
 
   const applyFilters = (products) => {
+    return products.filter((product) => {
+      let shouldInclude = true;
+
+      if (descuento > 0 && product.descuento < descuento) {
+        shouldInclude = false;
+      }
+
+      if (envio === 1 && product.costoEnvio !== 0) {
+        shouldInclude = false;
+      } else if (envio === 0 && product.costoEnvio === 0) {
+        shouldInclude = false;
+      }
+
+      if (product.price < minPrice || product.price > maxPrice) {
+        shouldInclude = false;
+      }
+
+
+      if (ubicacion && product.ubicacion !== ubicacion) {
+        shouldInclude = false;
+      }
+
+
+      if (consumo !== null && product.consumo !== consumo) {
+        shouldInclude = false;
+      }
+
+      if (categoria !== null && !product.categoria.includes(categoria)) {
+        shouldInclude = false;
+      }
+
+      return shouldInclude;
+    });
+  };
+
+  const applyFiltersCombos = (products) => {
     return products.filter((product) => {
       let shouldInclude = true;
 

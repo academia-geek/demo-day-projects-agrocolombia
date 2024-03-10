@@ -19,6 +19,7 @@ import MisBlogs from '../Containers/Private/MisBlogs'
 import Catalogo from '../Containers/Private/Catalogo'
 import ComprarProducto from '../Containers/Private/ComprarProducto'
 import ComprarCombo from '../Containers/Private/ComprarCombo'
+import Carrito from '../Containers/Private/Carrito'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -48,6 +49,7 @@ const Dashboard = () => {
             <Routes>
                 <Route path='/newcomer' element={<NewComers />}></Route>
                 <Route path='/' element={<PrivateCheckRouter isAutentication={user}><LandingPage /></PrivateCheckRouter>} />
+                <Route path='/carrito' element={<Carrito />}></Route>
                 <Route path='/perfil' element={<Perfil />}></Route>
                 <Route path='/catalogo' element={<PrivateCheckRouter isAutentication={user}><Catalogo /></PrivateCheckRouter>} />
                 <Route path='/catalogo/:filtro' element={<PrivateCheckRouter isAutentication={user}><Catalogo /></PrivateCheckRouter>} />

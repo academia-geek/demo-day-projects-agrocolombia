@@ -18,31 +18,42 @@ const Search = () => {
   const [envio, setEnvio] = useState(null);
   const [ubicacion, setUbicacion] = useState(null);
   const [consumo, setConsumo] = useState(null);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(900000000000);
+  const [categoria, setCategoria] = useState(null);
 
-  // Filter function (consider creating a separate reusable component)
   const applyFilters = (products) => {
     return products.filter((product) => {
       let shouldInclude = true;
 
-      // descuento: Include products with descuento greater than or equal to selected value
       if (descuento > 0 && product.descuento < descuento) {
         shouldInclude = false;
       }
 
-      // envio: Check for exact match to desired shipping option
       if (envio === 1 && product.costoEnvio !== 0) {
         shouldInclude = false;
       } else if (envio === 0 && product.costoEnvio === 0) {
         shouldInclude = false;
       }
-      // envio: Check for exact match to desired shipping option
-      if (consumo !== null && product.consumo !== consumo) {
+
+      if (product.price < minPrice || product.price > maxPrice) {
         shouldInclude = false;
       }
-      // ubicacion: Check for exact match to desired location
+
+
       if (ubicacion && product.ubicacion !== ubicacion) {
         shouldInclude = false;
       }
+
+
+      if (consumo !== null && product.consumo !== consumo) {
+        shouldInclude = false;
+      }
+
+      if (categoria !== null && !product.categoria.includes(categoria)) {
+        shouldInclude = false;
+      }
+
       return shouldInclude;
     });
   };

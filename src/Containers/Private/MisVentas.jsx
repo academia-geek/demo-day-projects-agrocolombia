@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import NavbarP from '../../Components/NavbarP'
 import FooterP from '../../Components/FooterP'
-import { actionListUserAsyn } from '../../Redux/Actions/actionsUser'
-import { actionEditProductAsyn, actionListproductAsyn, actionSearchProductIDAsyn } from '../../Redux/Actions/actionsProduct'
+import { actionEditProductAsyn, actionListproductAsyn } from '../../Redux/Actions/actionsProduct'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionEditCombosAsyn, actionListCombosAsyn, actionSearchComboIDAsyn } from '../../Redux/Actions/actionsCombo'
+import { actionEditCombosAsyn, actionListCombosAsyn } from '../../Redux/Actions/actionsCombo'
 import useForm from '../../Hooks/useForm'
 import { Carousel } from 'react-responsive-carousel'
 import { FileUpload } from '../../Helpers/FileUpload'
+import { actionListUserAsyn } from '../../Redux/Actions/actionsUser'
 
 const MisVentas = () => {
 
@@ -24,6 +24,7 @@ const MisVentas = () => {
   useEffect(() => {
     dispatch(actionListproductAsyn())
     dispatch(actionListCombosAsyn())
+    dispatch(actionListUserAsyn())
   }, [])
 
   useEffect(() => {

@@ -15,7 +15,7 @@ const OpcVenta = () => {
         </div>
       </div>
       <div style={{display: 'flex', justifyContent:'space-around'}}>
-        <div className="flex w-full">
+        <div className="flex flex-col w-full lg:flex-row">
             <div className="grid flex-grow card rounded-box place-items-center " onClick={() => navigate("/vende/producto")}>
                 <div className="card w-96 bg-base-100 shadow-xl image-full">
                     <figure>
@@ -31,7 +31,7 @@ const OpcVenta = () => {
                     </div>
                 </div>
             </div>
-        <div className="divider divider-horizontal divider-primary text-white">O</div>
+            <div className="divider lg:divider-horizontal divider-primary text-white">O</div>
             <div className="grid flex-grow card rounded-box place-items-center" onClick={() => navigate("/vende/combo")}>
                 <div className="card w-96 bg-base-100 shadow-xl image-full">
                     <figure><img style={{height: '210px', width: '400px'}} src="https://res.cloudinary.com/dyepe4ih7/image/upload/v1710003785/oxi5pofgbadlmnexhca1.png" alt="Shoes" /></figure>

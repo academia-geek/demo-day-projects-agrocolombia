@@ -11,11 +11,17 @@ const Register = () => {
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email("Ingrese un correo valido").required("Este campo es requerido"),
     pass: Yup.string()
-      .min(6, "Contraseña muy corta")
+      .min(8, "La contraseña debe tener al menos 8 caracteres")
+      .matches(/[A-Z]/, "La contraseña debe tener al menos una mayúscula")
+      .matches(/[a-z]/, "La contraseña debe tener al menos una minúscula")
+      .matches(/[0-9]/, "La contraseña debe tener al menos un número")
       .oneOf([Yup.ref("pass2"), "Las contraseñas No coinciden"])
       .required("Este campo es requerido"),
     pass2: Yup.string()
-      .min(6, "Pass muy corto")
+      .min(8, "La contraseña debe tener al menos 8 caracteres")
+      .matches(/[A-Z]/, "La contraseña debe tener al menos una mayúscula")
+      .matches(/[a-z]/, "La contraseña debe tener al menos una minúscula")
+      .matches(/[0-9]/, "La contraseña debe tener al menos un número")
       .oneOf([Yup.ref("pass"), "Las contraseñas No coinciden"])
       .required("Este campo es requerido"),
   });

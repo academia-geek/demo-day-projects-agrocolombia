@@ -92,7 +92,7 @@ const Chats = () => {
                             </div>
                             <hr />
                             <div>
-                                {chats[indexC].mensajes?.map((m, index) => {
+                                {chats[indexC]?.mensajes?.map((m, index) => {
                                     if (m.uid === user.currentUser.uid) {
                                         return (
                                             <div key={index}>

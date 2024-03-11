@@ -27,6 +27,10 @@ module.exports = {
           "warning": "#e89008",
 
           "error": "#d1470b",
+
+          "negro": "#000000",
+
+          "blanco": "#ffffff",
         },
       },
       "forest"

@@ -10,6 +10,7 @@ const Perfil = () => {
   const navigate = useNavigate()
   const { userData } = useSelector(state => state.userStore)
   const dispatch = useDispatch();
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
   useEffect(() => {
     dispatch(actionListUserAsyn())
@@ -53,8 +54,12 @@ const Perfil = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setIsImageLoading(true);
     FileUpload(file)
-      .then((resp) => (formValue.fotoUrl = resp))
+      .then((resp) => {
+        formValue.fotoUrl = resp
+        setIsImageLoading(false);
+      })
       .catch((err) => console.warn(err));
   };
 
@@ -77,51 +82,7 @@ const Perfil = () => {
               />
             </div>
             <h1 className="text-3xl font-bold pt-8 lg:pt-0 text-gray-900">{userData?.firstName} {userData?.lastName}</h1>
-            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-              <div className="modal-box">
-                <h3 className="font-bold text-lg">Editar perfil</h3>
-                <div className="modal-action">
-                  <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                    <form className="card-body" onSubmit={handleSubmit}>
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">Foto de perfil</span>
-                        </label>
-                        <input type="file" placeholder="Seleccine una imagen" className="file-input file-input-bordered w-full max-w-xs" onChange={handleFileChange} />
-                      </div>
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">Nombre</span>
-                        </label>
-                        <input type="text" placeholder="nombre" name="firstName" onChange={handleInputChange} value={formValue.firstName} className="input input-bordered text-base" />
-                      </div>
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">Apellido</span>
-                        </label>
-                        <input type="text" placeholder="apellido" name="lastName" onChange={handleInputChange} value={formValue.lastName} className="input input-bordered" />
-                      </div>
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">Direccion de envios</span>
-                        </label>
-                        <input type="text" placeholder="apellido" name="main" onChange={handleInputChange} value={formValue.main} className="input input-bordered" />
-                        <label className="label">
-                          <span className="label-text">Extras</span>
-                        </label>
-                        <input type="text" placeholder="apellido" name="extra" onChange={handleInputChange} value={formValue.extra} className="input input-bordered" />
-                      </div>
-                      <div className="form-control mt-6">
-                        <form className="mb-3" method="dialog">
-                          <button className="btn btn-primary w-full">Cancelar</button>
-                        </form>
-                          <button className="btn btn-warning">Editar</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </dialog>
+            
             <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
             <p className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
               <img alt="" className="h-4 fill-current text-green-700 pr-4" src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709827637/socialmedia/y27joltjfmby93eppiyo.png" />
@@ -145,6 +106,58 @@ const Perfil = () => {
           <button>Volver al comercio</button>
         </div>
       </div>
+      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-2xl">Editar perfil</h3>
+          <div className="modal-action justify-center">
+            <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+              <form className="card-body" onSubmit={handleSubmit}>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Foto de perfil</span>
+                  </label>
+                  <input type="file" placeholder="Seleccine una imagen" className="file-input file-input-bordered w-full max-w-xs mb-2" onChange={handleFileChange} />
+                  <div className="flex justify-center w-full">
+                    {isImageLoading ? (
+                      <span className="loading loading-spinner text-primary"></span>
+                    ) : (
+                        <img className=" h-48 w-48" src={formValue.fotoUrl} alt=""></img>
+                    )}
+                  </div>
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Nombre</span>
+                  </label>
+                  <input type="text" placeholder="nombre" name="firstName" onChange={handleInputChange} value={formValue.firstName} className="input input-bordered text-base" />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Apellido</span>
+                  </label>
+                  <input type="text" placeholder="apellido" name="lastName" onChange={handleInputChange} value={formValue.lastName} className="input input-bordered" />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Direccion de envios</span>
+                  </label>
+                  <input type="text" placeholder="apellido" name="main" onChange={handleInputChange} value={formValue.main} className="input input-bordered" />
+                  <label className="label">
+                    <span className="label-text">Extras</span>
+                  </label>
+                  <input type="text" placeholder="apellido" name="extra" onChange={handleInputChange} value={formValue.extra} className="input input-bordered" />
+                </div>
+                <div className="form-control mt-6">
+                  <form className="mb-3" method="dialog">
+                    <button className="btn btn-primary w-full">Cancelar</button>
+                  </form>
+                  <button className="btn btn-warning">Editar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };

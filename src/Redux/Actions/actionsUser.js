@@ -96,7 +96,7 @@ export const actionAddUserAsyn = (payload) => {
         idCart: idCart,
         history: [],
         favorites: [],
-        fotoUrl: "",
+        fotoUrl: "https://res.cloudinary.com/dlwr6vxib/image/upload/v1710173431/Guajolota/imagen_2024-03-11_111028939_eho0zn.png",
         products: [],
         combos: [],
         blogs: []

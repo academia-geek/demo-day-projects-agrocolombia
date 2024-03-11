@@ -56,7 +56,10 @@ const NuevoBlog = () => {
       dispatch(actionEditUserAsyn(obj));
       dispatch(actionAddBlogAsyn(formValue))
       dispatch(actionListUserAsyn())
-    }, 5000);
+    }, 1000);
+    setTimeout(() => {
+      navigate("/mis-blogs")
+    }, 2000);
   }
 
   const handleOnCancel = () => {

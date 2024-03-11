@@ -1,46 +1,55 @@
 import React, { useEffect, useState } from 'react'
-import ReactCreditCards from 'react-credit-cards-2';
+import ReactCreditCards, { Focused } from 'react-credit-cards-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionEditUserAsyn, actionListUserAsyn } from '../../Redux/Actions/actionsUser';
 import { useNavigate } from 'react-router-dom';
 
-const PasarelaCard = () => {
+interface State {
+    number: string;
+    expiry: string;
+    cvc: string;
+    name: string;
+    focus: Focused | undefined;
+}
 
-    const { userData } = useSelector((state) => state.userStore);
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+const initialState: State = {
+    number: "",
+    expiry: "",
+    cvc: "",
+    name: "",
+    focus: undefined,
+};
 
-    useEffect(()=>{
+const PasarelaCard: React.FC = () => {
+    const { userData } = useSelector((state: any) => state.userStore);
+    const dispatch:any = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
         dispatch(actionListUserAsyn());
-    },[])
+    }, []);
 
-    const [state, setState] = useState({
-        number: '',
-        expiry: '',
-        cvc: '',
-        name: '',
-        focus: '',
-    });
+    const [state, setState] = useState(initialState);
 
-    const handleInputChange = (evt) => {
+    const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = evt.target;
 
         setState((prev) => ({ ...prev, [name]: value }));
-    }
+    };
 
-    const handleInputFocus = (evt) => {
-        setState((prev) => ({ ...prev, focus: evt.target.name }));
-    }
+    const handleInputFocus = (evt: React.FocusEvent<HTMLInputElement>) => {
+        setState((prev) => ({ ...prev, focus: evt.target.name as Focused }));
+    };
 
-    const handleLimpiarCarrito = (e) => {
+    const handleLimpiarCarrito = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const objLimpiar = {
             ...userData,
-            cart: []
-        }
+            cart: [],
+        };
         dispatch(actionEditUserAsyn(objLimpiar));
-        document.getElementById('my_modal_5').showModal()
-    }
+        (document.getElementById('my_modal_5') as HTMLDialogElement)?.showModal();
+    };
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -102,7 +111,7 @@ const PasarelaCard = () => {
                 </div>
             </dialog>
         </div>
-    )
-}
+    );
+};
 
-export default PasarelaCard
+export default PasarelaCard;

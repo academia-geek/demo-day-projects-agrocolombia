@@ -10,6 +10,7 @@ import { actionAddproductAsyn, actionListproductAsyn } from "../../Redux/Actions
 import { FileUpload } from "../../Helpers/FileUpload";
 import FooterP from "../../Components/FooterP";
 import NavbarP from "../../Components/NavbarP";
+import { useNavigate } from "react-router-dom";
 
 const VentaProducto = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -18,6 +19,7 @@ const VentaProducto = () => {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const { products } = useSelector((store) => store.productStore);
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(actionListproductAsyn())
@@ -59,6 +61,7 @@ const VentaProducto = () => {
       products: aProductos,
     };
     dispatch(actionEditUserAsyn(objUser));
+    navigate("/mis-ventas")
   };
 
   const handleFileChange = (e) => {
@@ -137,33 +140,38 @@ const VentaProducto = () => {
         </div>
       </div>
       <div className={`flex flex-col gap-4 text-center ${activeStep === 3 ? '' : 'hidden'}`}>
-        <div>
-          <p className='text-2xl'>Añadele las categorias a tu producto</p>
+        <p className='text-2xl'>Añadele las categorias a tu producto</p>
+        <div className="flex gap-5 h-full justify-center">
           {
             categoriesArray?.map((p, index) => (
-              <div className='join join-vertical lg:join-horizontal py-3' onClick={() => { handleProductSelect(p) }}>
-                <p className='join-item cursor-pointer p-2'>{p}</p>
-              </div>
+              <button onClick={() => { handleProductSelect(p) }} className=" btn btn-primary">{p}</button>
             ))
           }
         </div>
-        <div>
-          Seleccionados:
+        <p className="text-xl">Categorias seleccionadas</p>
+        <div className="flex gap-5 h-full justify-center">
           {selectedProducts.map((p) => (
-            <div className='join join-vertical lg:join-horizontal py-3'>
-              <p className='join-item p-2'>{p}</p>
-            </div>
+            <button onClick={() => { handleProductSelect(p) }} className='btn btn-primary'>{p}</button>
           ))}
         </div>
         <p className='text-2xl'>Coloca unas fotos extras a tu combo</p>
-        <input onChange={handleFileChange} type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
-        <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true} thumbWidth={100}>
-          {formValue?.media?.map((i, index) => (
-            <div key={index}>
-              <img style={{ width: 400, maxHeight: 400, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
-            </div>
-          ))}
-        </Carousel>
+        <div className="flex flex-col gap-5 h-full justify-center">
+          <div className="flex gap-5 h-full justify-center">
+            <input onChange={handleFileChange} type="file" className="file-input file-input-bordered file-input-primary w-fit" />
+          </div>
+          {isImageLoading ? (
+            <span className="loading loading-spinner text-primary"></span>
+          ) : (
+              <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true} thumbWidth={100}>
+                {formValue?.media?.map((i, index) => (
+                  <div key={index}>
+                    <img style={{ width: 400, maxHeight: 400, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
+                  </div>
+                ))}
+              </Carousel>
+          )}
+        </div>
+
         <div className='flex flex-row gap-3 justify-center items-center'>
             <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
             <button className='btn btn-primary w-48' onClick={() => handleSubmit()}>Vender</button>

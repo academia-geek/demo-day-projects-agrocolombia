@@ -41,7 +41,7 @@ const Chats = () => {
             const isDuplicate = data.some(item => item.uid === resultSearch.uid);
 
             if (!isDuplicate) {
-                setData(prevData => [...prevData, resultSearch]);
+                setData(prevData => [resultSearch, ...prevData]);
             }
         }
     }, [resultSearch])
@@ -50,7 +50,6 @@ const Chats = () => {
 
     const handleChatSubmit = async (e) => {
         e.preventDefault()
-        console.log(chats[indexC])
         await dispatch(actionAddMessageToChatAsync(chats[indexC].id, chatInput))
         setChatInput('')
     }
@@ -65,6 +64,15 @@ const Chats = () => {
         }
     }
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            dispatch(actionFindChatAsync())
+            dispatch(actionListUserAsyn())
+        }, 15000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="min-h-screen">
             <NavbarP />
@@ -73,7 +81,7 @@ const Chats = () => {
                     <div className='outline h-full rounded-lg p-2 pt-6 bg-white flex flex-col gap-5'>
                         {
                             data?.map((c, index) => (
-                                <div className='flex gap-3 items-center p-3 bg-accent rounded-lg' key={index} onClick={() => { setChatsActual(c); setIndexC(index);}}>
+                                <div className='flex gap-3 items-center p-3 bg-accent rounded-lg' key={index} onClick={() => { setChatsActual(c);setIndexC(index);}}>
                                     <img className='size-14 object-cover' src={c.fotoUrl} alt="" />
                                     <p className='text-2xl font-bold line-clamp-2'>{c.firstName} {c.lastName}</p>
                                 </div>

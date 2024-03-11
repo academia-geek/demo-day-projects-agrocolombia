@@ -94,12 +94,18 @@ const MisVentas = () => {
 
   const handleSubmitCombo = () => {
     dispatch(actionEditCombosAsyn(formValue))
-    setBandera(!bandera)
+    setTimeout(() => {
+      setBandera(!bandera);
+      document.getElementById('my-drawer-5').click()
+    }, 1000);
   }
   
   const handleSubmitProducto = () => {
     dispatch(actionEditProductAsyn(formValue))
-    setBandera(!bandera)
+    setTimeout(() => {
+      setBandera(!bandera);
+      document.getElementById('my-drawer-4').click()
+    }, 1000);
   }
 
   const handleEliminarProducto = () => {
@@ -110,7 +116,9 @@ const MisVentas = () => {
     };
     dispatch(actionEditUserAsyn(newObj));
     dispatch(actionDeleteProductAsyn(eliminar))
-    setBandera(!bandera);
+    setTimeout(() => {
+      setBandera(!bandera);
+    }, 1000);
   };
   
   const handleEliminarCombo = () => {
@@ -121,7 +129,9 @@ const MisVentas = () => {
     };
     dispatch(actionEditUserAsyn(newObj));
     dispatch(actionDeleteCombosAsyn(eliminar))
-    setBandera(!bandera);
+    setTimeout(() => {
+      setBandera(!bandera);
+    }, 1000);
   };
 
   return (

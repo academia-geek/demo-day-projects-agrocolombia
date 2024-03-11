@@ -4,7 +4,7 @@ import FooterP from '../../Components/FooterP'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionListproductAsyn } from '../../Redux/Actions/actionsProduct'
 import { actionListCombosAsyn } from '../../Redux/Actions/actionsCombo'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Catalogo = () => {
 
@@ -14,6 +14,9 @@ const Catalogo = () => {
   const [filtrados, setFiltrados] = useState()
   const [filtradosCombo, setFiltradosCombo] = useState()
   const navigate = useNavigate()
+  const {filtro} = useParams()
+
+
 
 
   useEffect(() => {
@@ -30,6 +33,13 @@ const Catalogo = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(900000000000);
   const [categoria, setCategoria] = useState(null);
+
+  useEffect(() => {
+    if (filtro) {
+      setCategoria(filtro);
+    }
+  }, [filtro]);
+
 
   const applyFilters = (products) => {
     return products.filter((product) => {
@@ -195,8 +205,15 @@ const Catalogo = () => {
                 <p>Categorias</p>
                 <div className="join join-vertical ml-3">
                   <input onClick={() => setCategoria(null)} className="join-item btn" type="radio" name="categorias" aria-label="Todos" />
-                  {categoriesArray?.map((c,index) => (
-                    <input onClick={() => setCategoria(c)} className="join-item btn" type="radio" name="categorias" aria-label={c} />
+                  {categoriesArray?.map((c, index) => (
+                    <input
+                      onClick={() => setCategoria(c)}
+                      className="join-item btn"
+                      type="radio"
+                      name="categorias"
+                      aria-label={c}
+                      {...(filtro === c ? { checked: true } : {})}
+                    />
                   ))}
                 </div>
               </div>
@@ -239,7 +256,7 @@ const Catalogo = () => {
                   <button className="btn w-fit btn-primary" onClick={() => navigate(`/comprar-producto/${p?.id}`)}>Ver</button>
                   <div className="card-actions justify-end">
                     {
-                      p.categoria.map((c)=>(
+                      p.categoria?.map((c)=>(
                         <div onClick={() => setCategoria(c)} className="badge badge-outline cursor-pointer">{c}</div>
                       ))
                     }

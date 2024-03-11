@@ -132,6 +132,11 @@ const ComprarProducto = () => {
                         <h2 className="card-title">
                             {compra?.name.charAt(0).toUpperCase() + compra?.name.slice(1)}
                         </h2>
+                        <div>
+                            {compra?.categoria?.map((cat) => (
+                                <div onClick={() => navigate(`/catalogo/${cat}`)} className="badge badge-outline cursor-pointer">{cat}</div>
+                            ))}
+                        </div>
                         <p>{compra?.desc}</p>
                         <div className='flex text-center items-center'>
                             <p>Cantidad: </p>

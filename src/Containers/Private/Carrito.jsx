@@ -26,7 +26,7 @@ const Carrito = () => {
         dispatch(actionListUserAsyn());
 
         let totalCost = 0;
-        userData.cart.forEach((product) => {
+        userData.cart?.forEach((product) => {
             const { idProduct, cantidad } = product;
             const productItem = products.find((p) => p.id === idProduct);
             if (productItem) {
@@ -36,7 +36,7 @@ const Carrito = () => {
             }
         });
 
-        userData.cart.forEach((combo) => {
+        userData.cart?.forEach((combo) => {
             const { idProduct, cantidad } = combo;
             const comboItem = combos.find((p) => p.id === idProduct);
             if (comboItem) {
@@ -198,13 +198,13 @@ const Carrito = () => {
                 <div className="w-full lg:w-3/12 min-h-screen bg-accent px-4 py-4 lg:pb-4">
                     <div className="outline h-full rounded-lg p-2 pt-6 bg-white">
                         {userData?.cart?.length > 0 ? (
-                            <div>
+                            <div className='text-black'>
                                 <p className='text-2xl font-bold'>Tu carrito de compras</p>
                                 <div className='text-xl flex flex-col gap-5'>
                                     <p>Total de productos: {userData.cart.length}</p>
                                     <p>
                                         Total con envio: {totalCost <= 70000 ? (
-                                            <div>
+                                            <div className='flex flex-col'>
                                                 <span>{totalCost + 14000}</span>
                                                 <span className="text-warning">Para obtener el envio gratis tienes que hacer compras de mas de 70000</span>
                                             </div>

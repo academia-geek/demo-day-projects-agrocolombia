@@ -8,8 +8,8 @@ const Pasarela = () => {
 
   const { total } = useParams();
   const navigate = useNavigate()
-  const { userData } = useSelector((state) => state.userStore);
-  const dispatch = useDispatch()
+  const { userData } = useSelector((state:any) => state.userStore);
+  const dispatch:any = useDispatch()
 
   useEffect(() => {
     dispatch(actionListUserAsyn());
@@ -21,7 +21,7 @@ const Pasarela = () => {
       cart: []
     }
     dispatch(actionEditUserAsyn(objLimpiar));
-    document.getElementById('my_modal_5').showModal()
+    (document.getElementById('my_modal_5') as HTMLDialogElement)?.showModal();
   }
 
   return (

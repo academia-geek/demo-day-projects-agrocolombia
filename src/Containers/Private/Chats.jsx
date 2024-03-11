@@ -68,15 +68,14 @@ const Chats = () => {
     return (
         <div className="min-h-screen">
             <NavbarP />
-            <div className='min-h-full flex lg:flex-row flex-col justify-between'>
-                <div className='w-full lg:w-3/12 min-h-screen bg-accent px-4 py-4 lg:pb-4"'>
-                    <div className='outline h-full rounded-lg p-2 pt-6 bg-white'>
+            <div className='h-[90vh] flex lg:flex-row flex-col justify-between'>
+                <div className='w-full h-full lg:w-3/12 bg-accent px-4 pb-4 lg:pb-4"'>
+                    <div className='outline h-full rounded-lg p-2 pt-6 bg-white flex flex-col gap-5'>
                         {
                             data?.map((c, index) => (
-                                <div key={index} onClick={() => { setChatsActual(c); setIndexC(index); console.log(c) }}>
-                                    <p>{c.firstName}</p>
-                                    <p>{c.lastName}</p>
-                                    <img className='size-14' src={c.fotoUrl} alt="" />
+                                <div className='flex gap-3 items-center p-3 bg-accent rounded-lg' key={index} onClick={() => { setChatsActual(c); setIndexC(index);}}>
+                                    <img className='size-14 object-cover' src={c.fotoUrl} alt="" />
+                                    <p className='text-2xl font-bold line-clamp-2'>{c.firstName} {c.lastName}</p>
                                 </div>
                             ))
                         }
@@ -84,41 +83,46 @@ const Chats = () => {
                 </div>
                 <div className="w-9/12">
                     {chatsActual ?
-                        <div>
-                            <div>
-                                <p>{chatsActual.firstName}</p>
-                                <p>{chatsActual.lastName}</p>
-                                <img className='size-14' src={chatsActual.fotoUrl} alt="" />
+                        <div className='h-full flex flex-col'>
+                            <div className='flex gap-3 items-center border-b-8 border-black'>
+                                <img className='size-20' src={chatsActual.fotoUrl} alt="" />
+                                <p className='text-2xl font-bold'>{chatsActual.firstName} {chatsActual.lastName}</p>
                             </div>
-                            <hr />
-                            <div>
-                                {chats[indexC].mensajes?.map((m, index) => {
-                                    if (m.uid === user.currentUser.uid) {
-                                        return (
-                                            <div key={index}>
-                                                <img className='size-14' src={userData.fotoUrl} alt="" />
-                                                <p>{m.mensaje}</p>
-                                            </div>
-                                        );
-                                    } else {
-                                        return (
-                                            <div key={index}>
-                                                <img className='size-14' src={chatsActual.fotoUrl} alt="" />
-                                                <p>{m.mensaje}</p>
-                                                <div className="chat chat-start">
-                                                    <div className="chat-image avatar">
-                                                        <div className="w-10 rounded-full">
-                                                            <img alt="Tailwind CSS chat bubble component" src={chatsActual.fotoUrl} />
+                            <div className='p-5 flex flex-col h-full overflow-auto  justify-between'>
+                                <div className='flex flex-col gap-5 h-5/6 overflow-y-auto '>
+                                    {chats[indexC]?.mensajes?.map((m, index) => {
+                                        if (m.uid === user.currentUser.uid) {
+                                            return (
+                                                <div key={index}>
+                                                    <div className="chat chat-end">
+                                                        <div className="chat-image avatar">
+                                                            <div className="w-10 rounded-full">
+                                                                <img alt="Tailwind CSS chat bubble component" src={userData.fotoUrl} />
+                                                            </div>
                                                         </div>
+                                                        <div className="chat-bubble">{m.mensaje}</div>
                                                     </div>
-                                                    <div className="chat-bubble">It was said that you would, destroy the Sith, not join them.</div>
                                                 </div>
-                                            </div>
-                                        );
-                                    }
-                                })}
+                                            );
+                                        } else {
+                                            return (
+                                                <div key={index}>
+                                                    <div className="chat chat-start">
+                                                        <div className="chat-image avatar">
+                                                            <div className="w-10 rounded-full">
+                                                                <img alt="Tailwind CSS chat bubble component" src={chatsActual.fotoUrl} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="chat-bubble">{m.mensaje}</div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                    })}
+                                </div>
                                 <input type='text' value={chatInput}
                                     onChange={handleChatChange}
+                                    className='input input-bordered'
                                     onKeyPress={handleChatKeyPress}
                                     placeholder='Ab...'></input>
                             </div>

@@ -128,8 +128,8 @@ const Search = () => {
   return (
     <div>
       <NavbarP />
-      <div className='container mx-auto flex'>
-        <div className='bg-accent min-h-screen w-3/12 px-7 pb-10'>
+      <div className='min-h-full flex lg:flex-row flex-col justify-between'>
+        <div className='w-full lg:w-3/12 min-h-screen bg-accent px-4  pb-4  lg:pb-4'>
           <div className='outline h-full rounded-lg p-2 bg-base'>
             <p className='text-3xl'>Filtros</p>
             <div className='flex flex-col gap-5'>

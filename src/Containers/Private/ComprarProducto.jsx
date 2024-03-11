@@ -92,8 +92,8 @@ const ComprarProducto = () => {
                 ) : ("")
             }
             <NavbarP />
-            <div className='container mx-auto flex'>
-                <div className='w-3/12 min-h-screen bg-accent fondo verde px-4 pb-4'>
+            <div className='min-h-full flex lg:flex-row flex-col justify-between'>
+                <div className='w-full lg:w-3/12 min-h-screen bg-accent px-4 pb-4 lg:pb-4'>
                     <div className='outline h-full rounded-lg p-2 pt-6 bg-white'>
                         <div className="avatar w-full flex justify-center">
                             <div className="w-10/12 rounded-full">
@@ -118,8 +118,8 @@ const ComprarProducto = () => {
                         </div>
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-4 w-9/12 p-10'>
-                    <div>
+                <div className='grid grid-cols-2 gap-4 p-10 w-full'>
+                    <div className=''>
                         <Carousel style={{ width: 300 }} showArrows={true} emulateTouch showThumbs={true} thumbWidth={100}>
                             {compra?.media?.map((i, index) => (
                                 <div key={index}>
@@ -128,7 +128,7 @@ const ComprarProducto = () => {
                             ))}
                         </Carousel>
                     </div>
-                    <div className="flex flex-col gap-20">
+                    <div className="flex flex-col gap-20 className='w-1/2">
                         <h2 className="card-title">
                             {compra?.name.charAt(0).toUpperCase() + compra?.name.slice(1)}
                         </h2>
@@ -143,7 +143,7 @@ const ComprarProducto = () => {
                                 <button className="btn join-item" onClick={handleIncrease}>+</button>
                             </div>
                         </div>
-                        <div className='flex rounded-lg outline items-center flex-col gap-2 p-4 ml-4 w-fit'>
+                        <div className='flex rounded-lg outline items-center flex-col gap-2 p-4 ml-4 w-full'>
                             <p>Total productos: {count * compra?.price} </p>
                             <button onClick={() => handleComprar()} className='btn btn-accent'>Comprar</button>
                         </div>

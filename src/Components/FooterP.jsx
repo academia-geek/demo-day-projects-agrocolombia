@@ -2,7 +2,7 @@ import React from "react";
 
 const FooterP = () => {
   return (
-    <footer className="footer items-center p-4 bg-base-300">
+    <footer className="footer items-center p-4 bg-base-300 ">
       <aside className="items-center grid-flow-col">
         <img className="size-10" src="https://res.cloudinary.com/dyepe4ih7/image/upload/v1710022764/ywjvpaqmqh2e6vdjqzpv.png" alt="" />
         <p>Copyright © 2024 - All right reserved</p>

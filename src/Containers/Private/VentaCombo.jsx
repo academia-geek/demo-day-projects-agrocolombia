@@ -130,7 +130,7 @@ const VentaCombo = () => {
     const categoriesArray = Array.from(categoriesSet);
 
     return (
-        <div className='flex flex-col justify-center items-center gap-10'>
+        <div className='flex flex-col justify-between items-center gap-10 min-h-screen'>
             <NavbarP/>
             <ul className="steps py-10">
                 <li className={`step ${activeStep >= 0 ? 'step-primary' : ''}`}>Nombra tu combo</li>

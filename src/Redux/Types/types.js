@@ -31,6 +31,7 @@ export const typesCombos = {
     comment: "[combos] comment",
     removeComment: "[combos] removeComment",
     search: "[combos] search",
+    delete: "[combos] delete"
 }
 
 export const typesChats = {

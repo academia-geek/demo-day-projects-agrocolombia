@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import NavbarP from '../../Components/NavbarP'
 import FooterP from '../../Components/FooterP'
-import { actionEditProductAsyn, actionListproductAsyn } from '../../Redux/Actions/actionsProduct'
+import { actionDeleteProductAsyn, actionEditProductAsyn, actionListproductAsyn } from '../../Redux/Actions/actionsProduct'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionEditCombosAsyn, actionListCombosAsyn } from '../../Redux/Actions/actionsCombo'
+import { actionDeleteCombosAsyn, actionEditCombosAsyn, actionListCombosAsyn } from '../../Redux/Actions/actionsCombo'
 import useForm from '../../Hooks/useForm'
 import { Carousel } from 'react-responsive-carousel'
 import { FileUpload } from '../../Helpers/FileUpload'
-import { actionListUserAsyn } from '../../Redux/Actions/actionsUser'
+import { actionEditUserAsyn, actionListUserAsyn } from '../../Redux/Actions/actionsUser'
 
 const MisVentas = () => {
 
@@ -20,12 +20,13 @@ const MisVentas = () => {
   const [comboEdit, setComboEdit] = useState()
   const dispatch = useDispatch()
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [bandera, setBandera] = useState()
 
   useEffect(() => {
     dispatch(actionListproductAsyn())
     dispatch(actionListCombosAsyn())
     dispatch(actionListUserAsyn())
-  }, [])
+  }, [bandera])
 
   useEffect(() => {
     const func = async () => {
@@ -39,20 +40,11 @@ const MisVentas = () => {
         const pro = combos.filter((combos) => combos.id === p);
         proB.push(...pro)
       })
-      console.log(proA)
-      console.log(proB)
       setProductosUser(proA)
       setCombosUser(proB)
-
     }
     func()
-  }, [])
-
-  
-  const prueba = () => {
-    console.log(combosUser)
-    console.log(productosUser)
-  }
+  }, [bandera])
 
   const handleClickCombo = (c) => {
     setComboEdit(c)
@@ -64,10 +56,11 @@ const MisVentas = () => {
     formValue.descuento = c.descuento;
     formValue.media = c.media;
     formValue.stock = c.stock;
+    formValue.costoEnvio = c.costoEnvio || 0;
+    formValue.ubicacion = c.ubicacion || "";
   }
 
   const handleClikProduct = (p) => {
-    console.log(p)
     setProductoEdit(p)
     formValue.id = p.id;
     formValue.ubicacion = p.ubicacion;
@@ -78,6 +71,8 @@ const MisVentas = () => {
     formValue.descuento = p.descuento;
     formValue.media = p.media;
     formValue.stock = p.stock;
+    formValue.costoEnvio = p.costoEnvio || 0;
+    formValue.ubicacion = p.ubicacion || "";
   }
 
   const handleFileChange = (e) => {
@@ -95,49 +90,88 @@ const MisVentas = () => {
       .catch((err) => console.warn(err));
   };
 
-  const [formValue, handleInputChange, reset] = useForm({});
+  const [formValue, handleInputChange] = useForm({});
 
   const handleSubmitCombo = () => {
     dispatch(actionEditCombosAsyn(formValue))
+    setBandera(!bandera)
   }
   
   const handleSubmitProducto = () => {
     dispatch(actionEditProductAsyn(formValue))
+    setBandera(!bandera)
   }
+
+  const handleEliminarProducto = () => {
+    const eliminar = productoEdit.id;
+    const newObj = {
+      ...userData,
+      products: userData.products.filter((product) => product !== eliminar),
+    };
+    dispatch(actionEditUserAsyn(newObj));
+    dispatch(actionDeleteProductAsyn(eliminar))
+    setBandera(!bandera);
+  };
   
+  const handleEliminarCombo = () => {
+    const eliminar = comboEdit.id;
+    const newObj = {
+      ...userData,
+      combos: userData.combos.filter((combo) => combo !== eliminar),
+    };
+    dispatch(actionEditUserAsyn(newObj));
+    dispatch(actionDeleteCombosAsyn(eliminar))
+    setBandera(!bandera);
+  };
 
   return (
     <div>
       <NavbarP/>
-      <div>
-        <button onClick={() => prueba()}>PRUEBA</button>
-        <p>Mis ventas</p>
-        <div>
-          <p>Mis productos</p>
-          {productosUser?.map((p,index)=> (
-            <div key={index} onClick={() => handleClikProduct(p)}>
-              <img className='size-12' src={p.media[0]} alt=''></img>
-              <p>{p.name}</p>
-              <p>{p.stock}</p>
-              <p>{p.price}</p>
-              <label htmlFor="my-drawer-4" className="drawer-button btn btn-warning">Editar</label>
-              <button className="btn btn-error">Eliminar</button>
+      <div className=' bg-accent min-h-screen p-10'>
+        <p className='text-3xl font-bold mb-5'>Mis ventas</p>
+        <div className='flex justify-between'>
+          <div>
+            <p className='text-xl mb-5 font-bold'>Mis productos</p>
+            <div className='flex flex-col gap-5'>
+              {productosUser?.map((p,index)=> (
+                <div className='' key={index} >
+                  <div className="card card-side bg-base-100 shadow-xl">
+                    <figure><img className='size-40 object-contain' src={p.media[0]} alt="Movie" /></figure>
+                    <div className="card-body">
+                      <h2 className="card-title capitalize">{p.name}</h2>
+                      <p>Stock restante: {p.stock}</p>
+                      <p>Precio del producto: {p.price}</p>
+                      <div className="card-actions justify-end">
+                        <label onClick={() => handleClikProduct(p)} htmlFor="my-drawer-4" className="drawer-button btn btn-warning">Editar</label>
+                        <button onClick={() => { setProductoEdit(p); document.getElementById('my_modal_5').showModal()}} className="btn btn-error">Eliminar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <hr />
-        <div>
-          <p>Mis Combos</p>
-          {combosUser?.map((c, index) => (
-            <div key={index} onClick={() => handleClickCombo(c)}>
-              <img className='size-12' src={c.media[0]} alt=''></img>
-              <p>{c.name}</p>
-              <p>{c.stock}</p>
-              <p>{c.precio}</p>
-              <label htmlFor="my-drawer-5" className="drawer-button btn btn-warning">Editar</label>
-              <button className="btn btn-error">Eliminar</button>
+          </div>
+          <div>
+            <p className='text-xl mb-5 font-bold'>Mis Combos</p>
+            <div className='flex flex-col gap-5'>
+              {combosUser?.map((c, index) => (
+                <div className='' key={index} >
+                  <div className="card card-side bg-base-100 shadow-xl">
+                    <figure><img className='size-40 object-contain' src={c.media[0]} alt="Movie" /></figure>
+                    <div className="card-body">
+                      <h2 className="card-title capitalize">{c.name}</h2>
+                      <p>Stock restante: {c.stock}</p>
+                      <p>Precio del producto: {c.price}</p>
+                      <div className="card-actions justify-end">
+                        <label onClick={() => handleClickCombo(c)} htmlFor="my-drawer-4" className="drawer-button btn btn-warning">Editar</label>
+                        <button onClick={() => { setComboEdit(c); document.getElementById('my_modal_6').showModal()}} className="btn btn-error">Eliminar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
         <div className="drawer drawer-end">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -203,6 +237,24 @@ const MisVentas = () => {
             </ul>
           </div>
         </div>
+
+        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Estas seguro de eliminar el producto?</h3>
+            <p className="py-4">Eliminaras el producto con el nombre {productoEdit?.nombre}</p>
+            <button className='btn btn-warning' onClick={() => document.getElementById('my_modal_5').close()}>Cancelar</button>
+            <button className='btn btn-error' onClick={() => handleEliminarProducto()}>Eliminar</button>
+          </div>
+        </dialog>
+
+        <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Estas seguro de eliminar este combo?</h3>
+            <p className="py-4">Eliminaras el combo con el nombre {comboEdit?.nombre}</p>
+            <button className='btn btn-warning' onClick={() => { document.getElementById('my_modal_6').close() }}>Cancelar</button>
+            <button className='btn btn-error' onClick={() => { handleEliminarCombo() }}>Eliminar</button>
+          </div>
+        </dialog>
 
       </div>
       <FooterP/>

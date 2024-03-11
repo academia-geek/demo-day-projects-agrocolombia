@@ -28,8 +28,8 @@ const NewComers = () => {
     }
     reset()
     try {
-      navigate("/")
       await dispatch(actionAddUserAsyn(newObj))
+      navigate("/*")
     } catch (error) {
       console.log(error)
     }

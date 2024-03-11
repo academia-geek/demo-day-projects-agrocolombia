@@ -46,6 +46,7 @@ const Perfil = () => {
       products: formValue.products,
       uid: formValue.uid
     };
+    console.log(obj)
     dispatch(actionEditUserAsyn(obj));
     document.getElementById('my_modal_5').close()
   };

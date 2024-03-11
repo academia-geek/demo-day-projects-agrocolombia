@@ -93,7 +93,7 @@ const Carrito = () => {
             <NavbarP />
             <div className="min-h-full flex lg:flex-row flex-col justify-between">
                 <div className="w-9/12 p-10">
-                    {userData.cart.length > 0 ? (
+                    {userData?.cart?.length > 0 ? (
                         <div className="w-full">
                             <table className="table">
                                 <thead>
@@ -197,7 +197,7 @@ const Carrito = () => {
                 </div>
                 <div className="w-full lg:w-3/12 min-h-screen bg-accent px-4 py-4 lg:pb-4">
                     <div className="outline h-full rounded-lg p-2 pt-6 bg-white">
-                        {userData.cart.length > 0 ? (
+                        {userData?.cart?.length > 0 ? (
                             <div>
                                 <p className='text-2xl font-bold'>Tu carrito de compras</p>
                                 <div className='text-xl flex flex-col gap-5'>

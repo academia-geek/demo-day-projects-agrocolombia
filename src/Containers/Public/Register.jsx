@@ -9,14 +9,6 @@ const Register = () => {
   const dispatch= useDispatch();
 
   const SignupSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, "NO cumple con el número minimo de caracteres")
-      .max(50, "Excede el máximo de caracteres")
-      .required("Este campo es requerido"),
-    lastName: Yup.string()
-      .min(2, "NO cumple con el número minimo de caracteres")
-      .max(50, "Excede el máximo de caracteres")
-      .required("Este campo es requerido"),
     email: Yup.string().email("Ingrese un correo valido").required("Este campo es requerido"),
     pass: Yup.string()
       .min(6, "Contraseña muy corta")
@@ -30,8 +22,6 @@ const Register = () => {
 
   return (
     <Formik initialValues={{
-      firstName: "",
-      lastName: "",
       email: "",
       pass: "",
       pass2: "",
@@ -49,29 +39,6 @@ const Register = () => {
             </div>
             <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
               <Form className="card-body">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Nombres</span>
-                  </label>
-                  <Field name='firstName' className="input input-bordered" required />
-                  {errors.firstName && touched.firstName ? (
-                    <label className="label">
-                      <span className="label-text-alt text-red-500 animate-bounce">{errors.firstName}</span>
-                    </label>
-                  ) : null}
-                </div>
-
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Apellidos</span>
-                  </label>
-                  <Field name='lastName' className="input input-bordered" required />
-                  {errors.lastName && touched.lastName ? (
-                    <label className="label">
-                      <span className="label-text-alt text-red-500 animate-bounce">{errors.lastName}</span>
-                    </label>
-                  ) : null}
-                </div>
 
                 <div className="form-control">
                   <label className="label">

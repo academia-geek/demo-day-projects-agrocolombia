@@ -99,6 +99,7 @@ export const actionAddUserAsyn = (payload) => {
         fotoUrl: "",
         products: [],
         combos: [],
+        blogs: []
     };
     return async (dispatch) => {
         await addDoc(collection(dataBase, "Users"), modifiedPayload)

@@ -129,7 +129,7 @@ const MisVentas = () => {
       <NavbarP/>
       <div className=' bg-accent min-h-screen p-10'>
         <p className='text-3xl font-bold mb-5'>Mis ventas</p>
-        <div className='flex justify-between'>
+        <div className='flex flex-col lg:flex-row justify-between'>
           <div>
             <p className='text-xl mb-5 font-bold'>Mis productos</p>
             <div className='flex flex-col gap-5'>

@@ -6,6 +6,7 @@ import FotterLanding from '../../Components/FotterLanding';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionListproductAsyn } from '../../Redux/Actions/actionsProduct';
 import { useNavigate } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
 
 const Landing = () => {
 
@@ -16,6 +17,10 @@ const Landing = () => {
 
     useEffect(() => {
         dispatch(actionListproductAsyn())
+        const aut = getAuth()
+        if (aut) {
+            navigate("/*")
+        }
     }, [])
 
     return (

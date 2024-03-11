@@ -8,6 +8,7 @@ const NewComers = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  
   const [formValue, handleInputChange, reset] = useForm({
     firstName: "",
     lastName: "",
@@ -16,7 +17,7 @@ const NewComers = () => {
   });
 
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const newObj = {
       firstName: formValue.firstName,
@@ -28,8 +29,10 @@ const NewComers = () => {
     }
     reset()
     try {
-      await dispatch(actionAddUserAsyn(newObj))
-      navigate("/*")
+      dispatch(actionAddUserAsyn(newObj))
+      setTimeout(() => {
+        navigate("/")
+      }, 2000);
     } catch (error) {
       console.log(error)
     }

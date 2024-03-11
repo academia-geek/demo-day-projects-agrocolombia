@@ -104,8 +104,8 @@ export const actionAddUserAsyn = (payload) => {
     return async (dispatch) => {
         await addDoc(collection(dataBase, "Users"), modifiedPayload)
             .then((resp) => {
-                dispatch(actionAddCartUserAsyn({id: idCart}))
                 dispatch(actionAddUserSyn(modifiedPayload));
+                dispatch(actionListUserAsyn())
             })
             .catch((e) => {
                 console.error("Error adding document: ", e);

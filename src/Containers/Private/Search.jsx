@@ -100,7 +100,6 @@ const Search = () => {
       try {
         const datosEncontrados = await dispatch(actionSearchProductAsyn(term));
         const datosEncontradosCombo = await dispatch(actionSearchCombosAsyn(term));
-        console.warn(datosEncontradosCombo)
         setFilteredProducts(applyFilters(datosEncontrados));
         setFilteredCombos(applyFiltersCombo(datosEncontradosCombo));
       } catch (error) {
@@ -109,7 +108,7 @@ const Search = () => {
     };
 
     buscar();
-  }, [term, descuento, envio, ubicacion, consumo]);
+  }, [term, descuento, envio, ubicacion, consumo, categoria]);
 
   // Usamos un conjunto (set) para almacenar las categorías únicas
   const categoriesSet = new Set();
@@ -174,7 +173,7 @@ const Search = () => {
               <div>
                 <p>Descuento</p>
                 <div className="join join-vertical ml-3">
-                  <input onClick={() => setDescuento(0)} className="join-item btn" type="radio" name="descuento" aria-label="Sin descuento" />
+                  <input onClick={() => setDescuento(0)} className="join-item btn" type="radio" name="descuento" aria-label="Todos" />
                   <input onClick={() => setDescuento(10)} className="join-item btn" type="radio" name="descuento" aria-label="Desde 10%" />
                   <input onClick={() => setDescuento(20)} className="join-item btn" type="radio" name="descuento" aria-label="Desde 20%" />
                   <input onClick={() => setDescuento(30)} className="join-item btn" type="radio" name="descuento" aria-label="Desde 30%" />

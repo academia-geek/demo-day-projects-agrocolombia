@@ -29,6 +29,7 @@ const Register = () => {
       validationSchema={SignupSchema}
       onSubmit={(values) => {
         dispatch(actionRegisterAsync(values.email, values.pass));
+
       }}>
       {({ errors, touched }) => (
         <div className="hero min-h-screen bg-base-200">

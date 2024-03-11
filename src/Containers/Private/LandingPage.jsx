@@ -44,8 +44,10 @@ const LandingPage = () => {
       </div>
       <div className="px-10 py-8 mt-6 ">
         <div className="shadow-2xl shadow-neutral rounded-lg">
-          <div className="bg-neutral p-7 rounded-t-lg text-center">
-            <h1 className="text-2xl tracking-wide font-medium">Ofertas</h1>
+          <div className="flex items-center gap-7 bg-neutral p-7 rounded-t-lg text-center">
+            <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
+            <h1 className="text-2xl tracking-wide font-bold">OFERTAS</h1>
+            <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10 pt-4">
             {products?.map((product) => {
@@ -136,8 +138,10 @@ const LandingPage = () => {
       </div>
       <div className="px-10 py-8 mt-6 rounded-xl">
         <div className="shadow-2xl shadow-neutral rounded-lg">
-          <div className="bg-neutral p-7 rounded-t-lg text-center">
-            <h1 className="text-2xl tracking-wide font-medium">Nuevos</h1>
+          <div className="flex items-center gap-7 bg-neutral p-7 rounded-t-lg text-center">
+            <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
+            <h1 className="text-2xl tracking-wide font-bold">NUEVOS</h1>
+            <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10 pt-4">
             {products?.map((product) => (
@@ -174,8 +178,10 @@ const LandingPage = () => {
 
       <div className="px-10 py-8 mt-6">
         <div className="shadow-2xl shadow-neutral rounded-lg">
-          <div className="bg-neutral p-7 rounded-t-lg text-center">
-            <h1 className="text-2xl tracking-wide font-medium">Combos</h1>
+          <div className="flex items-center gap-7 bg-neutral p-7 rounded-t-lg text-center">
+            <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
+            <h1 className="text-2xl tracking-wide font-bold">COMBOS</h1>
+            <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
           </div>
           <Carousel showArrows={true} interval={10000} stopOnHover={true} infiniteLoop emulateTouch autoPlay showThumbs={false} onClickItem={() => onClickItem()}>
             {combos?.slice(0, 5).map((c, index) => (
@@ -189,7 +195,7 @@ const LandingPage = () => {
                   <h2 className="card-title">{c.name}</h2>
                   <p>{c.desc}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-primary" onClick={() => navigate(`/comprar-combo/${c?.id}`)}>Detalles</button>
+                    <button className="btn btn-primary font-bold text-lg" onClick={() => navigate(`/comprar-combo/${c?.id}`)}>Detalles</button>
                   </div>
                 </div>
               </div>

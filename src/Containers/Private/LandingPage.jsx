@@ -179,10 +179,10 @@ const LandingPage = () => {
           </div>
           <Carousel showArrows={true} interval={10000} stopOnHover={true} infiniteLoop emulateTouch autoPlay showThumbs={false} onClickItem={() => onClickItem()}>
             {combos?.slice(0, 5).map((c, index) => (
-              <div key={index} className="mt-6 pb-6 card card-side bg-base-100 ">
-                <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-1 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-1 px-10">
+              <div key={index} className="mt-6 pb-6 flex flex-col lg:flex-row card card-side bg-base-100 ">
+                <div className="grid grid-cols-1 sm:grid-rows-2 sm:grid-flow-col gap-x-2 gap-y-2 lg:grid-cols-2 xl:gap-x-1 px-10">
                   {c.media && c.media.slice(0, 4).map((img, i) => (
-                    <img key={i} style={{ width: 200, height: 200, objectFit: "contain" }} className="rounded-xl" src={img} alt="Movie" />
+                    <img key={i} className="rounded-xl w-24 h-24 object-contain lg:rounded-xl lg:w-48 lg:h-48 lg:object-contain" src={img} alt="Movie" />
                   ))}
                 </div>
                 <div className="card-body">

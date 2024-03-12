@@ -182,6 +182,7 @@ const Catalogo = () => {
                   <input onClick={() => setCategoria(null)} className="join-item btn" type="radio" name="categorias" aria-label="Todos" />
                   {categoriesArray?.map((c, index) => (
                     <input
+                      key={`catsc${index}`}
                       onClick={() => setCategoria(c)}
                       className="join-item btn"
                       type="radio"

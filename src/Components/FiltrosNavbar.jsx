@@ -38,7 +38,7 @@ const FiltrosNavbar = () => {
               <ul className="p-2 z-10">
                 {
                   categoriesArray.map((c, index) => (
-                    <Link to={`/catalogo/${c}`} key={index}><p>{c}</p></Link>
+                    <li key={`cats1${index}`} onClick={() => navigate(`/catalogo/${c}`)}>{c}</li>
                   ))
                 }
               </ul>
@@ -61,7 +61,7 @@ const FiltrosNavbar = () => {
                 <ul className="p-2 z-[1] flex flex-col gap-5">
                   {
                     categoriesArray.map((c, index) => (
-                      <li onClick={() => navigate(`/catalogo/${c}`)}>{c}</li>
+                      <li key={`cats2${index}`} onClick={() => navigate(`/catalogo/${c}`)}>{c}</li>
                     ))
                   }
                 </ul>

@@ -92,10 +92,10 @@ const Carrito = () => {
         <div className="min-h-screen">
             <NavbarP />
             <div className="min-h-full flex lg:flex-row flex-col justify-between">
-                <div className="w-9/12 p-10">
+                <div className="lg:w-9/12 p-10">
                     {userData?.cart?.length > 0 ? (
-                        <div className="w-full">
-                            <table className="table">
+                        <div className="overflow-x-auto">
+                            <table className="table w-full table-auto border-collapse">
                                 <thead>
                                     <tr>
                                         <th>Producto</th>
@@ -132,7 +132,7 @@ const Carrito = () => {
                                                     <td>
                                                         {cantidad * (productItem.price * (1 - (productItem.descuento || 0) / 100))}
                                                     </td>
-                                                    <td>
+                                                    <td className='flex gap-5 flex-col lg:flex-row'>
                                                         <button onClick={() => { navigate(`/comprar-producto/${productItem?.id}`) }} className="btn btn-primary btn-xs">Ver</button>
                                                         <button className="btn btn-error btn-xs" onClick={() => { document.getElementById('my_modal_4').showModal(); setActual(productItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Eliminar</button>
                                                         <button className="btn btn-warning btn-xs" onClick={() => { document.getElementById('my_modal_3').showModal(); setActual(productItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Editar</button>
@@ -169,7 +169,7 @@ const Carrito = () => {
                                                     </td>
                                                     <td>
                                                         <button onClick={() => { navigate(`/comprar-producto/${combosItem?.id}`) }} className="btn btn-primary btn-xs">Ver</button>
-                                                        <button className="btn btn-error btn-xs" onClick={() => { document.getElementById('my_modal_4').showModal(); setActual(combosItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Eliminar</button>
+                                   combos               <button className="btn btn-error btn-xs" onClick={() => { document.getElementById('my_modal_4').showModal(); setActual(combosItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Eliminar</button>
                                                         <button className="btn btn-warning btn-xs" onClick={() => { document.getElementById('my_modal_3').showModal(); setActual(combosItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Editar</button>
                                                     </td>
                                                 </tr>
@@ -188,7 +188,8 @@ const Carrito = () => {
                                 </tfoot>
                             </table>
                             <button onClick={() => handleLimpiarCarrito()} className='btn btn-warning'>Limpiar carrito</button>
-                        </div>) : (
+                        </div>
+                        ) : (
                         <div className="flex items-center justify-center h-5/6 flex-col gap-5">
                             <p className="text-xl font-bold">Aun no tienes productos en tu carrito</p>
                             <button onClick={() => navigate("/catalogo")} className='btn btn-primary'>Ir a catalogo</button>

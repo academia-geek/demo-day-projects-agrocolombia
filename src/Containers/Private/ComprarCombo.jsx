@@ -52,15 +52,6 @@ const ComprarCombo = () => {
 
     useEffect(() => {
         let array = []
-        if (combos !== 0 && resultSearch) {
-            combos.map((x) => {
-                resultSearch?.combos.map((y) => {
-                    if (y === x.id) {
-                        array.push(x)
-                    }
-                })
-            })
-        }
         if (products !== 0 && resultSearch) {
             products.map((x) => {
                 resultSearch?.products.map((y) => {
@@ -70,7 +61,15 @@ const ComprarCombo = () => {
                 })
             })
         }
-        setRelacionados(array)
+        if (combos !== 0 && resultSearch) {
+            combos.map((x) => {
+                resultSearch?.combos.map((y) => {
+                    if (y === x.id) {
+                        array.push(x)
+                    }
+                })
+            })
+        }
         setRelacionados(array)
     }, [bandera, resultSearch])
 
@@ -100,7 +99,7 @@ const ComprarCombo = () => {
             amount: count
         }
         dispatch(actionAddCartItemAsyn(objSend));
-        setCount(0)
+        setCount(1)
         setTimeout(() => {
             setAlert(false)
         }, 3000);
@@ -138,11 +137,21 @@ const ComprarCombo = () => {
                         <div className='mt-4 flex justify-center flex-col'>
                             <p className='text-xl font-medium'>Productos realcionados</p>
                             <div className='lg:grid lg:grid-cols-2 p-5 flex lg:w-full'>
-                                {relacionados?.slice(0, 8).map((i, index) => (
-                                    <div key={`itemR${index}`}>
-                                        <img onClick={() => navigate(`/comprar-combo/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
-                                    </div>
-                                ))}
+                                {relacionados?.slice(0, 8).map((i, index) => {
+                                    if (i.productos) {
+                                        return(
+                                            <div key={`itemR${index}`}>
+                                                <img onClick={() => navigate(`/comprar-combo/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
+                                            </div>
+                                        )
+                                    }else{
+                                        return (
+                                        <div key={`itemR${index}`}>
+                                            <img onClick={() => navigate(`/comprar-producto/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
+                                        </div>
+                                        )
+                                    }
+                                })}
                             </div>
                         </div>
                     </div>
@@ -162,8 +171,8 @@ const ComprarCombo = () => {
                             {compra?.name.charAt(0).toUpperCase() + compra?.name.slice(1)}
                         </h2>
                         <div className='flex gap-3'>
-                            {compra?.categoria?.map((cat) => (
-                                <div onClick={() => navigate(`/catalogo/${cat}`)} className="badge badge-outline cursor-pointer">{cat}</div>
+                            {compra?.categoria?.map((cat,index) => (
+                                <div key={`catsc${index}`} onClick={() => navigate(`/catalogo/${cat}`)} className="badge badge-outline cursor-pointer">{cat}</div>
                             ))}
                         </div>
                         <p>{compra?.desc}</p>
@@ -178,7 +187,7 @@ const ComprarCombo = () => {
                             </div>
                         </div>
                         <h2>Contenido</h2>
-                        <ul class="list-disc list-inside">
+                        <ul className="list-disc list-inside">
                             {infop?.map((i) => (
                                 <li>{i.name.charAt(0).toUpperCase() + i.name.slice(1).toLowerCase()}</li>
                             ))}

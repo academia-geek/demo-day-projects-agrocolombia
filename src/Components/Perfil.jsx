@@ -82,7 +82,7 @@ const Perfil = () => {
               />
             </div>
             <h1 className="text-3xl font-bold pt-8 lg:pt-0 text-gray-900">{userData?.firstName} {userData?.lastName}</h1>
-            
+
             <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
             <p className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
               <img alt="" className="h-4 fill-current text-green-700 pr-4" src="https:res.cloudinary.com/dyepe4ih7/image/upload/v1709827637/socialmedia/y27joltjfmby93eppiyo.png" />
@@ -121,7 +121,7 @@ const Perfil = () => {
                     {isImageLoading ? (
                       <span className="loading loading-spinner text-primary"></span>
                     ) : (
-                        <img className=" h-48 w-48" src={formValue.fotoUrl} alt=""></img>
+                      <img className=" h-48 w-48" src={formValue.fotoUrl} alt=""></img>
                     )}
                   </div>
                 </div>
@@ -148,11 +148,11 @@ const Perfil = () => {
                   <input type="text" placeholder="apellido" name="extra" onChange={handleInputChange} value={formValue.extra} className="input input-bordered" />
                 </div>
                 <div className="form-control mt-6">
-                  <form className="mb-3" method="dialog">
-                    <button className="btn btn-primary w-full">Cancelar</button>
-                  </form>
                   <button className="btn btn-warning">Editar</button>
                 </div>
+                <form className="mb-3" method="dialog">
+                  <button className="btn btn-primary w-full">Cancelar</button>
+                </form>
               </form>
             </div>
           </div>

@@ -182,7 +182,7 @@ const Search = () => {
         <div className='w-full'>
           <div className="mt-6 px-10 pb-10 lg:grid lg:grid-cols-2 flex flex-col gap-5">
             {filteredProducts?.map((p, index) => (
-              <div className='flex flex-row w-full h-64 bg-accent rounded-lg cursor-pointer' onClick={() => navigate(`/comprar-producto/${p?.id}`)}>
+              <div key={`prod${index}`} className='flex flex-row w-full h-64 bg-accent rounded-lg cursor-pointer' onClick={() => navigate(`/comprar-producto/${p?.id}`)}>
                 <div className='w-4/12'>
                   <img src={p.media[0]} alt="" className='size-full object-cover rounded-l-lg' />
                 </div>
@@ -218,7 +218,7 @@ const Search = () => {
               </div>
             ))}
             {filteredCombos?.map((p, index) => (
-              <div className='flex flex-row w-full h-64 bg-accent rounded-lg cursor-pointer' onClick={() => navigate(`/comprar-combo/${p?.id}`)}>
+              <div key={`comb${index}`} className='flex flex-row w-full h-64 bg-accent rounded-lg cursor-pointer' onClick={() => navigate(`/comprar-combo/${p?.id}`)}>
                 <div className='w-4/12'>
                   <img src={p.media[0]} alt="" className='size-full object-cover rounded-l-lg' />
                 </div>

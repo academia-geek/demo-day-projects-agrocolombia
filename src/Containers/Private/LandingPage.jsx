@@ -22,7 +22,7 @@ const LandingPage = () => {
   const [detalles, setDetalles] = useState();
   
   const onClickItem = () => {
-    console.warn("si")
+    
   }
 
   return (

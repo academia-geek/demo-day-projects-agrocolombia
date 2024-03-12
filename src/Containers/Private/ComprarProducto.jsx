@@ -8,12 +8,14 @@ import { actionAddCartItemAsyn, actionListUserUidAsyn } from '../../Redux/Action
 import { Carousel } from 'react-responsive-carousel';
 import { actionStartChatAsyn } from '../../Redux/Actions/actionsChat';
 import { getAuth } from 'firebase/auth';
+import { actionListCombosAsyn } from '../../Redux/Actions/actionsCombo';
 
 const ComprarProducto = () => {
     const userUID = getAuth()
     const { id } = useParams();
     const dispatch = useDispatch()
     const { products } = useSelector((store) => store.productStore);
+    const { combos } = useSelector((store) => store.combosStore);
     const { resultSearch } = useSelector(state => state.resultStore)
     const [compra, setCompra] = useState();
     const [relacionados, setRelacionados] = useState()
@@ -23,6 +25,7 @@ const ComprarProducto = () => {
 
     useEffect(() => {
         dispatch(actionListproductAsyn())
+        dispatch(actionListCombosAsyn())
         if (products !== 0) {
             products?.map((p) => {
                 if (p.id === id) {
@@ -39,6 +42,15 @@ const ComprarProducto = () => {
         if (products !== 0 && resultSearch) {
             products.map((x) => {
                 resultSearch?.products.map((y) => {
+                    if (y === x.id) {
+                        array.push(x)
+                    }
+                })
+            })
+        }
+        if (combos !== 0 && resultSearch) {
+            combos.map((x) => {
+                resultSearch?.combos.map((y) => {
                     if (y === x.id) {
                         array.push(x)
                     }
@@ -73,7 +85,7 @@ const ComprarProducto = () => {
             amount: count
         }
         dispatch(actionAddCartItemAsyn(objSend));
-        setCount(0)
+        setCount(1)
         setTimeout(() => {
             setAlert(false)
         }, 3000);
@@ -111,11 +123,21 @@ const ComprarProducto = () => {
                         <div className='mt-4 flex justify-center flex-col'>
                             <p className='text-xl font-medium'>Productos realcionados</p>
                             <div className='lg:grid lg:grid-cols-2 p-5 flex lg:w-full'>
-                                {relacionados?.slice(0, 8).map((i, index) => (
-                                    <div key={`itemR${index}`}>
-                                        <img onClick={() => navigate(`/comprar-combo/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
-                                    </div>
-                                ))}
+                                {relacionados?.slice(0, 8).map((i, index) => {
+                                    if (i.productos) {
+                                        return (
+                                            <div key={`itemR${index}`}>
+                                                <img onClick={() => navigate(`/comprar-combo/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
+                                            </div>
+                                        )
+                                    } else {
+                                        return (
+                                            <div key={`itemR${index}`}>
+                                                <img onClick={() => navigate(`/comprar-producto/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
+                                            </div>
+                                        )
+                                    }
+                                })}
                             </div>
                         </div>
                     </div>
@@ -124,7 +146,7 @@ const ComprarProducto = () => {
                     <div className='h-full flex items-center'>
                         <Carousel showArrows={true} emulateTouch showThumbs={true} thumbWidth={100}>
                             {compra?.media?.map((i, index) => (
-                                <div key={index} className='h-full flex items-center'>
+                                <div key={`carru1${index}`} className='h-full flex items-center'>
                                     <img className="rounded-lg" src={i} alt='' />
                                 </div>
                             ))}

@@ -105,8 +105,10 @@ const NavbarP = () => {
             </div>
           </ul>
         </div>
-        <img style={{ cursor: "pointer" }} onClick={() => navigate("/*")} alt="icon" className="size-12" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709572838/Guajolota/logo_tayiwj.png"></img>
-        <Link to="/*" className="btn btn-ghost text-xl">AgroColombia</Link>
+        <div className="flex cursor-pointer" onClick={() => navigate("/*")} >
+          <img alt="icon" className="size-12" src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709572838/Guajolota/logo_tayiwj.png"></img>
+          <p className="btn btn-ghost text-xl z-[1]">AgroColombia</p>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -187,17 +189,17 @@ const NavbarP = () => {
               <li>
                 <button onClick={() => navigate("/perfil")} className="btn btn-primary w-full">Mi perfil</button>
               </li>
-              <li>
-                <button onClick={() => navigate("/mis-ventas")} className="btn btn-primary w-full">Mis ventas</button>
-              </li>
-              <li>
-                <button onClick={() => logOutClick()} className="btn btn-primary w-full">Cerrar sesión</button>
-              </li>
               <li className="lg:hidden">
                 <button onClick={() => navigate("carrito")} className="btn btn-primary w-full">Carrito de compras</button>
               </li>
               <li className="lg:hidden">
                 <button onClick={() => navigate("/chats")} className="btn btn-primary w-full">Mis chats</button>
+              </li>
+              <li>
+                <button onClick={() => navigate("/mis-ventas")} className="btn btn-primary w-full">Mis ventas</button>
+              </li>
+              <li>
+                <button onClick={() => logOutClick()} className="btn btn-primary w-full">Cerrar sesión</button>
               </li>
             </ul>
           </div>

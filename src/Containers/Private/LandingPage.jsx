@@ -53,35 +53,45 @@ const LandingPage = () => {
             {products?.map((product) => {
               if (product.descuento > 0) {
                 return (
-                  <div onClick={() => { navigate(`/comprar-producto/${product?.id}`) }} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
-                    <div className="h-2/5">
+                  <div onClick={() => { navigate(`/comprar-producto/${product?.id}`) }} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                    <div className="h-3/6">
                       <img
                         className="h-full w-full object-cover object-center lg:h-full lg:w-full rounded-t-lg"
                         src={product.media[0]}
                         alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
                       />
                     </div>
-                    <div className="card-body h-3/5">
+                    <div className="card-body min-h-3/6">
                       <h2 className="card-title">
-                        {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+                        {product?.name.charAt(0).toUpperCase() + product.name.slice(1)}
                         <div className="badge badge-success">OFERTA</div>
                       </h2>
                       <div style={{ display: "flex" }}>
-                        <p className="text-gray-400 line-through -mr-5">
-                          ${product.price}
-                        </p>
-                        <p>
-                          -{product.descuento}%
-                        </p>
-                        <p className="text-lime-500">
-                          ${(product.price - (product.price*(product.descuento/100)))}
+                        {product?.descuento !== 0 ? (
+                          <div className="flex gap-1">
+                            <div className="flex gap-1">
+                              <p className="text-gray-400 line-through">${product.price}</p>
+                              <p>-{product.descuento}%</p>
+                            </div>
+                            <p className="text-lime-500">
+                              ${(product.price - (product.price * (product.descuento / 100)))}
+                            </p>
+                          </div>
+                        ) : (
+                          <div>
+                            <p className="">
+                              ${product.price}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-justify line-clamp-3">
+                          {product?.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
                         </p>
                       </div>
-                      <p className="line-clamp-2 capitalize">
-                        {product.desc}
-                      </p>
                       <div className="card-actions justify-end">
-                        {product.categoria.map((cat) => (
+                        {product?.categoria.map((cat) => (
                           <div className="badge badge-outline capitalize">{cat}</div>
                         ))}
                       </div>

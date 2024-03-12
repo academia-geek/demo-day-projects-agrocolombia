@@ -128,52 +128,33 @@ const Search = () => {
     <div>
       <NavbarP />
       <div className='min-h-full flex lg:flex-row flex-col justify-between'>
-        <div className='w-full lg:w-3/12 min-h-screen bg-accent px-4  pb-4  lg:pb-4'>
-          <div className='outline h-full rounded-lg p-2 bg-base'>
+        <div className='w-full lg:w-[15%] min-h-screen bg-accent px-4  pb-4  lg:pb-4'>
+          <div className='outline h-full rounded-lg p-2 bg-white'>
             <p className='text-3xl'>Filtros</p>
             <div className='flex flex-col gap-5'>
               <div>
-                <p>Envio</p>
-                <div className="join join-vertical ml-3">
-                  <input onClick={() => setEnvio(null)} className="join-item btn" type="radio" name="envio" aria-label="Toodos" />
-                  <input onClick={() => setEnvio(1)} className="join-item btn" type="radio" name="envio" aria-label="Gratis" />
-                  <input onClick={() => setEnvio(0)} className="join-item btn" type="radio" name="envio" aria-label="Con costo" />
-                </div>
-              </div>
-              <div>
                 <p>Precio</p>
-                <div className="flex flex-col ml-3">
+                <div className="flex flex-col gap-4">
                   <input
                     type="number"
-                    value={minPrice}
+                    value={minPrice || ""}
                     onChange={(e) => setMinPrice(parseInt(e.target.value))}
-                    className="input input-bordered mr-2 w-full max-w-xs"
+                    className="input input-bordered mr-2 w-full"
                     placeholder="Mínimo"
                   />
                   <input
                     type="number"
-                    value={maxPrice}
+                    value={maxPrice || ""}
                     onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full "
                     placeholder="Máximo"
                   />
                 </div>
               </div>
               <div>
-                <p>Ubicacion</p>
-                <div className="join join-vertical ml-3">
-                  <input onClick={() => setUbicacion(null)} className="join-item btn" type="radio" name="ubicacion" aria-label="Todos" />
-                  <input onClick={() => setUbicacion('bello')} className="join-item btn" type="radio" name="ubicacion" aria-label="Bello" />
-                  <input onClick={() => setUbicacion('medellin')} className="join-item btn" type="radio" name="ubicacion" aria-label="Medellin" />
-                  <input onClick={() => setUbicacion('copacabana')} className="join-item btn" type="radio" name="ubicacion" aria-label="Copacabana" />
-                  <input onClick={() => setUbicacion('barbosa')} className="join-item btn" type="radio" name="ubicacion" aria-label="Barbosa" />
-                  <input onClick={() => setUbicacion('cisneros')} className="join-item btn" type="radio" name="ubicacion" aria-label="Cisneros" />
-                </div>
-              </div>
-              <div>
                 <p>Descuento</p>
-                <div className="join join-vertical ml-3">
-                  <input onClick={() => setDescuento(0)} className="join-item btn" type="radio" name="descuento" aria-label="Todos" />
+                <div className="join join-vertical  w-full">
+                  <input onClick={() => setDescuento(0)} className="join-item btn" type="radio" name="descuento" aria-label="Sin descuento" />
                   <input onClick={() => setDescuento(10)} className="join-item btn" type="radio" name="descuento" aria-label="Desde 10%" />
                   <input onClick={() => setDescuento(20)} className="join-item btn" type="radio" name="descuento" aria-label="Desde 20%" />
                   <input onClick={() => setDescuento(30)} className="join-item btn" type="radio" name="descuento" aria-label="Desde 30%" />
@@ -181,45 +162,39 @@ const Search = () => {
                 </div>
               </div>
               <div>
-                <p>Consumo</p>
-                <div className="join join-vertical ml-3">
-                  <input onClick={() => setConsumo(null)} className="join-item btn" type="radio" name="consumo" aria-label="Todos" />
-                  <input onClick={() => setConsumo(0)} className="join-item btn" type="radio" name="consumo" aria-label="Inmediato" />
-                  <input onClick={() => setConsumo(1)} className="join-item btn" type="radio" name="consumo" aria-label="2 Semanas" />
-                  <input onClick={() => setConsumo(2)} className="join-item btn" type="radio" name="consumo" aria-label="1 Mes o mas" />
-                </div>
-              </div>
-              <div>
                 <p>Categorias</p>
-                <div className="join join-vertical ml-3">
+                <div className="join join-vertical  w-full">
                   <input onClick={() => setCategoria(null)} className="join-item btn" type="radio" name="categorias" aria-label="Todos" />
                   {categoriesArray?.map((c, index) => (
-                    <input onClick={() => setCategoria(c)} className="join-item btn" type="radio" name="categorias" aria-label={c} />
+                    <input
+                      onClick={() => setCategoria(c)}
+                      className="join-item btn"
+                      type="radio"
+                      name="categorias"
+                      aria-label={c}
+                    />
                   ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='p-10 w-9/12'>
-          <div className="mt-6 px-10 pb-10">
+        <div className='w-full'>
+          <div className="mt-6 px-10 pb-10 lg:grid lg:grid-cols-2 flex flex-col gap-5">
             {filteredProducts?.map((p, index) => (
-              <div className="flex bg-accent mb-10 p-5 rounded-lg">
-                <img
-                  className="object-contain object-center"
-                  src={p.media[0]}
-                  style={{ width: 200, height: 200 }}
-                  alt={p.name.charAt(0).toUpperCase() + p.name.slice(1)}
-                />
-                <div className="card-body">
-                  <h2 className="card-title">
-                    {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
+              <div className='flex flex-row w-full h-64 bg-accent rounded-lg cursor-pointer' onClick={() => navigate(`/comprar-producto/${p?.id}`)}>
+                <div className='w-4/12'>
+                  <img src={p.media[0]} alt="" className='size-full object-cover rounded-l-lg' />
+                </div>
+                <div className='w-8/12 p-5 flex flex-col gap-3'>
+                  <div className='flex justify-between'>
+                    <p className='text-xl font-bold'>{p.name.charAt(0).toUpperCase() + p.name.slice(1).toLowerCase()}</p>
                     {p.descuento > 0 && (
                       <div>
                         <div className="badge badge-secondary">Descuento</div>
                       </div>
                     )}
-                  </h2>
+                  </div>
                   <p>
                     {p.descuento > 0 && (
                       <div>
@@ -227,18 +202,15 @@ const Search = () => {
                         <span className="text-base text">${(p.price - (p.price * (p.descuento / 100)))}</span>
                       </div>
                     )}
-                    {p.descuento === "0" && (
+                    {p.descuento === 0 && (
                       <span className="text-base">${p.price}</span>
                     )}
                   </p>
-                  <p>
-                    {p.desc.charAt(0).toUpperCase() + p.desc.slice(1)}
-                  </p>
-                  <button className="btn w-fit btn-primary" onClick={() => navigate(`/comprar-producto/${p?.id}`)}>Ver</button>
-                  <div className="card-actions justify-end">
+                  <p className='line-clamp-4 '>{p.desc.charAt(0).toUpperCase() + p.desc.slice(1).toLowerCase()}</p>
+                  <div className=''>
                     {
-                      p.categoria.map((c) => (
-                        <div onClick={() => setCategoria(c)} className="badge badge-outline cursor-pointer">{c}</div>
+                      p.categoria?.map((c) => (
+                        <div onClick={() => setCategoria(c)} className="badge badge-outline cursor-pointer mr-2">{c}</div>
                       ))
                     }
                   </div>
@@ -246,22 +218,19 @@ const Search = () => {
               </div>
             ))}
             {filteredCombos?.map((p, index) => (
-              <div className="flex bg-accent mb-10 p-5 rounded-lg">
-                <img
-                  className="object-contain object-center"
-                  src={p.media[0]}
-                  style={{ width: 200, height: 200 }}
-                  alt={p.name.charAt(0).toUpperCase() + p.name.slice(1)}
-                />
-                <div className="card-body">
-                  <h2 className="card-title">
-                    {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
+              <div className='flex flex-row w-full h-64 bg-accent rounded-lg cursor-pointer' onClick={() => navigate(`/comprar-combo/${p?.id}`)}>
+                <div className='w-4/12'>
+                  <img src={p.media[0]} alt="" className='size-full object-cover rounded-l-lg' />
+                </div>
+                <div className='w-8/12 p-5 flex flex-col gap-3'>
+                  <div className='flex justify-between'>
+                    <p className='text-xl font-bold'>{p.name.charAt(0).toUpperCase() + p.name.slice(1).toLowerCase()}</p>
                     {p.descuento > 0 && (
                       <div>
                         <div className="badge badge-secondary">Descuento</div>
                       </div>
                     )}
-                  </h2>
+                  </div>
                   <p>
                     {p.descuento > 0 && (
                       <div>
@@ -269,18 +238,15 @@ const Search = () => {
                         <span className="text-base text">${(p.precio - (p.precio * (p.descuento / 100)))}</span>
                       </div>
                     )}
-                    {p.descuento === "0" && (
+                    {p.descuento === 0 && (
                       <span className="text-base">${p.precio}</span>
                     )}
                   </p>
-                  <p>
-                    {p.desc.charAt(0).toUpperCase() + p.desc.slice(1)}
-                  </p>
-                  <button className="btn w-fit btn-primary" onClick={() => navigate(`/comprar-combo/${p?.id}`)}>Ver</button>
-                  <div className="card-actions justify-end">
+                  <p className='line-clamp-4 '>{p.desc.charAt(0).toUpperCase() + p.desc.slice(1).toLowerCase()}</p>
+                  <div className=''>
                     {
                       p.categoria?.map((c) => (
-                        <div onClick={() => setCategoria(c)} className="badge badge-outline cursor-pointer">{c}</div>
+                        <div onClick={() => setCategoria(c)} className="badge badge-outline cursor-pointer mr-2">{c}</div>
                       ))
                     }
                   </div>

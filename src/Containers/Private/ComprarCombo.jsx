@@ -61,6 +61,16 @@ const ComprarCombo = () => {
                 })
             })
         }
+        if (products !== 0 && resultSearch) {
+            products.map((x) => {
+                resultSearch?.products.map((y) => {
+                    if (y === x.id) {
+                        array.push(x)
+                    }
+                })
+            })
+        }
+        setRelacionados(array)
         setRelacionados(array)
     }, [bandera, resultSearch])
 
@@ -97,7 +107,7 @@ const ComprarCombo = () => {
     }
 
     return (
-        <div>
+        <div className='min-h-screen'>
             {
                 alert ? (
                     <div className="toast toast-top toast-center z-auto">
@@ -109,55 +119,57 @@ const ComprarCombo = () => {
                 ) : ("")
             }
             <NavbarP />
-            <div className='min-h-full flex lg:flex-row flex-col justify-between'>
-                <div className='w-full lg:w-3/12 min-h-screen bg-accent px-4  pb-4  lg:pb-4'>
-                    <div className='outline h-full rounded-lg p-2 pt-6 bg-white'>
-                        <div className="avatar w-full flex justify-center">
-                            <div className="w-10/12 rounded-full">
-                                <img src={resultSearch?.fotoUrl} alt='' />
+            <div className='flex lg:flex-row flex-col justify-between'>
+                <div className='w-full lg:w-3/12  bg-accent px-4  pb-4  lg:pb-4'>
+                    <div className='outline h-full rounded-lg p-2 pt-6 bg-white flex lg:block gap-5 lg:gap-0'>
+                        <div>
+                            <div className="avatar w-full flex justify-center">
+                                <div className="w:1/2 lg:w-10/12 rounded-full">
+                                    <img src={resultSearch?.fotoUrl} alt='' />
+                                </div>
                             </div>
-                        </div>
-                        <div className='flex justify-center mt-3'>
-                            <p className='text-xl font-medium'>{resultSearch?.firstName} {resultSearch?.lastName}</p>
-                        </div>
-                        <div className='flex justify-center mt-3'>
-                            <img onClick={() => handleChat(resultSearch.uid)} className='size-12 cursor-pointer' src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709846420/Guajolota/1380370_nqvo2f.png" alt="" />
+                            <div className='flex justify-center mt-3'>
+                                <p className='text-xl font-medium text-center'>{resultSearch?.firstName} {resultSearch?.lastName}</p>
+                            </div>
+                            <div className='flex justify-center mt-3'>
+                                <img onClick={() => handleChat(resultSearch.uid)} className='size-12 cursor-pointer' src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709846420/Guajolota/1380370_nqvo2f.png" alt="" />
+                            </div>
                         </div>
                         <div className='mt-4 flex justify-center flex-col'>
                             <p className='text-xl font-medium'>Productos realcionados</p>
-                            <div className='columns-2 p-5'>
-                                {relacionados?.slice(0, 4).map((i, index) => (
+                            <div className='lg:grid lg:grid-cols-2 p-5 flex lg:w-full'>
+                                {relacionados?.slice(0, 8).map((i, index) => (
                                     <div key={`itemR${index}`}>
-                                        <img onClick={() => navigate(`/comprar-producto/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
+                                        <img onClick={() => navigate(`/comprar-combo/${i?.id}`)} className='size-20 cursor-pointer rounded-lg object-cover mb-5' src={i.media[0]} alt="" />
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-4 w-9/12 p-10'>
-                    <div>
-                        <Carousel style={{ width: 300 }} showArrows={true} emulateTouch showThumbs={true} thumbWidth={100}>
+                <div className='flex flex-col lg:grid lg:grid-cols-2 gap-4 lg:w-9/12 p-5 justify-center w-full'>
+                    <div className='h-full flex items-center'>
+                        <Carousel showArrows={true} emulateTouch showThumbs={true} thumbWidth={100}>
                             {compra?.media?.map((i, index) => (
-                                <div key={index}>
-                                    <img style={{ width: 200, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
+                                <div key={index} className='h-full flex items-center'>
+                                    <img className="rounded-lg" src={i} alt='' />
                                 </div>
                             ))}
                         </Carousel>
                     </div>
-                    <div className="card-body">
+                    <div className="card-body gap-5">
                         <h2 className="card-title">
                             {compra?.name.charAt(0).toUpperCase() + compra?.name.slice(1)}
                         </h2>
-                        <div>
+                        <div className='flex gap-3'>
                             {compra?.categoria?.map((cat) => (
                                 <div onClick={() => navigate(`/catalogo/${cat}`)} className="badge badge-outline cursor-pointer">{cat}</div>
                             ))}
                         </div>
                         <p>{compra?.desc}</p>
-                        <div className='flex text-center items-center'>
+                        <div className='lg:flex lg:flex-col lg:items-center gap-3'>
                             <p>Cantidad: </p>
-                            <div className="join join-vertical lg:join-horizontal">
+                            <div className="join join-horizontal">
                                 <button className="btn join-item" onClick={handleDecrease}>-</button>
                                 <div className="flex text-center items-center w-10 join-item justify-center">
                                     <p>{count}</p>
@@ -166,11 +178,11 @@ const ComprarCombo = () => {
                             </div>
                         </div>
                         <h2>Contenido</h2>
-                        <div>
+                        <ul class="list-disc list-inside">
                             {infop?.map((i) => (
-                                <p>{i.name}</p>
+                                <li>{i.name.charAt(0).toUpperCase() + i.name.slice(1).toLowerCase()}</li>
                             ))}
-                        </div>
+                        </ul>
                         <div className='flex rounded-lg outline items-center flex-col gap-2 p-4 ml-4 w-full'>
                             <p>Total productos: {compra?.precio} </p>
                             <button onClick={() => handleComprar()} className='btn btn-accent'>Comprar</button>

@@ -2,12 +2,14 @@ import { useDispatch } from "react-redux";
 import useForm from "../../Hooks/useForm";
 import { actionAddUserAsyn } from "../../Redux/Actions/actionsUser";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 const NewComers = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
   
   const [formValue, handleInputChange, reset] = useForm({
     firstName: "",
@@ -29,8 +31,10 @@ const NewComers = () => {
     }
     reset()
     try {
+      setLoading(true)
       dispatch(actionAddUserAsyn(newObj))
       setTimeout(() => {
+        setLoading(false)
         navigate("/")
       }, 2000);
     } catch (error) {
@@ -41,6 +45,13 @@ const NewComers = () => {
 
   return (
     <div className="hero min-h-screen bg-base-200">
+      {loading && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 z-50">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="loading loading-spinner text-primary size-12"></span>
+          </div>
+        </div>
+      )}
       <div className="hero-content">
         <div className="text-center lg:text-center">
           <h1 className="text-4xl font-bold">Completa tu registro para continuar</h1>

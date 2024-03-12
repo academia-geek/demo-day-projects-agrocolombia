@@ -18,10 +18,6 @@ const NavbarP = () => {
     dispatch(actionListUserAsyn())
     dispatch(actionListproductAsyn())
     dispatch(actionListCombosAsyn())
-
-   
-    console.log("bucle")
-
   }, [])
 
   useEffect(()=>{
@@ -44,7 +40,6 @@ const NavbarP = () => {
       }
     });
     setTotalCost(totalCost);
-    console.log("bucle")
 
   },[userData])
 

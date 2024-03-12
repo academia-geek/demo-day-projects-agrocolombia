@@ -95,11 +95,11 @@ const Perfil = () => {
             </div>
           </div>
         </div>
-        <div className="w-full lg:w-2/5">
+        <div className="w-full lg:w-2/5 ">
           <img
             alt=""
             src={userData?.fotoUrl}
-            className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+            className="rounded-none lg:rounded-lg lg:h-72 lg:w-72 shadow-2xl hidden lg:block object-cover"
           />
         </div>
         <div onClick={() => navigate("/landing")} className={`btn btn-info absolute top-0 right-0 h-12 w-18 p-4`}>

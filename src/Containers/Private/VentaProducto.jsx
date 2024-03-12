@@ -44,14 +44,14 @@ const VentaProducto = () => {
     const uidR = crypto.randomUUID();
     let obj = {
       id: uidR,
-      name: formValue.name,
+      name: formValue.name.toLowerCase(),
       price: formValue.precio,
       desc: formValue.desc,
       descuento: formValue.descuento,
       media: formValue.media,
       stock: formValue.stock,
       dueño: datosU.uid,
-      categoria: formValue.categoria,
+      categoria: formValue.categoria || [],
     };
     dispatch(actionAddproductAsyn(obj));
     let aProductos = datosU.products;
@@ -61,7 +61,9 @@ const VentaProducto = () => {
       products: aProductos,
     };
     dispatch(actionEditUserAsyn(objUser));
-    navigate("/mis-ventas")
+    setTimeout(() => {
+      navigate("/mis-ventas")
+    }, 2000);
   };
 
   const handleFileChange = (e) => {
@@ -115,11 +117,11 @@ const VentaProducto = () => {
       </div>
       <div className={`flex flex-col gap-10 justify-center items-center ${activeStep === 1 ? '' : 'hidden'}`}>
         <div>
-          <p className='gap-3 pb-3 text-center font-semibold'>Precio del combo:</p>
+          <p className='gap-3 pb-3 text-center font-semibold'>Precio del producto:</p>
           <input name="precio" value={formValue.precio} onChange={handleInputChange} type='number' placeholder='2000' className='input input-bordered w-full max-w-xs'></input>
         </div>
         <div>
-          <p className='gap-3 pb-3 text-center font-semibold'>Porcentaje de descuento del combo:</p>
+          <p className='gap-3 pb-3 text-center font-semibold'>Porcentaje de descuento del producto:</p>
           <input name="descuento" value={formValue.descuento} onChange={handleInputChange} type='number' placeholder='10' className='input input-bordered w-full max-w-xs'></input>
         </div>
         <div className='flex flex-row gap-3 justify-center items-center'>

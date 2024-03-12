@@ -19,9 +19,15 @@ const NavbarP = () => {
     dispatch(actionListproductAsyn())
     dispatch(actionListCombosAsyn())
 
+   
+    console.log("bucle")
+
+  }, [])
+
+  useEffect(()=>{
     let totalCost = 0;
     userData.cart?.forEach(product => {
-      const { idProduct, cantidad} = product;
+      const { idProduct, cantidad } = product;
       const productItem = products.find(p => p.id === idProduct);
       if (productItem) {
         const discountedPrice = productItem.price * (1 - (productItem.descuento || 0) / 100);
@@ -38,8 +44,9 @@ const NavbarP = () => {
       }
     });
     setTotalCost(totalCost);
+    console.log("bucle")
 
-  }, [])
+  },[userData])
 
   const logOutClick = () => {
     navigate("/")

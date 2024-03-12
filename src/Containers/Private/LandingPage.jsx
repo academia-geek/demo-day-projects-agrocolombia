@@ -77,12 +77,12 @@ const LandingPage = () => {
                           ${(product.price - (product.price*(product.descuento/100)))}
                         </p>
                       </div>
-                      <p className="line-clamp-2">
-                        {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
+                      <p className="line-clamp-2 capitalize">
+                        {product.desc}
                       </p>
                       <div className="card-actions justify-end">
                         {product.categoria.map((cat) => (
-                          <div className="badge badge-outline">{cat}</div>
+                          <div className="badge badge-outline capitalize">{cat}</div>
                         ))}
                       </div>
                     </div>
@@ -127,7 +127,6 @@ const LandingPage = () => {
                 </p>
                 <div className="modal-action">
                   <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
                     <button className="btn" onClick={() => navigate(`/comprar-producto/${detalles?.id}`)}>Ver</button>
                   </form>
                 </div>
@@ -146,27 +145,45 @@ const LandingPage = () => {
           <div className="mt-6 grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 px-10 pb-10 pt-4">
             {products?.map((product) => (
               <div onClick={() => { navigate(`/comprar-producto/${product?.id}`) }} className="group card bg-base-100 shadow-xl shadow-neutral cursor-pointer  transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
-                <div className="h-2/5">
+                <div className="h-3/6">
                   <img
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full rounded-t-lg"
                     src={product.media[0]}
                     alt={product.name.charAt(0).toUpperCase() + product.name.slice(1)}
                   />
                 </div>
-                <div className="card-body h-3/5">
+                <div className="card-body min-h-3/6">
                   <h2 className="card-title">
-                    {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-                    <div className="badge badge-secondary">Nuevo</div>
+                    {product?.name.charAt(0).toUpperCase() + product.name.slice(1)}
+                    <div className="badge badge-primary">Nuevo</div>
                   </h2>
-                  <p>
-                    ${product.price}
-                  </p>
-                  <p className="line-clamp-2">
-                    {product.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
-                  </p>
+                  <div style={{ display: "flex" }}>
+                    {product?.descuento !== 0 ? (
+                      <div className="flex gap-1">
+                        <div className="flex gap-1">
+                          <p className="text-gray-400 line-through">${product.price}</p>
+                          <p>-{product.descuento}%</p>
+                        </div>
+                        <p className="text-lime-500">
+                          ${(product.price - (product.price * (product.descuento / 100)))}
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="">
+                          ${product.price}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-justify line-clamp-3">
+                      {product?.desc.charAt(0).toUpperCase() + product.desc.slice(1)}
+                    </p>
+                  </div>
                   <div className="card-actions justify-end">
-                    {product.categoria.map((cat) => (
-                      <div className="badge badge-outline">{cat}</div>
+                    {product?.categoria.map((cat) => (
+                      <div className="badge badge-outline capitalize">{cat}</div>
                     ))}
                   </div>
                 </div>
@@ -177,25 +194,34 @@ const LandingPage = () => {
       </div>
 
       <div className="px-10 py-8 mt-6">
-        <div className="shadow-2xl shadow-neutral rounded-lg">
-          <div className="flex items-center gap-7 bg-neutral p-7 rounded-t-lg text-center">
+        <div className="shadow-2xl shadow-neutral rounded-lg ">
+          <div className="flex items-center gap-7 bg-neutral p-7 rounded-t-lg text-center ">
             <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
             <h1 className="text-2xl tracking-wide font-bold">COMBOS</h1>
             <div className="border-2 w-full h-0 border-primary rounded-2xl"></div>
           </div>
           <Carousel showArrows={true} interval={10000} stopOnHover={true} infiniteLoop emulateTouch autoPlay showThumbs={false} onClickItem={() => onClickItem()}>
             {combos?.slice(0, 5).map((c, index) => (
-              <div key={index} className="mt-6 pb-6 flex flex-col lg:flex-row card card-side bg-base-100 ">
-                <div className="grid grid-cols-1 sm:grid-rows-2 sm:grid-flow-col gap-x-2 gap-y-2 lg:grid-cols-2 xl:gap-x-1 px-10">
+              <div key={index} className="py-10 px-5 flex flex-col">
+                <div className="grid-cols-4 gap-4 justify-items-stretch hidden lg:grid">
                   {c.media && c.media.slice(0, 4).map((img, i) => (
-                    <img key={i} className="rounded-xl w-24 h-24 object-contain lg:rounded-xl lg:w-48 lg:h-48 lg:object-contain" src={img} alt="Movie" />
+                    <div className="cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                      <img key={i} className="lg:size-56 md:size-32 object-cover  rounded-lg" src={img} alt="Movie" />
+                    </div>
                   ))}
                 </div>
-                <div className="card-body">
-                  <h2 className="card-title">{c.name}</h2>
-                  <p>{c.desc}</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary font-bold text-lg" onClick={() => navigate(`/comprar-combo/${c?.id}`)}>Detalles</button>
+                <div className="lg:hidden">
+                  <Carousel infiniteLoop autoPlay showThumbs={false}>
+                    {c.media && c.media.slice(0, 4).map((img, i) => (
+                      <img key={i} className="size-56 object-contain" src={img} alt="Movie" />
+                    ))}
+                  </Carousel>
+                </div>
+                <div className="flex flex-col gap-3 mt-3">
+                  <h2 className="text-xl font-bold text-center">{c.name}</h2>
+                  <p className="text-justify line-clamp-3">{c.desc}</p>
+                  <div className="">
+                    <button className="btn btn-primary" onClick={() => navigate(`/comprar-combo/${c?.id}`)}>Detalles</button>
                   </div>
                 </div>
               </div>

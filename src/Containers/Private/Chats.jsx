@@ -36,6 +36,8 @@ const Chats = () => {
         func()
     }, [chats])
 
+
+    /// TODO: ORGANIZAR ACA
     useEffect(() => {
         if (resultSearch) {
             const isDuplicate = data.some(item => item.uid === resultSearch.uid);
@@ -68,7 +70,7 @@ const Chats = () => {
         const interval = setInterval(() => {
             dispatch(actionFindChatAsync())
             dispatch(actionListUserAsyn())
-        }, 15000);
+        }, 7000);
 
         return () => clearInterval(interval);
     }, []);

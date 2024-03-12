@@ -107,7 +107,7 @@ const ComprarProducto = () => {
                             <img onClick={() => handleChat(resultSearch.uid)} className='size-12 cursor-pointer' src="https://res.cloudinary.com/dlwr6vxib/image/upload/v1709846420/Guajolota/1380370_nqvo2f.png" alt="" />
                         </div>
                         <div className='mt-4 flex justify-center flex-col'>
-                            <p className='text-xl font-medium'>Productos realcionados</p>
+                            <p className='text-xl font-medium'>Productos relacionados</p>
                             <div className='columns-2 p-5'>
                                 {relacionados?.slice(0, 4).map((i, index) => (
                                     <div key={`itemR${index}`}>

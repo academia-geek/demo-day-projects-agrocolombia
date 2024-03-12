@@ -18,7 +18,7 @@ const Landing = () => {
     useEffect(() => {
         dispatch(actionListproductAsyn())
         const aut = getAuth()
-        if (aut) {
+        if (aut.currentUser?.uid) {
             navigate("/*")
         }
     }, [])

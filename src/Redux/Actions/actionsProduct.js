@@ -102,8 +102,8 @@ export const actionSearchProductAsyn = (payload) => {
         const productosCollection = collection(dataBase, "Products");
         const q = query(
             productosCollection,
-            where("name", ">=", payload),
-            where("name", "<=", payload + '\uf8ff')
+            where("name", ">=", payload.toLowerCase()),
+            where("name", "<=", payload.toLowerCase() + '\uf8ff')
         );
 
         const dataQ = await getDocs(q);

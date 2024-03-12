@@ -8,6 +8,7 @@ import { actionAddCombosAsyn } from '../../Redux/Actions/actionsCombo';
 import { FileUpload } from '../../Helpers/FileUpload';
 import NavbarP from '../../Components/NavbarP';
 import FooterP from '../../Components/FooterP';
+import { useNavigate } from 'react-router-dom';
 
 const VentaCombo = () => {
     const [activeStep, setActiveStep] = useState(0)
@@ -19,6 +20,7 @@ const VentaCombo = () => {
     const dispatch = useDispatch()
     const [isImageLoading, setIsImageLoading] = useState(false);
     const { products } = useSelector((store) => store.productStore);
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(actionListproductAsyn())
@@ -50,7 +52,7 @@ const VentaCombo = () => {
         const uidR = crypto.randomUUID()
         let obj = {
             id: uidR,
-            name: formValue.name,
+            name: formValue.name.toLowerCase(),
             productos: formValue.productos,
             precio: formValue.precio,
             desc: formValue.desc,
@@ -68,7 +70,9 @@ const VentaCombo = () => {
             combos: aCombos
         }
         dispatch(actionEditUserAsyn(objUser))
-        reset();
+        setTimeout(() => {
+            navigate("/mis-ventas")
+        }, 2000);
     };
 
     function handleProductSelect(producto) {

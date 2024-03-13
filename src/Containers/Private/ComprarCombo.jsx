@@ -199,7 +199,9 @@ const ComprarCombo = () => {
                     </div>
                 </div>
             </div>
-            <FooterP />
+            <div className='lg:absolute sticky bottom-0 w-full '>
+                <FooterP />
+            </div>
         </div>
     )
 }

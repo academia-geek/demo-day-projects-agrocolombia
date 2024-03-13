@@ -169,7 +169,7 @@ const Carrito = () => {
                                                     </td>
                                                     <td>
                                                         <button onClick={() => { navigate(`/comprar-producto/${combosItem?.id}`) }} className="btn btn-primary btn-xs">Ver</button>
-                                   combos               <button className="btn btn-error btn-xs" onClick={() => { document.getElementById('my_modal_4').showModal(); setActual(combosItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Eliminar</button>
+                                                        <button className="btn btn-error btn-xs" onClick={() => { document.getElementById('my_modal_4').showModal(); setActual(combosItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Eliminar</button>
                                                         <button className="btn btn-warning btn-xs" onClick={() => { document.getElementById('my_modal_3').showModal(); setActual(combosItem); setCantActual(cantidad); setCantModificada(cantidad) }}>Editar</button>
                                                     </td>
                                                 </tr>

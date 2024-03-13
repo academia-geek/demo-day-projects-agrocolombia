@@ -24,7 +24,7 @@ const Landing = () => {
     }, [])
 
     return (
-        <div className="w-full h-screen bg-no-repeat bg-cover bg-[url('https://res.cloudinary.com/dlwr6vxib/image/upload/v1709742810/Guajolota/hermoso-paisaje-verde-rodeado-altas-montanas-cielo-nublado_1_rmpyic.jpg')]">
+        <div className="w-full min-h-screen bg-no-repeat bg-cover bg-[url('https://res.cloudinary.com/dlwr6vxib/image/upload/v1709742810/Guajolota/hermoso-paisaje-verde-rodeado-altas-montanas-cielo-nublado_1_rmpyic.jpg')]">
             <div className="h-full w-full">
                 <NavBarLanding />
                 <div className='lg:p-10 flex flex-col gap-5 p-5 w-full justify-center lg:flex-row'>

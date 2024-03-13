@@ -136,109 +136,111 @@ const VentaCombo = () => {
     return (
         <div className='flex flex-col justify-between items-center gap-10 min-h-screen'>
             <NavbarP/>
-            <ul className="steps py-10">
-                <li className={`step ${activeStep >= 0 ? 'step-primary' : ''}`}>Nombra tu combo</li>
-                <li className={`step ${activeStep >= 1 ? 'step-primary' : ''}`}>Selecciona los productos</li>
-                <li className={`step ${activeStep >= 2 ? 'step-primary' : ''}`}>Precio y descuento</li>
-                <li className={`step ${activeStep >= 3 ? 'step-primary' : ''}`}>Descripcion y stock</li>
-                <li className={`step ${activeStep >= 4 ? 'step-primary' : ''}`}>Extras</li>
-            </ul>
-            <div className={`flex flex-col gap-10 justify-center items-center ${activeStep === 0 ? '' : 'hidden'}`}>
-                <p className='text-2xl'>Colocale un nombre a tu producto</p>
-                <input type="text" name="name" value={formValue.name} onChange={handleInputChange} placeholder="Caja de aguacates haz" className="input input-bordered w-full max-w-xs" />
-                <button className='btn btn-primary' onClick={() => { setActiveStep(activeStep + 1) }}>Continuar</button>
-            </div>
-            <div className={`flex flex-col gap-10 justify-center items-center ${activeStep === 1 ? '' : 'hidden'}`}>
-                <p className='text-2xl'>Selecciona que productos quieres agregar a tu combo</p>
-                {
-                    productosUser?.map((p, index) => (
-                        <div className='grid grid-cols-2 gap-2 justify-center items-center' onClick={() => { handleProductSelect(p) }}>
-                            <p>{p.name}</p>
-                            <img className='size-14' src={p.media[0]} alt="" />
-                            <p>${p.price}</p>
-                            <p>{p.desc}</p>
-                        </div>
-                    ))
-                }
-                <div>
-                    <h2 className='font-semibold'>Seleccionados: </h2>
-                    {selectedProducts.map((producto) => (
-                        <div className="tarjeta-producto">
-                            <img className="size-12" src={producto.media[0]} alt="" />
-                            <div className="informacion-producto">
-                                <p className="nombre-producto">{producto.name}</p>
-                                <p className="descripcion-producto">{producto.desc}</p>
-                                <p className="precio-producto">{producto.price}</p>
-                            </div>
-                        </div>
-                    ))}
+            <div>
+                <ul className="steps py-10">
+                    <li className={`step ${activeStep >= 0 ? 'step-primary' : ''}`}>Nombra tu combo</li>
+                    <li className={`step ${activeStep >= 1 ? 'step-primary' : ''}`}>Selecciona los productos</li>
+                    <li className={`step ${activeStep >= 2 ? 'step-primary' : ''}`}>Precio y descuento</li>
+                    <li className={`step ${activeStep >= 3 ? 'step-primary' : ''}`}>Descripcion y stock</li>
+                    <li className={`step ${activeStep >= 4 ? 'step-primary' : ''}`}>Extras</li>
+                </ul>
+                <div className={`flex flex-col gap-10 justify-center items-center ${activeStep === 0 ? '' : 'hidden'}`}>
+                    <p className='text-2xl'>Colocale un nombre a tu producto</p>
+                    <input type="text" name="name" value={formValue.name} onChange={handleInputChange} placeholder="Caja de aguacates haz" className="input input-bordered w-full max-w-xs" />
+                    <button className='btn btn-primary' onClick={() => { setActiveStep(activeStep + 1) }}>Continuar</button>
                 </div>
-                <div className='flex flex-row gap-3 justify-center items-center'>
-                    <button className='btn btn-primary' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
-                    <button className='btn btn-primary' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
-                </div>
-            </div>
-            <div className={`flex flex-col gap-10 justify-center items-center ${activeStep === 2 ? '' : 'hidden'}`}>
-                <div>
-                    <p className='gap-3 pb-3 text-center font-semibold'>Precio del combo:</p>
-                    <input name="precio" value={formValue.precio} onChange={handleInputChange} type='number' placeholder='2000' className='input input-bordered w-full max-w-xs'></input>
-                </div>
-                <div>
-                    <p className='gap-3 pb-3 text-center font-semibold'>Porcentaje de descuento del combo:</p>
-                    <input name="descuento" value={formValue.descuento} onChange={handleInputChange} type='number' placeholder='10' className='input input-bordered w-full max-w-xs'></input>
-                </div>
-                <div className='flex flex-row gap-3 justify-center items-center'>
-                    <button className='btn btn-primary' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
-                    <button className='btn btn-primary' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
-                </div>
-            </div>
-            <div className={`${activeStep === 3 ? '' : 'hidden'}`}>
-                <div className="grid grid-cols-2 gap-10 justify-center items-center text-center">
-                    <p className='text-2xl'>Añadele una descripcion:</p>
-                    <p className='text-2xl'>Cantidad:</p>
-                    <textarea name="desc" value={formValue.desc} onChange={handleInputChange} placeholder="Caja de aguacates para consumo en una semana" className="textarea textarea-bordered textarea-lg w-full max-w-xs" ></textarea>
-                    <input name="stock" value={formValue.stock} onChange={handleInputChange} type='number' placeholder='10' className='input input-bordered w-full max-w-xs'></input>
-                    </div>
-                    <div className='flex flex-row gap-3 pt-7 justify-center items-center'>
-                        <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
-                        <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
-                </div>
-            </div>
-            <div className={`flex flex-col gap-4 text-center ${activeStep === 4 ? '' : 'hidden'}`}>
-                <div>
-                    <p className='text-2xl'>Añadele las categorias a tu producto</p>
+                <div className={`flex flex-col gap-10 justify-center items-center ${activeStep === 1 ? '' : 'hidden'}`}>
+                    <p className='text-2xl'>Selecciona que productos quieres agregar a tu combo</p>
                     {
-                        categoriesArray?.map((p, index) => (
-                            <div className='join join-vertical lg:join-horizontal py-3' onClick={() => { handleCatSelect(p) }}>
-                                <p className='join-item cursor-pointer p-2'>{p}</p>
+                        productosUser?.map((p, index) => (
+                            <div className='grid grid-cols-2 gap-2 justify-center items-center' onClick={() => { handleProductSelect(p) }}>
+                                <p>{p.name}</p>
+                                <img className='size-14' src={p.media[0]} alt="" />
+                                <p>${p.price}</p>
+                                <p>{p.desc}</p>
                             </div>
                         ))
                     }
-                </div>
-                <div>
-                    <h2 className='font-semibold'>Seleccionados:</h2>
-                    {selectedCats.map((p) => (
-                        <div className='join join-vertical lg:join-horizontal py-3'>
-                            <p className='join-item p-2'>{p}</p>
-                        </div>
-                    ))}
-                </div>
-                <p className='text-2xl'>Coloca unas fotos extras a tu combo</p>
-                <input onChange={handleFileChange} type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
-                {isImageLoading ? (
-                    <span className="loading loading-spinner text-primary"></span>
-                ) : (
-                        <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true} thumbWidth={100}>
-                            {urlsFotos?.map((i, index) => (
-                                <div key={index}>
-                                    <img style={{ width: 400, maxHeight: 400, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
+                    <div>
+                        <h2 className='font-semibold'>Seleccionados: </h2>
+                        {selectedProducts.map((producto) => (
+                            <div className="tarjeta-producto">
+                                <img className="size-12" src={producto.media[0]} alt="" />
+                                <div className="informacion-producto">
+                                    <p className="nombre-producto">{producto.name}</p>
+                                    <p className="descripcion-producto">{producto.desc}</p>
+                                    <p className="precio-producto">{producto.price}</p>
                                 </div>
-                            ))}
-                        </Carousel>
-                )}
-                <div className='flex flex-row gap-3 justify-center items-center'>
-                    <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
-                    <button className='btn btn-primary w-48' onClick={() => handleSubmit()}>Vender</button>
+                            </div>
+                        ))}
+                    </div>
+                    <div className='flex flex-row gap-3 justify-center items-center'>
+                        <button className='btn btn-primary' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
+                        <button className='btn btn-primary' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
+                    </div>
+                </div>
+                <div className={`flex flex-col gap-10 justify-center items-center ${activeStep === 2 ? '' : 'hidden'}`}>
+                    <div>
+                        <p className='gap-3 pb-3 text-center font-semibold'>Precio del combo:</p>
+                        <input name="precio" value={formValue.precio} onChange={handleInputChange} type='number' placeholder='2000' className='input input-bordered w-full max-w-xs'></input>
+                    </div>
+                    <div>
+                        <p className='gap-3 pb-3 text-center font-semibold'>Porcentaje de descuento del combo:</p>
+                        <input name="descuento" value={formValue.descuento} onChange={handleInputChange} type='number' placeholder='10' className='input input-bordered w-full max-w-xs'></input>
+                    </div>
+                    <div className='flex flex-row gap-3 justify-center items-center'>
+                        <button className='btn btn-primary' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
+                        <button className='btn btn-primary' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
+                    </div>
+                </div>
+                <div className={`${activeStep === 3 ? '' : 'hidden'}`}>
+                    <div className="grid grid-cols-2 gap-10 justify-center items-center text-center">
+                        <p className='text-2xl'>Añadele una descripcion:</p>
+                        <p className='text-2xl'>Cantidad:</p>
+                        <textarea name="desc" value={formValue.desc} onChange={handleInputChange} placeholder="Caja de aguacates para consumo en una semana" className="textarea textarea-bordered textarea-lg w-full max-w-xs" ></textarea>
+                        <input name="stock" value={formValue.stock} onChange={handleInputChange} type='number' placeholder='10' className='input input-bordered w-full max-w-xs'></input>
+                        </div>
+                        <div className='flex flex-row gap-3 pt-7 justify-center items-center'>
+                            <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
+                            <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep + 1)}>Continuar</button>
+                    </div>
+                </div>
+                <div className={`flex flex-col gap-4 text-center ${activeStep === 4 ? '' : 'hidden'}`}>
+                    <div>
+                        <p className='text-2xl'>Añadele las categorias a tu producto</p>
+                        {
+                            categoriesArray?.map((p, index) => (
+                                <div className='join join-vertical lg:join-horizontal py-3' onClick={() => { handleCatSelect(p) }}>
+                                    <p className='join-item cursor-pointer p-2'>{p}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div>
+                        <h2 className='font-semibold'>Seleccionados:</h2>
+                        {selectedCats.map((p) => (
+                            <div className='join join-vertical lg:join-horizontal py-3'>
+                                <p className='join-item p-2'>{p}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <p className='text-2xl'>Coloca unas fotos extras a tu combo</p>
+                    <input onChange={handleFileChange} type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+                    {isImageLoading ? (
+                        <span className="loading loading-spinner text-primary"></span>
+                    ) : (
+                            <Carousel showArrows={true} interval={10000} infiniteLoop emulateTouch autoPlay showThumbs={true} thumbWidth={100}>
+                                {urlsFotos?.map((i, index) => (
+                                    <div key={index}>
+                                        <img style={{ width: 400, maxHeight: 400, objectFit: "cover" }} className="rounded-lg" src={i} alt='' />
+                                    </div>
+                                ))}
+                            </Carousel>
+                    )}
+                    <div className='flex flex-row gap-3 justify-center items-center'>
+                        <button className='btn btn-primary w-48' onClick={() => setActiveStep(activeStep - 1)}>Atras</button>
+                        <button className='btn btn-primary w-48' onClick={() => handleSubmit()}>Vender</button>
+                    </div>
                 </div>
             </div>
             <FooterP/>

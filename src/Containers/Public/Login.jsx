@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { actionGoogle, actionLoginAsyn } from "../../Redux/Actions/actionsLogin"
 import useForm from "../../Hooks/useForm"
 import { useState } from "react"
 
 const Login = () => {
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [errorMessage, setErrorMessage] = useState()
   const [formValue, handleInputChange, reset] = useForm({
@@ -40,17 +41,20 @@ const Login = () => {
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form onSubmit={onSubmit} className="card-body">
+            <div>
+              <button onClick={( ) => navigate("/")} className="btn btn-primary">Volver al inicio</button>
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Correo</span>
               </label>
-              <input value={formValue.email} onChange={handleInputChange} name='email' type="email" placeholder="correo" className="input input-bordered" required />
+              <input value={formValue.email} onChange={handleInputChange} name='email' type="email" placeholder="Correo" className="input input-bordered" required />
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Contraseña</span>
               </label>
-              <input value={formValue.password} onChange={handleInputChange} name='password' type="password" placeholder="contraseña" className="input input-bordered" autoComplete="true" required />
+              <input value={formValue.password} onChange={handleInputChange} name='password' type="password" placeholder="Contraseña" className="input input-bordered" autoComplete="true" required />
             </div>
             <label className="label">
               <span className="label-text-alt text-red-500 animate-bounce">{errorMessage}</span>

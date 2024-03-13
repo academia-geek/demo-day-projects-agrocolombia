@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const NavBarLanding = () => {
     return (
-        <div className="navbar glass">
+        <div className="navbar glass ">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

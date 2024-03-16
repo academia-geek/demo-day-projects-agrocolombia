@@ -11,11 +11,7 @@ export const actionLoginAsyn = (email, pass) => {
             const auth = getAuth();
             const userCredential = await signInWithEmailAndPassword(auth, email, pass);
             const user = userCredential.user;
-
-            console.log(user, user.displayName, "Bienvenido si estas Registrado");
             dispatch(actionLoginSyn(email, pass));
-            // ... your other success logic
-
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -44,11 +40,6 @@ export const actionGoogle = () => {
         const auth = getAuth();
         signInWithPopup(auth, google)
             .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                console.log(token);
-                const user = result.user;
-                console.log(user);
             })
             .catch((error) => {
                 console.log(error);
@@ -61,11 +52,9 @@ export const actionGoogle = () => {
 export const actionLogoutAsyn = () => {
     return (dispatch) => {
         const auth = getAuth();
-
         signOut(auth)
             .then(() => {
                 dispatch(actionLogoutSyn);
-                console.log("Adios..");
             })
             .catch((error) => {
                 console.warn(error);

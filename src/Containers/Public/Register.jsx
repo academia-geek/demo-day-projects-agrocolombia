@@ -4,34 +4,31 @@ import { Field, Form, Formik } from 'formik';
 import { actionRegisterAsync } from "../../Redux/Actions/actionsRegister";
 
 
+
 const Register = () => {
 
   const dispatch= useDispatch();
 
   const SignupSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, "NO cumple con el número minimo de caracteres")
-      .max(50, "Excede el máximo de caracteres")
-      .required("Este campo es requerido"),
-    lastName: Yup.string()
-      .min(2, "NO cumple con el número minimo de caracteres")
-      .max(50, "Excede el máximo de caracteres")
-      .required("Este campo es requerido"),
     email: Yup.string().email("Ingrese un correo valido").required("Este campo es requerido"),
     pass: Yup.string()
-      .min(6, "Contraseña muy corta")
+      .min(8, "La contraseña debe tener al menos 8 caracteres")
+      .matches(/[A-Z]/, "La contraseña debe tener al menos una mayúscula")
+      .matches(/[a-z]/, "La contraseña debe tener al menos una minúscula")
+      .matches(/[0-9]/, "La contraseña debe tener al menos un número")
       .oneOf([Yup.ref("pass2"), "Las contraseñas No coinciden"])
       .required("Este campo es requerido"),
     pass2: Yup.string()
-      .min(6, "Pass muy corto")
+      .min(8, "La contraseña debe tener al menos 8 caracteres")
+      .matches(/[A-Z]/, "La contraseña debe tener al menos una mayúscula")
+      .matches(/[a-z]/, "La contraseña debe tener al menos una minúscula")
+      .matches(/[0-9]/, "La contraseña debe tener al menos un número")
       .oneOf([Yup.ref("pass"), "Las contraseñas No coinciden"])
       .required("Este campo es requerido"),
   });
 
   return (
     <Formik initialValues={{
-      firstName: "",
-      lastName: "",
       email: "",
       pass: "",
       pass2: "",
@@ -39,6 +36,7 @@ const Register = () => {
       validationSchema={SignupSchema}
       onSubmit={(values) => {
         dispatch(actionRegisterAsync(values.email, values.pass));
+
       }}>
       {({ errors, touched }) => (
         <div className="hero min-h-screen bg-base-200">
@@ -49,29 +47,6 @@ const Register = () => {
             </div>
             <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
               <Form className="card-body">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Nombres</span>
-                  </label>
-                  <Field name='firstName' className="input input-bordered" required />
-                  {errors.firstName && touched.firstName ? (
-                    <label className="label">
-                      <span className="label-text-alt text-red-500 animate-bounce">{errors.firstName}</span>
-                    </label>
-                  ) : null}
-                </div>
-
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Apellidos</span>
-                  </label>
-                  <Field name='lastName' className="input input-bordered" required />
-                  {errors.lastName && touched.lastName ? (
-                    <label className="label">
-                      <span className="label-text-alt text-red-500 animate-bounce">{errors.lastName}</span>
-                    </label>
-                  ) : null}
-                </div>
 
                 <div className="form-control">
                   <label className="label">

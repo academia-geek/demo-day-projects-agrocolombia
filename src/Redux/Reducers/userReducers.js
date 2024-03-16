@@ -4,13 +4,18 @@ const userReducer = (state = {}, action) => {
     switch (action.type) {
         case typesUsers.list:
             return {
-                payload: action.payload
+                userData: action.payload
             };
 
         case typesUsers.add:
             return {
-                payload: action.payload
+                userData: action.payload
             };
+
+        case typesUsers.addCart:
+            return {
+                userData: action.payload
+            }
 
         default:
             return state;

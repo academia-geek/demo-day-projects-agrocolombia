@@ -37,6 +37,53 @@ AgroColombia es una plataforma online que facilita el comercio de productos agr�
 Para cualquier pregunta o comentario, no dude en contactarnos a través de los siguientes canales:
 Correo electrónico: [buitragogiraldosantiago@gmail.com]
 
+## Guia de colores
+Primario: #2e4912 (Verde oscuro)
+Opaco: #273b0e (Verde bosque)
+Claro: #46601b (Verde oliva)
+
+Secundario: #aa7a1b (Marrón anaranjado)
+Opaco: #876212 (Marrón chocolate)
+Claro: #c79124 (Marrón caramelo)
+
+Acentuado: #90b673 (Verde lima)
+Opaco: #728f57 (Verde militar)
+Claro: #a6c28a (Verde menta)
+
+Neutro: #86efac (Turquesa claro)
+Opaco: #67c794 (Verde azulado)
+Claro: #a7f4c5 (Turquesa pastel)
+
+Base: #fff (Blanco)
+
+Información: #85a139 (Verde oliva)
+
+Éxito: #FFDF37 (Amarillo dorado)
+
+Advertencia: #e89008 (Naranja rojizo)
+
+Error: #d1470b (Rojo oscuro)
+
+
+Tipografía:
+Fuente principal: FALTA
+Tamaño de letra base: 16px
+
+Títulos:
+H1: 24px, negrita
+H2: 20px, negrita
+H3: 18px, negrita
+
+Botones:
+Tamaño: 14px
+Color: #2e4912 (Verde oscuro)
+Fondo: #fff (Blanco)
+Hover: Color: #fff (Blanco), Fondo: #2e4912 (Verde oscuro)
+
+Espaciado:
+Márgenes: 20px
+Padding: 10px
+
 
 ## Licencia
 AgroColombia está bajo la licencia MIT.

@@ -12,6 +12,5 @@ node {
       steps{
         sh 'npm i'
       }
-    }
   }
 }

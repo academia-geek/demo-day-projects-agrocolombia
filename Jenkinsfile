@@ -9,7 +9,9 @@ node {
     }
   }
   stage('Instalacion de dependencias') {
-      sh 'npm i'
+      steps{
+        sh 'npm i'
+      }
     }
   }
 }

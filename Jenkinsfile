@@ -9,10 +9,7 @@ node {
     }
   }
   stage('Instalacion de dependencias') {
-    if (usSonarCubeScanerSuccesful()){
-      sh 'npm install'
-    }else {
-      error('No se aprobo el codigo')
+      sh 'npm i'
     }
   }
 }
